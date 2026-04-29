@@ -6,7 +6,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import type { ReactNode } from "react";
-import { useWeddingContent } from "@/context/language";
+import { useLanguage } from "@/context/language";
 
 const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
@@ -76,8 +76,12 @@ const Divider = ({ compact = false }: { compact?: boolean }) => {
   if (!DETAILS_DIVIDER.show) return null;
 
   return (
-    <div
-      className="mx-auto flex items-center justify-center"
+    <motion.div
+      className="mx-auto flex origin-center items-center justify-center"
+      initial={{ opacity: 0, clipPath: "inset(0% 50% 0% 50%)" }}
+      whileInView={{ opacity: 1, clipPath: "inset(0% 0% 0% 0%)" }}
+      transition={{ duration: 0.8, ease: EASE }}
+      viewport={{ once: true, amount: 0.6 }}
       style={{
         marginTop: compact
           ? DETAILS_DIVIDER.compactMarginTop
@@ -102,7 +106,7 @@ const Divider = ({ compact = false }: { compact?: boolean }) => {
           maxWidth: "70vw",
         }}
       />
-    </div>
+    </motion.div>
   );
 };
 
@@ -195,10 +199,12 @@ const DetailItem = ({
 
 const ClickHereButton = ({
   href,
+  label,
   reduceMotion,
   isMyanmar,
 }: {
   href: string;
+  label: string;
   reduceMotion: boolean | null;
   isMyanmar: boolean;
 }) => {
@@ -263,17 +269,20 @@ const ClickHereButton = ({
       )}
 
       <span className="relative z-10">
-        {isMyanmar ? "နှိပ်ပါ" : "Click Here"}
+        {label}
       </span>
     </motion.a>
   );
 };
 
 const EventDetails = () => {
-  const { event } = useWeddingContent();
+  const {
+    language,
+    content: { event },
+  } = useLanguage();
   const reduceMotion = useReducedMotion();
 
-  const isMyanmar = event.title !== "Wedding Details";
+  const isMyanmar = language === "my";
 
   const dateItem = event.items.find((item) => item.icon === "calendar");
   const timeItem = event.items.find((item) => item.icon === "clock");
@@ -455,6 +464,7 @@ const EventDetails = () => {
             >
               <ClickHereButton
                 href={event.mapUrl}
+                label={event.buttonText}
                 reduceMotion={reduceMotion}
                 isMyanmar={isMyanmar}
               />

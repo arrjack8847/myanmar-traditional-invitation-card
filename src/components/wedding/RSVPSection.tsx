@@ -312,7 +312,7 @@ const RSVPSection = () => {
                   <motion.button
                     type="submit"
                     disabled={isSubmitting}
-                    className={`min-h-[48px] w-full rounded-full bg-gold px-4 py-2.5 text-[9px] font-medium uppercase tracking-[0.16em] text-primary-foreground shadow-[0_16px_34px_rgba(201,162,92,0.26)] transition-all active:scale-[0.98] sm:min-h-12 sm:px-5 sm:py-3 sm:text-[11px] sm:tracking-[0.28em] sm:hover:-translate-y-0.5 sm:hover:brightness-105 ${
+                    className={`premium-button-shine min-h-[48px] w-full overflow-hidden rounded-full bg-gold px-4 py-2.5 text-[9px] font-medium uppercase tracking-[0.16em] text-primary-foreground shadow-[0_16px_34px_rgba(201,162,92,0.26)] transition-all active:scale-[0.98] sm:min-h-12 sm:px-5 sm:py-3 sm:text-[11px] sm:tracking-[0.28em] sm:hover:-translate-y-0.5 sm:hover:brightness-105 ${
                       isSubmitting ? "cursor-not-allowed opacity-80" : ""
                     }`}
                     whileHover={isSubmitting ? undefined : { scale: 1.01 }}

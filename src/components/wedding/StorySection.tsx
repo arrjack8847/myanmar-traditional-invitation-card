@@ -33,7 +33,19 @@ const StorySection = () => {
                 viewport={{ once: true, amount: 0.25 }}
               >
                 {/* Photo card */}
-                <div className="relative overflow-hidden rounded-[30px] border border-[#e8d7b4] bg-[#f6ecdc] shadow-[0_24px_60px_rgba(111,84,42,0.14)]">
+                <motion.div
+                  className="relative overflow-hidden rounded-[30px] border border-[#e8d7b4] bg-[#f6ecdc] shadow-[0_24px_60px_rgba(111,84,42,0.14)]"
+                  initial={{
+                    opacity: 0,
+                    clipPath: "inset(8% 0% 8% 0% round 30px)",
+                  }}
+                  whileInView={{
+                    opacity: 1,
+                    clipPath: "inset(0% 0% 0% 0% round 30px)",
+                  }}
+                  transition={{ duration: 0.9, ease: EASE }}
+                  viewport={{ once: true, amount: 0.25 }}
+                >
                   {/* soft blurred fill behind image */}
                   <img
                     src={story.image}
@@ -43,14 +55,18 @@ const StorySection = () => {
                   />
 
                   {/* full visible image */}
-                  <img
+                  <motion.img
                     src={story.image}
                     alt={story.title}
                     className="relative z-10 block h-auto w-full object-contain"
+                    initial={{ scale: reduceMotion ? 1 : 1.035 }}
+                    whileInView={{ scale: 1 }}
+                    transition={{ duration: 1.25, ease: EASE }}
+                    viewport={{ once: true, amount: 0.3 }}
                   />
 
                   <div className="pointer-events-none absolute inset-0 z-20 bg-gradient-to-t from-black/18 via-transparent to-white/8" />
-                </div>
+                </motion.div>
 
                 {/* Text card */}
                 <motion.div
@@ -185,7 +201,7 @@ const StorySection = () => {
                 {isLeftCard && (
                   <div className="flex justify-start">
                     <motion.div
-                      className="w-full max-w-xl rounded-[30px] border border-white/10 bg-black/30 p-9 text-left shadow-[0_24px_60px_rgba(0,0,0,0.22)] backdrop-blur-md"
+                      className="w-full max-w-xl rounded-[30px] border border-white/10 bg-black/30 p-9 text-left shadow-[0_24px_60px_rgba(0,0,0,0.22)] backdrop-blur-md will-change-transform"
                       initial={{
                         opacity: 0,
                         x: reduceMotion ? 0 : -36,
@@ -193,6 +209,7 @@ const StorySection = () => {
                       whileInView={{ opacity: 1, x: 0 }}
                       transition={{ duration: 0.9, ease: EASE }}
                       viewport={{ once: true }}
+                      whileHover={reduceMotion ? undefined : { y: -4 }}
                     >
                       <motion.p
                         className="mb-4 text-[10px] uppercase tracking-[0.42em] text-gold/80"

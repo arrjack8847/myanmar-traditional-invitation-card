@@ -6,6 +6,8 @@ export interface WeddingContent {
   couple: {
     bride: string;
     groom: string;
+    brideRole: string;
+    groomRole: string;
     display: string;
   };
   intro: {
@@ -56,6 +58,7 @@ export interface WeddingContent {
       value: string;
     }>;
     mapUrl: string;
+    buttonText: string;
   };
   gallery: {
     eyebrow: string;
@@ -95,11 +98,13 @@ export interface WeddingContent {
     buttonText: string;
     footerDate: string;
     footerCredit: string;
+    footerCreditPrefix: string;
   };
   ui: {
     languageToggleLabel: string;
     switchToEnglish: string;
     switchToMyanmar: string;
+    viewInvitation: string;
     viewDetails: string;
     rsvpShort: string;
     rsvpNow: string;
@@ -107,6 +112,7 @@ export interface WeddingContent {
     viewLocation: string;
     venueAlt: string;
     venueDetailAlt: string;
+    weddingRingsAlt: string;
     countdown: {
       days: string;
       hours: string;
@@ -138,6 +144,8 @@ export const weddingContent = {
     couple: {
       bride: "Myo Myat Khine",
       groom: "Than Htay Hlaing",
+      brideRole: "Bride",
+      groomRole: "Groom",
       display: "Myo Myat Khine & Than Htay Hlaing",
     },
 
@@ -226,6 +234,7 @@ export const weddingContent = {
       ],
       mapUrl:
         "https://www.google.com/maps/place/Arian/@20.1360881,92.8991252,16.5z/data=!4m6!3m5!1s0x30b04f9e4236f609:0x475ee836395f588e!8m2!3d20.1360702!4d92.899345!16s%2Fg%2F1tg37jls?entry=ttu&g_ep=EgoyMDI2MDQyMC4wIKXMDSoASAFQAw%3D%3D",
+      buttonText: "Click Here",
     },
 
     gallery: {
@@ -281,12 +290,14 @@ export const weddingContent = {
       buttonText: "Message on WhatsApp",
       footerDate: "29 January 2027",
       footerCredit: "JackNex Studio",
+      footerCreditPrefix: "Crafted with love by",
     },
 
     ui: {
       languageToggleLabel: "Language",
       switchToEnglish: "Switch to English",
       switchToMyanmar: "Switch to Myanmar",
+      viewInvitation: "View Invitation",
       viewDetails: "View Details",
       rsvpShort: "RSVP",
       rsvpNow: "RSVP Now",
@@ -294,6 +305,7 @@ export const weddingContent = {
       viewLocation: "View Location",
       venueAlt: "Wedding venue",
       venueDetailAlt: "Wedding venue detail",
+      weddingRingsAlt: "Wedding rings",
       countdown: {
         days: "Days",
         hours: "Hours",
@@ -326,6 +338,8 @@ export const weddingContent = {
     couple: {
       bride: "မျိုးမြတ်ခိုင်",
       groom: "သန်းဌေးလှိုင်",
+      brideRole: "သတို့သမီး",
+      groomRole: "သတို့သား",
       display: "မျိုးမြတ်ခိုင် နှင့် သန်းဌေးလှိုင်",
     },
 
@@ -414,6 +428,7 @@ export const weddingContent = {
       ],
       mapUrl:
         "https://www.google.com/maps/place/Arian/@20.1360881,92.8991252,16.5z/data=!4m6!3m5!1s0x30b04f9e4236f609:0x475ee836395f588e!8m2!3d20.1360702!4d92.899345!16s%2Fg%2F1tg37jls?entry=ttu&g_ep=EgoyMDI2MDQyMC4wIKXMDSoASAFQAw%3D%3D",
+      buttonText: "နှိပ်ပါ",
     },
 
     gallery: {
@@ -469,12 +484,14 @@ export const weddingContent = {
       buttonText: "WhatsApp မှ စာပို့ရန်",
       footerDate: "၂၀၂၇ ခုနှစ် ဇန်နဝါရီလ ၂၉ ရက်",
       footerCredit: "JackNex Studio",
+      footerCreditPrefix: "မေတ္တာဖြင့် ဖန်တီးသူ",
     },
 
     ui: {
       languageToggleLabel: "ဘာသာစကား",
       switchToEnglish: "အင်္ဂလိပ်ဘာသာသို့ ပြောင်းရန်",
       switchToMyanmar: "မြန်မာဘာသာသို့ ပြောင်းရန်",
+      viewInvitation: "ဖိတ်ကြားလွှာ ကြည့်ရန်",
       viewDetails: "အသေးစိတ် ကြည့်ရန်",
       rsvpShort: "အကြောင်းပြန်ရန်",
       rsvpNow: "ယခု အကြောင်းပြန်ရန်",
@@ -482,6 +499,7 @@ export const weddingContent = {
       viewLocation: "နေရာကြည့်ရန်",
       venueAlt: "မင်္ဂလာပွဲ ကျင်းပမည့်နေရာ",
       venueDetailAlt: "ကျင်းပမည့်နေရာ အသေးစိတ်ပုံ",
+      weddingRingsAlt: "မင်္ဂလာလက်စွပ်များ",
       countdown: {
         days: "ရက်",
         hours: "နာရီ",

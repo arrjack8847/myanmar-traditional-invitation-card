@@ -10,6 +10,7 @@ import {
   Volume2,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { useLanguage } from "@/context/language";
 
 const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
@@ -41,16 +42,16 @@ const MUSIC = {
 const HERO = {
   minHeight: "100dvh",
 
-  paddingX: 18,
-  paddingTop: 12,
-  paddingBottom: 12,
+  paddingX: "clamp(14px, 4vw, 24px)",
+  paddingTop: "max(18px, env(safe-area-inset-top))",
+  paddingBottom: "max(18px, env(safe-area-inset-bottom))",
 
-  contentMaxWidth: 430,
+  contentMaxWidth: "min(100%, 430px)",
 
-  contentX: 0,
-  contentY: -25,
+  contentX: "0px",
+  contentY: "clamp(-30px, -4dvh, -12px)",
 
-  verticalAlign: "flex-start" as "flex-start" | "center",
+  verticalAlign: "center" as "flex-start" | "center",
 };
 
 /* BACKGROUND GLOW CONTROL */
@@ -72,14 +73,13 @@ const BACKGROUND = {
 const DIVIDER = {
   show: true,
 
-  x: 0,
-  y: 0,
+  x: "0px",
+  y: "0px",
   scale: 1,
-  width: 270,
-  maxWidthVW: 80,
+  width: "clamp(150px, 44vw, 270px)",
 
   opacity: 0.8,
-  marginBottom: -25,
+  marginBottom: -18,
 
   animationDelay: 0.04,
 };
@@ -88,13 +88,12 @@ const DIVIDER = {
 const TITLE = {
   show: true,
 
-  x: 0,
-  y: -40,
+  x: "0px",
+  y: "-22px",
   scale: 1,
-  width: 350,
-  maxWidthVW: 95,
+  width: "clamp(218px, 70vw, 350px)",
 
-  marginBottom: -50,
+  marginBottom: -28,
 
   animationDelay: 0.08,
 };
@@ -106,7 +105,7 @@ const PHOTO_CARD = {
   x: 0,
   y: 0,
 
-  width: "100%",
+  width: "min(100%, clamp(240px, calc(100dvh - 292px), 430px))",
   padding: 7,
 
   borderRadius: 28,
@@ -120,9 +119,10 @@ const PHOTO_CARD = {
 
 /* PHOTO IMAGE CONTROL */
 const PHOTO = {
-  height: "clamp(260px, 30dvh, 200px)",
-  objectFit: "cover" as "cover" | "contain",
-  objectPosition: "center top",
+  aspectRatio: "1242 / 1209",
+  height: "auto",
+  objectFit: "contain" as "cover" | "contain",
+  objectPosition: "center center",
 };
 
 /* CAPTION CONTROL */
@@ -143,12 +143,12 @@ const CAPTION = {
 const PLAYER = {
   show: true,
 
-  marginTop: 10,
+  marginTop: 8,
 
   timeFontSize: 11,
   progressMarginTop: 3,
 
-  controlsMarginTop: 8,
+  controlsMarginTop: 6,
   controlsGap: 18,
 
   smallIconSize: 14,
@@ -167,11 +167,9 @@ const PLAYER = {
 const CTA_BUTTON = {
   show: true,
 
-  text: "ဖိတ်စာကြည့်ရန်",
+  marginTop: 6,
 
-  marginTop: 8,
-
-  minHeight: 38,
+  minHeight: 36,
   paddingX: 18,
 
   fontSize: 12,
@@ -210,10 +208,13 @@ const formatTime = (time: number) => {
 };
 
 const MusicIntroHero = () => {
+  const { language, content } = useLanguage();
   const reduceMotion = useReducedMotion();
+  const isMyanmar = language === "my";
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isLooping, setIsLooping] = useState(MUSIC.loop);
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
 
@@ -321,6 +322,18 @@ const MusicIntroHero = () => {
     setCurrentTime(0);
   };
 
+  const toggleLoop = () => {
+    setIsLooping((current) => {
+      const next = !current;
+
+      if (audioRef.current) {
+        audioRef.current.loop = next;
+      }
+
+      return next;
+    });
+  };
+
   const skipForward = () => {
     const audio = audioRef.current;
     if (!audio) return;
@@ -332,7 +345,9 @@ const MusicIntroHero = () => {
   };
 
   const goToInvitation = () => {
-    const nextSection = document.getElementById("main-invitation");
+    const nextSection =
+      document.getElementById("main-invitation") ||
+      document.getElementById("top");
     nextSection?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
@@ -346,12 +361,17 @@ const MusicIntroHero = () => {
         minHeight: HERO.minHeight,
         paddingLeft: HERO.paddingX,
         paddingRight: HERO.paddingX,
-        paddingTop: `max(${HERO.paddingTop}px, env(safe-area-inset-top))`,
+        paddingTop: HERO.paddingTop,
         paddingBottom: HERO.paddingBottom,
         alignItems: HERO.verticalAlign,
       }}
     >
-      <audio ref={audioRef} src={MUSIC_SRC} preload="auto" autoPlay={MUSIC.autoPlay} />
+      <audio
+        ref={audioRef}
+        src={MUSIC_SRC}
+        preload="auto"
+        autoPlay={MUSIC.autoPlay}
+      />
 
       {/* Background glow */}
       {BACKGROUND.showGlow && (
@@ -390,7 +410,7 @@ const MusicIntroHero = () => {
         className="relative z-10 mx-auto flex w-full flex-col items-center text-center"
         style={{
           maxWidth: HERO.contentMaxWidth,
-          transform: `translate(${HERO.contentX}px, ${HERO.contentY}px)`,
+          transform: `translate(${HERO.contentX}, ${HERO.contentY})`,
         }}
         initial={{ opacity: 0, y: reduceMotion ? 0 : 18 }}
         animate={{ opacity: 1, y: 0 }}
@@ -417,17 +437,16 @@ const MusicIntroHero = () => {
               aria-hidden="true"
               className="h-auto object-contain"
               style={{
-                width: `min(${DIVIDER.width}px, ${DIVIDER.maxWidthVW}vw)`,
-                maxWidth: `${DIVIDER.maxWidthVW}vw`,
+                width: DIVIDER.width,
                 opacity: DIVIDER.opacity,
-                transform: `translate(${DIVIDER.x}px, ${DIVIDER.y}px) scale(${DIVIDER.scale})`,
+                transform: `translate(${DIVIDER.x}, ${DIVIDER.y}) scale(${DIVIDER.scale})`,
                 transformOrigin: "center",
               }}
             />
           </motion.div>
         )}
 
-        {/* Gold Myanmar title */}
+        {/* Language-aware title */}
         {TITLE.show && (
           <motion.div
             className="flex w-full justify-center overflow-visible"
@@ -442,17 +461,29 @@ const MusicIntroHero = () => {
               ease: EASE,
             }}
           >
-            <img
-              src={TITLE_IMAGE_SRC}
-              alt="ထိမ်းမြားမင်္ဂလာ ဖိတ်ကြားလွှာ"
-              className="h-auto object-contain"
-              style={{
-                width: `min(${TITLE.width}px, ${TITLE.maxWidthVW}vw)`,
-                maxWidth: `${TITLE.maxWidthVW}vw`,
-                transform: `translate(${TITLE.x}px, ${TITLE.y}px) scale(${TITLE.scale})`,
-                transformOrigin: "center",
-              }}
-            />
+            {isMyanmar ? (
+              <img
+                src={TITLE_IMAGE_SRC}
+                alt={content.intro.label}
+                className="h-auto object-contain"
+                style={{
+                  width: TITLE.width,
+                  transform: `translate(${TITLE.x}, ${TITLE.y}) scale(${TITLE.scale})`,
+                  transformOrigin: "center",
+                }}
+              />
+            ) : (
+              <h1
+                className="font-display font-semibold leading-[0.95] text-[#b78728] text-shadow-gold"
+                style={{
+                  fontSize: "clamp(2.5rem, 12vw, 4.6rem)",
+                  transform: `translate(${TITLE.x}, ${TITLE.y}) scale(${TITLE.scale})`,
+                  transformOrigin: "center",
+                }}
+              >
+                {content.intro.label}
+              </h1>
+            )}
           </motion.div>
         )}
 
@@ -481,9 +512,10 @@ const MusicIntroHero = () => {
             >
               <img
                 src={INTRO_IMAGE}
-                alt="Wedding couple"
-                className="w-full"
+                alt={content.couple.display}
+                className="block w-full"
                 style={{
+                  aspectRatio: PHOTO.aspectRatio,
                   height: PHOTO.height,
                   objectFit: PHOTO.objectFit,
                   objectPosition: PHOTO.objectPosition,
@@ -560,11 +592,18 @@ const MusicIntroHero = () => {
                 color: PLAYER.darkColor,
               }}
             >
-              <button type="button" className="transition active:scale-95">
+              <button
+                type="button"
+                onClick={toggleLoop}
+                aria-label={isLooping ? "Disable loop" : "Enable loop"}
+                aria-pressed={isLooping}
+                className="transition active:scale-95"
+              >
                 <Repeat
                   style={{
                     width: PLAYER.smallIconSize,
                     height: PLAYER.smallIconSize,
+                    opacity: isLooping ? 1 : 0.45,
                   }}
                 />
               </button>
@@ -572,6 +611,7 @@ const MusicIntroHero = () => {
               <button
                 type="button"
                 onClick={restartSong}
+                aria-label="Restart music"
                 className="transition active:scale-95"
               >
                 <SkipBack
@@ -618,6 +658,7 @@ const MusicIntroHero = () => {
               <button
                 type="button"
                 onClick={skipForward}
+                aria-label="Skip forward 10 seconds"
                 className="transition active:scale-95"
               >
                 <SkipForward
@@ -629,7 +670,12 @@ const MusicIntroHero = () => {
                 />
               </button>
 
-              <button type="button" className="transition active:scale-95">
+              <button
+                type="button"
+                disabled
+                aria-label="Shuffle unavailable"
+                className="cursor-not-allowed opacity-45"
+              >
                 <Shuffle
                   style={{
                     width: PLAYER.smallIconSize,
@@ -646,7 +692,9 @@ const MusicIntroHero = () => {
           <motion.button
             type="button"
             onClick={goToInvitation}
-            className="mx-auto inline-flex items-center justify-center gap-2 border font-myanmar font-bold shadow-[0_10px_22px_rgba(184,135,36,0.10)] backdrop-blur-md transition active:scale-[0.98]"
+            className={`mx-auto inline-flex items-center justify-center gap-2 border font-bold shadow-[0_10px_22px_rgba(184,135,36,0.10)] backdrop-blur-md transition active:scale-[0.98] ${
+              isMyanmar ? "font-myanmar" : "font-display tracking-[0.04em]"
+            }`}
             style={{
               marginTop: CTA_BUTTON.marginTop,
               minHeight: CTA_BUTTON.minHeight,
@@ -669,7 +717,7 @@ const MusicIntroHero = () => {
               ease: "easeInOut",
             }}
           >
-            {CTA_BUTTON.text}
+            {content.ui.viewInvitation}
             <ChevronDown className="h-4 w-4" />
           </motion.button>
         )}

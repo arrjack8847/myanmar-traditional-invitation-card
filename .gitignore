@@ -12,6 +12,7 @@ node_modules
 dist
 dist-ssr
 *.local
+*.tsbuildinfo
 
 # Local backups and downloaded extras
 current.zip

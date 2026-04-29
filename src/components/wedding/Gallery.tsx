@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
 import { useWeddingContent } from "@/context/language";
 
+const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
+
 const Gallery = () => {
   const { gallery, ui } = useWeddingContent();
+  const reduceMotion = useReducedMotion();
   const [selected, setSelected] = useState<number | null>(null);
   const photoCount = gallery.photos.length;
 
@@ -149,18 +152,20 @@ const Gallery = () => {
       <div className="mx-auto max-w-5xl text-center">
         <motion.p
           className="mb-4 text-[10px] uppercase tracking-[0.42em] text-gold/75 sm:text-[11px]"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
+          initial={{ opacity: 0, y: reduceMotion ? 0 : 8 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.65, ease: EASE }}
+          viewport={{ once: true, amount: 0.4 }}
         >
           {gallery.eyebrow}
         </motion.p>
 
         <motion.h2
           className="font-display text-4xl text-foreground sm:text-5xl md:text-6xl"
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: reduceMotion ? 0 : 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          transition={{ duration: 0.8, ease: EASE }}
+          viewport={{ once: true, amount: 0.4 }}
         >
           {gallery.title}
         </motion.h2>
@@ -169,8 +174,8 @@ const Gallery = () => {
           className="gold-line mx-auto mt-5 h-px w-24 sm:w-28"
           initial={{ scaleX: 0, opacity: 0 }}
           whileInView={{ scaleX: 1, opacity: 1 }}
-          transition={{ duration: 0.7, delay: 0.1 }}
-          viewport={{ once: true }}
+          transition={{ duration: 0.75, delay: 0.1, ease: EASE }}
+          viewport={{ once: true, amount: 0.7 }}
         />
 
         <div className="mt-14 grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3">
@@ -178,20 +183,31 @@ const Gallery = () => {
             <motion.button
               key={photo.src}
               type="button"
-              className="cursor-pointer overflow-hidden rounded-[24px] luxury-card text-left"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.08 }}
-              viewport={{ once: true }}
-              whileHover={{ scale: 1.02 }}
+              className="group cursor-pointer overflow-hidden rounded-[24px] luxury-card text-left will-change-transform"
+              initial={{
+                opacity: 0,
+                y: reduceMotion ? 0 : 22,
+                clipPath: "inset(10% 0% 10% 0% round 24px)",
+              }}
+              whileInView={{
+                opacity: 1,
+                y: 0,
+                clipPath: "inset(0% 0% 0% 0% round 24px)",
+              }}
+              transition={{ delay: i * 0.055, duration: 0.72, ease: EASE }}
+              viewport={{ once: true, amount: 0.18 }}
+              whileHover={reduceMotion ? undefined : { y: -4, scale: 1.015 }}
               whileTap={{ scale: 0.98 }}
               onClick={() => setSelected(i)}
               aria-label={`${ui.openGalleryItem} ${photo.label}`}
             >
-              <img
+              <motion.img
                 src={photo.src}
                 alt={photo.label}
-                className="aspect-[4/5] w-full object-cover transition duration-500"
+                className="aspect-[4/5] w-full object-cover transition duration-700 group-hover:scale-[1.035]"
+                initial={{ scale: reduceMotion ? 1 : 1.04 }}
+                whileInView={{ scale: 1 }}
+                transition={{ duration: 1.2, ease: EASE }}
               />
             </motion.button>
           ))}

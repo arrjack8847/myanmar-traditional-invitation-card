@@ -32,7 +32,7 @@ const Index = () => {
             transition={{ duration: 1.2, ease: "easeOut" }}
             className="relative w-full overflow-x-hidden"
           >
-            <MusicPlayer play={opened} />
+            <MusicPlayer />
 
             <FloatingPetals />
 
@@ -40,7 +40,9 @@ const Index = () => {
               <MouseGlow />
             </div>
 
-            <HeroSection />
+            <div id="main-invitation">
+              <HeroSection />
+            </div>
             <EventDetails />
             <VenueSection />
             <RSVPSection />

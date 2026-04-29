@@ -9,7 +9,7 @@ const ContactSection = () => {
   const reduceMotion = useReducedMotion();
 
   return (
-    <section className="relative flex min-h-screen items-center overflow-hidden px-4 py-16 sm:px-6 sm:py-24">
+    <section className="relative flex min-h-[100svh] items-center overflow-hidden px-4 py-8 sm:min-h-screen sm:px-6 sm:py-24">
       {/* BACKGROUND */}
       <div className="section-glow absolute inset-0" />
       <div className="absolute inset-0 bg-gradient-to-b from-background via-[#f8f1e8] to-background" />
@@ -18,10 +18,10 @@ const ContactSection = () => {
       <div className="absolute inset-x-0 bottom-0 h-52 bg-gradient-to-t from-white/45 to-transparent" />
 
       {/* DECOR */}
-      <div className="pointer-events-none absolute left-8 top-24 h-2 w-2 rounded-full bg-gold/45" />
-      <div className="pointer-events-none absolute right-10 top-36 h-3 w-3 rounded-full bg-gold/35" />
-      <div className="pointer-events-none absolute bottom-36 left-10 h-3 w-3 rounded-full bg-gold/25" />
-      <div className="pointer-events-none absolute bottom-28 right-8 h-2 w-2 rounded-full bg-gold/45" />
+      <div className="pointer-events-none absolute left-8 top-24 hidden h-2 w-2 rounded-full bg-gold/45 sm:block" />
+      <div className="pointer-events-none absolute right-10 top-36 hidden h-3 w-3 rounded-full bg-gold/35 sm:block" />
+      <div className="pointer-events-none absolute bottom-36 left-10 hidden h-3 w-3 rounded-full bg-gold/25 sm:block" />
+      <div className="pointer-events-none absolute bottom-28 right-8 hidden h-2 w-2 rounded-full bg-gold/45 sm:block" />
 
       <motion.div
         className="pointer-events-none absolute left-1/2 top-[18%] h-[260px] w-[260px] -translate-x-1/2 rounded-full bg-gold/10 blur-[90px] sm:h-[460px] sm:w-[460px]"
@@ -37,19 +37,19 @@ const ContactSection = () => {
         {/* HEADER */}
         <div className="mx-auto max-w-3xl text-center">
           <motion.div
-            className="mb-4 flex items-center justify-center gap-3 text-gold/75"
+            className="mb-2 flex items-center justify-center gap-2 text-gold/75 sm:mb-4 sm:gap-3"
             initial={{ opacity: 0, y: reduceMotion ? 0 : 8 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: EASE }}
             viewport={{ once: true, amount: 0.3 }}
           >
-            <div className="h-px w-10 bg-gold/35" />
-            <Sparkles className="h-4 w-4" />
-            <div className="h-px w-10 bg-gold/35" />
+            <div className="h-px w-8 bg-gold/35 sm:w-10" />
+            <Sparkles className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+            <div className="h-px w-8 bg-gold/35 sm:w-10" />
           </motion.div>
 
           <motion.p
-            className="mb-3 text-[9px] uppercase tracking-[0.38em] text-gold/80 sm:text-[11px] sm:tracking-[0.45em]"
+            className="mb-2 text-[8px] uppercase tracking-[0.32em] text-gold/80 sm:mb-3 sm:text-[11px] sm:tracking-[0.45em]"
             initial={{ opacity: 0, y: reduceMotion ? 0 : 8 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: EASE }}
@@ -59,7 +59,7 @@ const ContactSection = () => {
           </motion.p>
 
           <motion.h2
-            className="font-display text-[2.7rem] font-medium leading-[0.95] tracking-[0.01em] text-foreground sm:text-5xl md:text-6xl"
+            className="font-display text-[2.2rem] font-medium leading-[0.98] tracking-[0.01em] text-foreground sm:text-5xl md:text-6xl"
             initial={{ opacity: 0, y: reduceMotion ? 0 : 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.85, ease: EASE }}
@@ -69,7 +69,7 @@ const ContactSection = () => {
           </motion.h2>
 
           <motion.div
-            className="gold-line mx-auto mt-5 h-px w-24 sm:w-28"
+            className="gold-line mx-auto mt-4 h-px w-20 sm:mt-5 sm:w-28"
             initial={{ scaleX: 0, opacity: 0 }}
             whileInView={{ scaleX: 1, opacity: 1 }}
             transition={{ duration: 0.7, delay: 0.1, ease: EASE }}
@@ -77,7 +77,7 @@ const ContactSection = () => {
           />
 
           <motion.p
-            className="mx-auto mt-5 max-w-[22rem] text-[13.5px] leading-[1.8] text-muted-foreground sm:max-w-2xl sm:text-base sm:leading-8"
+            className="mx-auto mt-3 max-w-[19rem] text-[12.5px] leading-[1.55] text-muted-foreground sm:mt-5 sm:max-w-2xl sm:text-base sm:leading-8"
             initial={{ opacity: 0, y: reduceMotion ? 0 : 14 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.15, duration: 0.8, ease: EASE }}
@@ -88,14 +88,14 @@ const ContactSection = () => {
         </div>
 
         {/* CONTACT CARDS */}
-        <div className="mx-auto mt-10 grid max-w-4xl gap-4 sm:mt-12 md:grid-cols-2">
+        <div className="mx-auto mt-6 grid max-w-4xl gap-2.5 sm:mt-12 sm:gap-4 md:grid-cols-2">
           {contact.people.map((person, i) => (
             <motion.a
               key={person.name}
               href={`https://wa.me/${person.phone}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="luxury-card group relative overflow-hidden rounded-[30px] border border-white/50 bg-white/40 p-5 text-left shadow-[0_24px_65px_rgba(111,84,42,0.12)] backdrop-blur-xl sm:p-7"
+              className="luxury-card group relative overflow-hidden rounded-[20px] border border-white/50 bg-white/40 p-3.5 text-left shadow-[0_18px_45px_rgba(111,84,42,0.1)] backdrop-blur-xl sm:rounded-[30px] sm:p-7 sm:shadow-[0_24px_65px_rgba(111,84,42,0.12)]"
               initial={{ opacity: 0, y: reduceMotion ? 0 : 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.1, duration: 0.75, ease: EASE }}
@@ -103,38 +103,47 @@ const ContactSection = () => {
               whileHover={reduceMotion ? undefined : { y: -5 }}
             >
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(212,175,108,0.14),transparent_45%)]" />
-              <div className="absolute -right-12 -top-12 h-32 w-32 rounded-full bg-gold/10 blur-3xl transition-opacity duration-500 group-hover:opacity-100" />
+              <div className="absolute -right-12 -top-12 h-24 w-24 rounded-full bg-gold/10 blur-3xl transition-opacity duration-500 group-hover:opacity-100 sm:h-32 sm:w-32" />
 
-              <div className="relative z-10">
-                <div className="mb-6 flex items-center justify-between">
-                  <div className="flex h-14 w-14 items-center justify-center rounded-full bg-green-500/12 ring-1 ring-green-500/20">
-                    <MessageCircle className="h-6 w-6 text-green-600" />
+              <div className="relative z-10 sm:block">
+                <div className="flex items-center gap-4 sm:mb-6 sm:justify-between">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-green-500/12 ring-1 ring-green-500/20 sm:h-14 sm:w-14">
+                    <MessageCircle className="h-[18px] w-[18px] text-green-600 sm:h-6 sm:w-6" />
                   </div>
 
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full border border-gold/20 bg-background/50 text-gold transition duration-300 group-hover:bg-gold group-hover:text-white">
-                    <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5" />
+                  <div className="min-w-0 flex-1 sm:hidden">
+                    <p className="text-[8px] uppercase tracking-[0.24em] text-gold/80">
+                      {person.role}
+                    </p>
+                    <h3 className="mt-1 truncate font-display text-[1.35rem] leading-tight text-foreground">
+                      {person.name}
+                    </h3>
+                  </div>
+
+                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-gold/20 bg-background/50 text-gold transition duration-300 group-hover:bg-gold group-hover:text-white sm:h-10 sm:w-10">
+                    <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5 sm:h-4 sm:w-4" />
                   </div>
                 </div>
 
-                <p className="text-[9px] uppercase tracking-[0.34em] text-gold/80 sm:text-[10px]">
+                <p className="hidden text-[9px] uppercase tracking-[0.34em] text-gold/80 sm:block sm:text-[10px]">
                   {person.role}
                 </p>
 
-                <h3 className="mt-3 font-display text-[1.75rem] leading-tight text-foreground sm:text-3xl">
+                <h3 className="mt-3 hidden font-display text-[1.75rem] leading-tight text-foreground sm:block sm:text-3xl">
                   {person.name}
                 </h3>
 
-                <p className="mt-3 text-[13.5px] leading-7 text-muted-foreground sm:text-sm">
+                <p className="mt-3 hidden text-[12.5px] leading-5 text-muted-foreground sm:block sm:text-sm sm:leading-7">
                   {contact.ctaText}
                 </p>
 
-                <div className="mt-6 flex items-center gap-3">
+                <div className="mt-4 hidden items-center gap-3 sm:mt-6 sm:flex">
                   <span className="h-px w-12 bg-gold/35" />
                   <span className="h-1.5 w-1.5 rotate-45 bg-gold/70" />
                   <span className="h-px w-8 bg-gold/25" />
                 </div>
 
-                <p className="mt-6 text-[10px] font-medium uppercase tracking-[0.25em] text-foreground/80 sm:text-[11px]">
+                <p className="mt-2 text-[8.5px] font-medium uppercase tracking-[0.16em] text-foreground/80 sm:mt-6 sm:text-[11px] sm:tracking-[0.25em]">
                   {contact.buttonText}
                 </p>
               </div>
@@ -144,7 +153,7 @@ const ContactSection = () => {
 
         {/* FOOTER SIGNATURE */}
         <motion.div
-          className="mx-auto mt-12 max-w-2xl rounded-[32px] border border-gold/15 bg-white/35 px-5 py-8 text-center shadow-[0_20px_60px_rgba(111,84,42,0.08)] backdrop-blur-xl sm:mt-14 sm:px-8 sm:py-10"
+          className="mx-auto mt-6 max-w-2xl rounded-[22px] border border-gold/15 bg-white/35 px-5 py-4 text-center shadow-[0_16px_44px_rgba(111,84,42,0.07)] backdrop-blur-xl sm:mt-14 sm:rounded-[32px] sm:px-8 sm:py-10 sm:shadow-[0_20px_60px_rgba(111,84,42,0.08)]"
           initial={{ opacity: 0, y: reduceMotion ? 0 : 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2, ease: EASE }}
@@ -156,18 +165,18 @@ const ContactSection = () => {
             <div className="h-px w-10 bg-gold/30" />
           </div>
 
-          <p className="mt-5 font-display text-[2rem] leading-tight text-foreground sm:text-4xl">
+          <p className="mt-3 font-display text-[1.45rem] leading-tight text-foreground sm:mt-5 sm:text-4xl">
             {couple.display}
           </p>
 
-          <p className="mt-3 text-[10px] uppercase tracking-[0.28em] text-muted-foreground sm:text-xs">
+          <p className="mt-1.5 text-[8.5px] uppercase tracking-[0.18em] text-muted-foreground sm:mt-3 sm:text-xs sm:tracking-[0.28em]">
             {contact.footerDate}
           </p>
 
-          <div className="mx-auto mt-6 h-px w-20 bg-gradient-to-r from-transparent via-gold/60 to-transparent" />
+          <div className="mx-auto mt-3 h-px w-16 bg-gradient-to-r from-transparent via-gold/60 to-transparent sm:mt-6 sm:w-20" />
 
-          <p className="mt-6 text-[10px] tracking-[0.18em] text-muted-foreground/70 sm:text-xs">
-            Crafted with love by{" "}
+          <p className="mt-3 text-[8.5px] tracking-[0.1em] text-muted-foreground/70 sm:mt-6 sm:text-xs sm:tracking-[0.18em]">
+            {contact.footerCreditPrefix}{" "}
             <span className="text-gold/90">{contact.footerCredit}</span>
           </p>
         </motion.div>

@@ -14,7 +14,23 @@
 
 @font-face {
   font-family: 'YoeYar One';
-  src: url('fonts/YoeYar-One Bold.ttf') format('truetype');
+  src: url('/fonts/YoeYar-One Bold.ttf') format('truetype');
+  font-display: swap;
+  font-style: normal;
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: 'NotoSansMyanmarLocal';
+  src: url('/fonts/NotoSansMyanmar-Regular.ttf') format('truetype');
+  font-display: swap;
+  font-style: normal;
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'NotoSansMyanmarLocal';
+  src: url('/fonts/NotoSansMyanmar-Bold.ttf') format('truetype');
   font-display: swap;
   font-style: normal;
   font-weight: 700;
@@ -401,6 +417,35 @@
     filter: brightness(1.04);
   }
 
+  .premium-button-shine {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .premium-button-shine::after {
+    content: "";
+    position: absolute;
+    inset-block: -45%;
+    left: -55%;
+    z-index: 0;
+    width: 42%;
+    pointer-events: none;
+    opacity: 0.58;
+    transform: translateX(0) rotate(13deg);
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.62),
+      transparent
+    );
+    animation: premium-shine 4.2s ease-in-out infinite;
+  }
+
+  .premium-button-shine > * {
+    position: relative;
+    z-index: 1;
+  }
+
   .mm-outline-button {
     border: 1px solid rgba(184, 135, 36, 0.45);
     background: rgba(255, 255, 255, 0.45);
@@ -444,6 +489,25 @@
 
   .mm-floral-corners::after {
     right: -4rem;
+  }
+}
+
+@keyframes premium-shine {
+  0%,
+  58% {
+    transform: translateX(0) rotate(13deg);
+  }
+
+  86%,
+  100% {
+    transform: translateX(420%) rotate(13deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .premium-button-shine::after {
+    animation: none;
+    opacity: 0;
   }
 }
 

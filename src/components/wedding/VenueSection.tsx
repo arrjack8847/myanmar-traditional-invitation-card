@@ -1,17 +1,23 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { MapPin, Navigation, Sparkles } from "lucide-react";
-import { useWeddingContent } from "@/context/language";
+import { useLanguage } from "@/context/language";
 
 const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
 const CORNER_IMAGE = "/detail-corner.png";
 
 const Divider = () => (
-  <div className="mx-auto my-4 flex items-center justify-center gap-2 text-gold">
+  <motion.div
+    className="mx-auto my-4 flex origin-center items-center justify-center gap-2 text-gold"
+    initial={{ opacity: 0, scaleX: 0.72 }}
+    whileInView={{ opacity: 1, scaleX: 1 }}
+    transition={{ duration: 0.8, ease: EASE }}
+    viewport={{ once: true, amount: 0.6 }}
+  >
     <span className="h-px w-16 bg-gradient-to-r from-transparent via-gold/55 to-gold/75" />
     <span className="h-1.5 w-1.5 rotate-45 border border-gold/70" />
     <span className="h-px w-16 bg-gradient-to-l from-transparent via-gold/55 to-gold/75" />
-  </div>
+  </motion.div>
 );
 
 const CornerImage = ({
@@ -56,8 +62,12 @@ const CornerImage = ({
 };
 
 const VenueSection = () => {
-  const { venue, ui } = useWeddingContent();
+  const {
+    language,
+    content: { venue, ui },
+  } = useLanguage();
   const reduceMotion = useReducedMotion();
+  const isMyanmar = language === "my";
 
   const mainPhoto = venue.photos[0];
   const sidePhotos = venue.photos.slice(1, 3);
@@ -105,7 +115,11 @@ const VenueSection = () => {
             </motion.div>
 
             <motion.p
-              className="font-myanmar text-[13px] font-bold leading-relaxed text-[#b78728] sm:text-base"
+              className={`text-[13px] font-bold leading-relaxed text-[#b78728] sm:text-base ${
+                isMyanmar
+                  ? "font-myanmar"
+                  : "font-display uppercase tracking-[0.18em]"
+              }`}
               initial={{ opacity: 0, y: reduceMotion ? 0 : 10 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, ease: EASE }}
@@ -115,7 +129,11 @@ const VenueSection = () => {
             </motion.p>
 
             <motion.h2
-              className="mx-auto mt-2 max-w-[20rem] font-myanmar text-[2.65rem] font-bold leading-[1.08] text-[#3f2d1f] sm:max-w-none sm:text-[4rem]"
+              className={`mx-auto mt-2 max-w-[20rem] font-bold leading-[1.08] text-[#3f2d1f] sm:max-w-none ${
+                isMyanmar
+                  ? "font-myanmar text-[2.65rem] sm:text-[4rem]"
+                  : "font-display text-[2.75rem] sm:text-[4.25rem]"
+              }`}
               initial={{ opacity: 0, y: reduceMotion ? 0 : 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: EASE }}
@@ -127,7 +145,11 @@ const VenueSection = () => {
             <Divider />
 
             <motion.p
-              className="mx-auto max-w-[20rem] font-myanmar text-[13px] leading-[1.9] text-[#7a6034] sm:max-w-xl sm:text-base"
+              className={`mx-auto max-w-[20rem] text-[13px] text-[#7a6034] sm:max-w-xl sm:text-base ${
+                isMyanmar
+                  ? "font-myanmar leading-[1.9]"
+                  : "font-display leading-[1.75]"
+              }`}
               initial={{ opacity: 0, y: reduceMotion ? 0 : 12 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.05, duration: 0.75, ease: EASE }}
@@ -140,16 +162,28 @@ const VenueSection = () => {
             {mainPhoto && (
               <motion.div
                 className="mx-auto mt-9 overflow-hidden rounded-[28px] border border-gold/35 bg-white/55 p-2 shadow-[0_20px_60px_rgba(111,84,42,0.16)]"
-                initial={{ opacity: 0, y: reduceMotion ? 0 : 22 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.08, duration: 0.8, ease: EASE }}
+                initial={{
+                  opacity: 0,
+                  y: reduceMotion ? 0 : 22,
+                  clipPath: "inset(8% 0% 8% 0% round 28px)",
+                }}
+                whileInView={{
+                  opacity: 1,
+                  y: 0,
+                  clipPath: "inset(0% 0% 0% 0% round 28px)",
+                }}
+                transition={{ delay: 0.08, duration: 0.95, ease: EASE }}
                 viewport={{ once: true, amount: 0.25 }}
               >
                 <div className="overflow-hidden rounded-[22px]">
-                  <img
+                  <motion.img
                     src={mainPhoto}
                     alt={ui.venueAlt}
                     className="h-[330px] w-full object-cover sm:h-[460px]"
+                    initial={{ scale: reduceMotion ? 1 : 1.045 }}
+                    whileInView={{ scale: 1 }}
+                    transition={{ duration: 1.7, ease: EASE }}
+                    viewport={{ once: true, amount: 0.35 }}
                   />
                 </div>
               </motion.div>
@@ -161,7 +195,7 @@ const VenueSection = () => {
                 {sidePhotos.map((src, index) => (
                   <motion.div
                     key={src}
-                    className="overflow-hidden rounded-[22px] border border-gold/25 bg-white/50 p-1.5 shadow-[0_12px_34px_rgba(111,84,42,0.12)]"
+                    className="group overflow-hidden rounded-[22px] border border-gold/25 bg-white/50 p-1.5 shadow-[0_12px_34px_rgba(111,84,42,0.12)]"
                     initial={{ opacity: 0, y: reduceMotion ? 0 : 18 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{
@@ -170,12 +204,17 @@ const VenueSection = () => {
                       ease: EASE,
                     }}
                     viewport={{ once: true, amount: 0.25 }}
+                    whileHover={reduceMotion ? undefined : { y: -3 }}
                   >
                     <div className="overflow-hidden rounded-[17px]">
-                      <img
+                      <motion.img
                         src={src}
                         alt={ui.venueDetailAlt}
                         className="h-[150px] w-full object-cover sm:h-[220px]"
+                        initial={{ scale: reduceMotion ? 1 : 1.04 }}
+                        whileInView={{ scale: 1 }}
+                        whileHover={reduceMotion ? undefined : { scale: 1.035 }}
+                        transition={{ duration: 0.9, ease: EASE }}
                       />
                     </div>
                   </motion.div>
@@ -195,7 +234,9 @@ const VenueSection = () => {
                 href={venue.mapUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mm-gold-button inline-flex min-h-[54px] w-full items-center justify-center gap-3 rounded-2xl px-6 font-myanmar text-[15px] font-bold transition active:scale-[0.98] sm:w-auto sm:min-w-[260px]"
+                className={`mm-gold-button premium-button-shine inline-flex min-h-[54px] w-full items-center justify-center gap-3 overflow-hidden rounded-2xl px-6 text-[15px] font-bold transition active:scale-[0.98] sm:w-auto sm:min-w-[260px] ${
+                  isMyanmar ? "font-myanmar" : "font-display tracking-[0.04em]"
+                }`}
               >
                 <Navigation className="h-5 w-5" />
                 {ui.viewLocation}

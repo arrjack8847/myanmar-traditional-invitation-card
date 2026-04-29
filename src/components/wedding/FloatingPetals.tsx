@@ -15,14 +15,28 @@ const FloatingPetals = () => {
   const [petals, setPetals] = useState<Petal[]>([]);
 
   useEffect(() => {
-    const generated: Petal[] = Array.from({ length: 15 }, (_, i) => ({
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+
+    if (prefersReducedMotion) {
+      setPetals([]);
+      return;
+    }
+
+    const isMobile = window.matchMedia("(max-width: 640px)").matches;
+    const count = isMobile ? 7 : 14;
+
+    const generated: Petal[] = Array.from({ length: count }, (_, i) => ({
       id: i,
       x: 6 + Math.random() * 88,
       delay: Math.random() * 8,
-      duration: 8 + Math.random() * 12,
-      size: 8 + Math.random() * 16,
-      opacity: 0.15 + Math.random() * 0.25,
-      drift: -28 + Math.random() * 56,
+      duration: isMobile ? 15 + Math.random() * 10 : 9 + Math.random() * 12,
+      size: isMobile ? 7 + Math.random() * 10 : 8 + Math.random() * 16,
+      opacity: isMobile
+        ? 0.12 + Math.random() * 0.18
+        : 0.15 + Math.random() * 0.25,
+      drift: isMobile ? -18 + Math.random() * 36 : -28 + Math.random() * 56,
     }));
     setPetals(generated);
   }, []);
