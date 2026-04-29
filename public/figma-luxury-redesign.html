@@ -1,0 +1,974 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Luxury Wedding Invitation Redesign</title>
+    <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600&display=swap");
+
+      :root {
+        --ink: #211816;
+        --deep: #17120f;
+        --ivory: #fffaf0;
+        --paper: #f7efe3;
+        --champagne: #e9d6ad;
+        --gold: #b98d3d;
+        --gold-soft: #ddc17a;
+        --wine: #5f2538;
+        --sage: #64725c;
+        --mist: #efe8dd;
+        --line: rgba(185, 141, 61, 0.34);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background:
+          linear-gradient(90deg, rgba(185, 141, 61, 0.08) 1px, transparent 1px),
+          linear-gradient(180deg, rgba(185, 141, 61, 0.08) 1px, transparent 1px),
+          #ece1d2;
+        background-size: 48px 48px;
+        color: var(--ink);
+        font-family: Inter, sans-serif;
+      }
+
+      .board {
+        width: 2560px;
+        min-height: 2520px;
+        padding: 88px;
+      }
+
+      .cover {
+        display: grid;
+        grid-template-columns: 1fr 520px;
+        gap: 56px;
+        width: 100%;
+        min-height: 460px;
+        padding: 64px;
+        border: 1px solid rgba(185, 141, 61, 0.22);
+        background:
+          linear-gradient(135deg, rgba(255, 250, 240, 0.92), rgba(239, 229, 214, 0.84)),
+          url("/hero-couple.jpg") center/cover;
+        box-shadow: 0 28px 90px rgba(45, 31, 22, 0.16);
+      }
+
+      .cover h1,
+      .title,
+      .display,
+      .names,
+      .section-title,
+      .card-title,
+      .number,
+      .footer-names {
+        font-family: "Playfair Display", serif;
+      }
+
+      .eyebrow {
+        margin: 0 0 18px;
+        color: var(--gold);
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+      }
+
+      .cover h1 {
+        max-width: 900px;
+        margin: 0;
+        font-size: 96px;
+        line-height: 0.96;
+        font-weight: 600;
+        color: var(--deep);
+      }
+
+      .cover p {
+        max-width: 680px;
+        margin: 28px 0 0;
+        color: rgba(33, 24, 22, 0.72);
+        font-size: 22px;
+        line-height: 1.7;
+      }
+
+      .palette {
+        align-self: end;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+      }
+
+      .swatch {
+        min-height: 96px;
+        padding: 14px;
+        border: 1px solid rgba(255, 255, 255, 0.34);
+        color: #fff;
+        font-size: 11px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+      }
+
+      .screens {
+        display: grid;
+        grid-template-columns: repeat(5, 390px);
+        gap: 56px;
+        margin-top: 72px;
+        align-items: start;
+      }
+
+      .frame-wrap {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .frame-label {
+        color: rgba(33, 24, 22, 0.58);
+        font-size: 13px;
+        font-weight: 600;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+      }
+
+      .phone {
+        position: relative;
+        width: 390px;
+        height: 844px;
+        overflow: hidden;
+        border: 10px solid #15110f;
+        border-radius: 38px;
+        background: var(--paper);
+        box-shadow: 0 34px 80px rgba(42, 29, 22, 0.2);
+      }
+
+      .phone::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: 12px;
+        width: 108px;
+        height: 20px;
+        transform: translateX(-50%);
+        border-radius: 20px;
+        background: #15110f;
+        z-index: 20;
+      }
+
+      .screen {
+        position: absolute;
+        inset: 0;
+        padding: 38px 24px 28px;
+      }
+
+      .image-bg {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .shade {
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(180deg, rgba(12, 8, 6, 0.34), rgba(12, 8, 6, 0.12) 34%, rgba(12, 8, 6, 0.7)),
+          radial-gradient(circle at 50% 42%, rgba(233, 214, 173, 0.18), transparent 38%);
+      }
+
+      .topbar {
+        position: relative;
+        z-index: 3;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: rgba(255, 250, 240, 0.76);
+        font-size: 10px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+      }
+
+      .music {
+        display: grid;
+        place-items: center;
+        width: 38px;
+        height: 38px;
+        border-radius: 999px;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        background: rgba(0, 0, 0, 0.22);
+        color: var(--champagne);
+      }
+
+      .hero-content {
+        position: relative;
+        z-index: 3;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        min-height: 690px;
+        text-align: center;
+        color: #fffaf0;
+      }
+
+      .rule {
+        width: 96px;
+        height: 1px;
+        margin: 0 auto 22px;
+        background: linear-gradient(90deg, transparent, var(--gold-soft), transparent);
+      }
+
+      .names {
+        margin: 0;
+        font-size: 46px;
+        line-height: 0.98;
+        font-weight: 600;
+      }
+
+      .amp {
+        margin: 12px 0;
+        color: var(--gold-soft);
+        font-family: "Playfair Display", serif;
+        font-size: 30px;
+      }
+
+      .body-copy {
+        margin: 18px auto 0;
+        color: rgba(255, 250, 240, 0.78);
+        font-size: 13px;
+        line-height: 1.75;
+      }
+
+      .cta-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin-top: 28px;
+      }
+
+      .button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 44px;
+        border-radius: 999px;
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+      }
+
+      .button.gold {
+        background: var(--gold);
+        color: #fffaf0;
+      }
+
+      .button.ghost {
+        border: 1px solid rgba(255, 255, 255, 0.26);
+        background: rgba(255, 255, 255, 0.08);
+        color: #fffaf0;
+      }
+
+      .countdown {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 7px;
+        margin-top: 24px;
+      }
+
+      .count {
+        min-height: 74px;
+        padding: 10px 4px;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        background: rgba(255, 250, 240, 0.09);
+        backdrop-filter: blur(8px);
+      }
+
+      .count strong {
+        display: block;
+        font-family: "Playfair Display", serif;
+        font-size: 23px;
+      }
+
+      .count span {
+        color: var(--gold-soft);
+        font-size: 8px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .paper-screen {
+        background:
+          linear-gradient(180deg, rgba(255, 250, 240, 0.96), rgba(241, 230, 212, 0.96)),
+          radial-gradient(circle at top, rgba(185, 141, 61, 0.12), transparent 42%);
+      }
+
+      .paper-screen::before {
+        content: "";
+        position: absolute;
+        inset: 18px;
+        border: 1px solid rgba(185, 141, 61, 0.22);
+        pointer-events: none;
+      }
+
+      .dark-screen {
+        background:
+          linear-gradient(180deg, rgba(24, 18, 15, 0.92), rgba(39, 29, 24, 0.98)),
+          #1d1612;
+      }
+
+      .section-head {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+      }
+
+      .section-title {
+        margin: 0;
+        color: var(--ink);
+        font-size: 38px;
+        line-height: 1.08;
+        font-weight: 600;
+      }
+
+      .section-copy {
+        margin: 18px auto 0;
+        max-width: 290px;
+        color: rgba(33, 24, 22, 0.62);
+        font-size: 12px;
+        line-height: 1.7;
+        text-align: center;
+      }
+
+      .detail-list {
+        position: relative;
+        z-index: 2;
+        display: grid;
+        gap: 10px;
+        margin-top: 34px;
+      }
+
+      .detail-card,
+      .form-card,
+      .contact-card {
+        border: 1px solid rgba(185, 141, 61, 0.24);
+        border-radius: 8px;
+        background: rgba(255, 252, 246, 0.8);
+        box-shadow: 0 16px 42px rgba(45, 31, 22, 0.08);
+      }
+
+      .detail-card {
+        display: grid;
+        grid-template-columns: 46px 1fr;
+        gap: 13px;
+        min-height: 106px;
+        padding: 16px;
+      }
+
+      .icon {
+        display: grid;
+        place-items: center;
+        width: 42px;
+        height: 42px;
+        border-radius: 999px;
+        border: 1px solid rgba(185, 141, 61, 0.28);
+        color: var(--gold);
+        background: rgba(185, 141, 61, 0.08);
+      }
+
+      .card-label {
+        margin: 0 0 6px;
+        color: var(--gold);
+        font-size: 9px;
+        font-weight: 600;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+      }
+
+      .card-title {
+        margin: 0;
+        color: var(--ink);
+        font-size: 20px;
+        line-height: 1.35;
+      }
+
+      .venue-photos {
+        display: grid;
+        gap: 12px;
+        margin-top: 32px;
+      }
+
+      .venue-main {
+        height: 240px;
+        border-radius: 8px;
+        object-fit: cover;
+        width: 100%;
+        box-shadow: 0 18px 40px rgba(45, 31, 22, 0.14);
+      }
+
+      .venue-strip {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+
+      .venue-strip img {
+        width: 100%;
+        height: 140px;
+        object-fit: cover;
+        border-radius: 8px;
+      }
+
+      .form-card {
+        position: relative;
+        z-index: 2;
+        margin-top: 30px;
+        padding: 20px;
+      }
+
+      .field {
+        margin-bottom: 16px;
+      }
+
+      .field label {
+        display: block;
+        margin-bottom: 8px;
+        color: rgba(33, 24, 22, 0.64);
+        font-size: 12px;
+      }
+
+      .input {
+        width: 100%;
+        min-height: 46px;
+        padding: 13px 14px;
+        border: 1px solid rgba(33, 24, 22, 0.12);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.66);
+        color: rgba(33, 24, 22, 0.48);
+        font-size: 12px;
+      }
+
+      .segmented {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+      }
+
+      .segment {
+        min-height: 42px;
+        border-radius: 8px;
+        border: 1px solid rgba(185, 141, 61, 0.24);
+        background: rgba(255, 255, 255, 0.58);
+        color: rgba(33, 24, 22, 0.62);
+        font-size: 11px;
+        font-weight: 600;
+      }
+
+      .segment.active {
+        border-color: var(--gold);
+        background: var(--gold);
+        color: #fffaf0;
+      }
+
+      .story-text {
+        position: absolute;
+        left: 24px;
+        right: 24px;
+        bottom: 70px;
+        z-index: 3;
+        color: #fffaf0;
+        text-align: center;
+      }
+
+      .story-text.left {
+        text-align: left;
+      }
+
+      .story-text .section-title {
+        color: #fffaf0;
+      }
+
+      .story-text p:not(.eyebrow) {
+        color: rgba(255, 250, 240, 0.78);
+        font-size: 14px;
+        line-height: 1.75;
+      }
+
+      .gallery-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin-top: 34px;
+      }
+
+      .gallery-tile {
+        position: relative;
+        overflow: hidden;
+        height: 184px;
+        border-radius: 8px;
+        background: #ddd;
+      }
+
+      .gallery-tile img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .gallery-tile.wide {
+        grid-column: span 2;
+        height: 210px;
+      }
+
+      .gallery-tile span {
+        position: absolute;
+        left: 12px;
+        right: 12px;
+        bottom: 12px;
+        color: #fffaf0;
+        font-family: "Playfair Display", serif;
+        font-size: 17px;
+        text-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+      }
+
+      .contact-card {
+        display: grid;
+        grid-template-columns: 48px 1fr;
+        gap: 14px;
+        margin-top: 16px;
+        padding: 18px;
+        text-align: left;
+      }
+
+      .footer-names {
+        margin: 64px 0 0;
+        color: var(--ink);
+        font-size: 30px;
+        line-height: 1.1;
+        text-align: center;
+      }
+
+      .notfound {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        height: 100%;
+        padding: 70px 28px;
+        text-align: center;
+      }
+
+      .number {
+        color: var(--gold);
+        font-size: 96px;
+        line-height: 0.9;
+      }
+
+      .opening-center {
+        position: relative;
+        z-index: 4;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        text-align: center;
+      }
+
+      .envelope {
+        position: relative;
+        width: 290px;
+        height: 260px;
+      }
+
+      .envelope img {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 280px;
+        transform: translate(-50%, -50%);
+        filter: drop-shadow(0 24px 36px rgba(45, 31, 22, 0.18));
+      }
+
+      .invitation-card {
+        position: absolute;
+        left: 50%;
+        top: 18px;
+        width: 190px;
+        height: 250px;
+        transform: translateX(-50%);
+        padding: 28px 14px;
+        border: 1px solid rgba(185, 141, 61, 0.34);
+        border-radius: 8px;
+        background: linear-gradient(180deg, #fffdf8, #f4eadb);
+        box-shadow: 0 18px 42px rgba(45, 31, 22, 0.16);
+      }
+
+      .invitation-card .display {
+        margin: 18px 0 0;
+        font-size: 22px;
+        line-height: 1.04;
+      }
+
+      .desktop-row {
+        display: grid;
+        grid-template-columns: 1120px 1fr;
+        gap: 56px;
+        margin-top: 88px;
+      }
+
+      .desktop-frame {
+        position: relative;
+        width: 1120px;
+        height: 680px;
+        overflow: hidden;
+        border: 1px solid rgba(33, 24, 22, 0.16);
+        background: #fffaf0;
+        box-shadow: 0 34px 90px rgba(42, 29, 22, 0.16);
+      }
+
+      .desktop-frame .image-bg {
+        width: 56%;
+      }
+
+      .desktop-panel {
+        position: absolute;
+        left: 52%;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 72px;
+        background: linear-gradient(180deg, #fffaf0, #f0e2ce);
+      }
+
+      .desktop-panel h2 {
+        margin: 0;
+        font-family: "Playfair Display", serif;
+        font-size: 70px;
+        line-height: 0.98;
+      }
+
+      .desktop-notes {
+        padding: 44px;
+        border: 1px solid rgba(185, 141, 61, 0.22);
+        background: rgba(255, 250, 240, 0.72);
+      }
+
+      .desktop-notes h3 {
+        margin: 0 0 22px;
+        font-family: "Playfair Display", serif;
+        font-size: 42px;
+      }
+
+      .desktop-notes p {
+        margin: 0 0 16px;
+        color: rgba(33, 24, 22, 0.68);
+        font-size: 16px;
+        line-height: 1.7;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="board">
+      <section class="cover">
+        <div>
+          <p class="eyebrow">Luxury mobile-first redesign</p>
+          <h1>Myo Myat Khine & Than Htay Hlaing</h1>
+          <p>
+            A refined wedding invitation system with cinematic opening moments,
+            editorial story screens, elevated RSVP controls, and quiet luxury
+            details designed first for a 390 x 844 mobile viewport.
+          </p>
+        </div>
+        <div class="palette">
+          <div class="swatch" style="background:#17120f">Noir</div>
+          <div class="swatch" style="background:#fffaf0;color:#211816">Ivory</div>
+          <div class="swatch" style="background:#b98d3d">Antique Gold</div>
+          <div class="swatch" style="background:#5f2538">Wine</div>
+          <div class="swatch" style="background:#64725c">Sage</div>
+          <div class="swatch" style="background:#e9d6ad;color:#211816">Champagne</div>
+          <div class="swatch" style="background:#211816">Ink</div>
+          <div class="swatch" style="background:#efe8dd;color:#211816">Mist</div>
+        </div>
+      </section>
+
+      <section class="screens">
+        <div class="frame-wrap">
+          <div class="frame-label">01 Opening</div>
+          <div class="phone">
+            <div class="screen paper-screen">
+              <div class="opening-center">
+                <p class="eyebrow">Wedding Invitation</p>
+                <div class="envelope">
+                  <div class="invitation-card">
+                    <div class="rule"></div>
+                    <p class="display">Myo Myat Khine<br />&<br />Than Htay Hlaing</p>
+                    <p class="card-label" style="margin-top:18px">29 January 2027</p>
+                  </div>
+                  <img src="/Envelope Closed.png" alt="Closed envelope" />
+                </div>
+                <p class="section-copy">A sealed invitation with soft gold focus, refined paper texture, and a clear tap action.</p>
+                <div class="button gold" style="width:180px;margin-top:22px">Tap to Open</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="frame-wrap">
+          <div class="frame-label">02 Hero</div>
+          <div class="phone">
+            <img class="image-bg" src="/hero-couple.jpg" alt="Couple hero" />
+            <div class="shade"></div>
+            <div class="screen">
+              <div class="topbar">
+                <span>29 Jan 2027</span>
+                <span class="music">Vol</span>
+              </div>
+              <div class="hero-content">
+                <p class="eyebrow" style="color:#ddc17a">Together with their families</p>
+                <div class="rule"></div>
+                <h2 class="names">Myo Myat Khine</h2>
+                <div class="amp">&</div>
+                <h2 class="names">Than Htay Hlaing</h2>
+                <p class="body-copy">A celebration of love, devotion, and the beautiful beginning of forever.</p>
+                <div class="cta-row">
+                  <div class="button gold">Details</div>
+                  <div class="button ghost">RSVP</div>
+                </div>
+                <div class="countdown">
+                  <div class="count"><strong>280</strong><span>Days</span></div>
+                  <div class="count"><strong>10</strong><span>Hours</span></div>
+                  <div class="count"><strong>24</strong><span>Min</span></div>
+                  <div class="count"><strong>08</strong><span>Sec</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="frame-wrap">
+          <div class="frame-label">03 Details</div>
+          <div class="phone">
+            <div class="screen paper-screen">
+              <div class="section-head">
+                <p class="eyebrow">Join Us</p>
+                <h2 class="section-title">Wedding Details</h2>
+                <p class="section-copy">Everything guests need, arranged for quick mobile scanning.</p>
+              </div>
+              <div class="detail-list">
+                <div class="detail-card">
+                  <div class="icon">Cal</div>
+                  <div><p class="card-label">The Date</p><p class="card-title">Friday, 29 January 2027</p></div>
+                </div>
+                <div class="detail-card">
+                  <div class="icon">Time</div>
+                  <div><p class="card-label">The Time</p><p class="card-title">Signing Ceremony - 10:00 AM<br />Wedding Celebration - 12:00 PM</p></div>
+                </div>
+                <div class="detail-card">
+                  <div class="icon">Map</div>
+                  <div><p class="card-label">The Venue</p><p class="card-title">Arian<br />ShuKhinTha St, Sittwe</p></div>
+                </div>
+                <div class="detail-card">
+                  <div class="icon">Call</div>
+                  <div><p class="card-label">Contact</p><p class="card-title">+95 9517001</p></div>
+                </div>
+              </div>
+              <div class="button gold" style="margin-top:20px">Open Maps</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="frame-wrap">
+          <div class="frame-label">04 Venue</div>
+          <div class="phone">
+            <div class="screen paper-screen">
+              <div class="section-head">
+                <p class="eyebrow">The Venue</p>
+                <h2 class="section-title">Arian, Sittwe</h2>
+                <p class="section-copy">A warm venue page led by photography, then one clear map action.</p>
+              </div>
+              <div class="venue-photos">
+                <img class="venue-main" src="/venue-3.jpg" alt="Venue main" />
+                <div class="venue-strip">
+                  <img src="/venue-1.jpg" alt="Venue detail" />
+                  <img src="/venue-2.jpg" alt="Venue detail" />
+                </div>
+              </div>
+              <div class="detail-card" style="grid-template-columns:46px 1fr;margin-top:18px">
+                <div class="icon">Map</div>
+                <div><p class="card-label">Location</p><p class="card-title">Arian, ShuKhinTha St, Sittwe, Myanmar</p></div>
+              </div>
+              <div class="button gold" style="margin-top:20px">View Location</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="frame-wrap">
+          <div class="frame-label">05 RSVP</div>
+          <div class="phone">
+            <div class="screen paper-screen">
+              <div class="section-head">
+                <p class="eyebrow">Be Our Guest</p>
+                <h2 class="section-title">RSVP</h2>
+                <p class="section-copy">A ceremonial form with familiar controls and generous tap targets.</p>
+              </div>
+              <div class="form-card">
+                <div class="field">
+                  <label>Your Name</label>
+                  <div class="input">Enter your full name</div>
+                </div>
+                <div class="field">
+                  <label>Will you be joining us?</label>
+                  <div class="segmented">
+                    <div class="segment active">Joyfully Accept</div>
+                    <div class="segment">Decline</div>
+                  </div>
+                </div>
+                <div class="field">
+                  <label>Number of Guests</label>
+                  <div class="input">1</div>
+                </div>
+                <div class="field">
+                  <label>A message for us</label>
+                  <div class="input" style="min-height:116px">Leave your wishes for the couple...</div>
+                </div>
+                <div class="button gold">Send Response</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="frame-wrap">
+          <div class="frame-label">06 Story 1</div>
+          <div class="phone">
+            <img class="image-bg" src="/story-1.jpg" alt="Story beginning" />
+            <div class="shade"></div>
+            <div class="story-text">
+              <p class="eyebrow" style="color:#ddc17a">Chapter One</p>
+              <h2 class="section-title">The Beginning</h2>
+              <p>From a simple hello, everything changed. A moment that quietly started a lifetime together.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="frame-wrap">
+          <div class="frame-label">07 Story 2</div>
+          <div class="phone">
+            <img class="image-bg" src="/story-2.jpg" alt="Story journey" />
+            <div class="shade" style="background:linear-gradient(90deg,rgba(0,0,0,.72),rgba(0,0,0,.16)),linear-gradient(180deg,transparent,rgba(0,0,0,.72))"></div>
+            <div class="story-text left">
+              <p class="eyebrow" style="color:#ddc17a">Chapter Two</p>
+              <h2 class="section-title">Our Journey</h2>
+              <p>Through every laugh, every challenge, and every dream, we chose each other again and again.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="frame-wrap">
+          <div class="frame-label">08 Story 3</div>
+          <div class="phone">
+            <img class="image-bg" src="/story-3.jpg" alt="Story forever" />
+            <div class="shade"></div>
+            <div class="story-text">
+              <p class="eyebrow" style="color:#ddc17a">Final Chapter</p>
+              <h2 class="section-title">Forever Starts Here</h2>
+              <p>Now, we begin the most beautiful chapter of our lives, and invite you to be part of it.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="frame-wrap">
+          <div class="frame-label">09 Gallery</div>
+          <div class="phone">
+            <div class="screen paper-screen">
+              <div class="section-head">
+                <p class="eyebrow">Our Moments</p>
+                <h2 class="section-title">Gallery</h2>
+                <p class="section-copy">Editorial image rhythm for faster browsing and more romance on small screens.</p>
+              </div>
+              <div class="gallery-grid">
+                <div class="gallery-tile wide"><img src="/gallery-1.jpg" alt="Gallery" /><span>A Beautiful Beginning</span></div>
+                <div class="gallery-tile"><img src="/gallery-2.jpg" alt="Gallery" /></div>
+                <div class="gallery-tile"><img src="/gallery-3.jpg" alt="Gallery" /></div>
+                <div class="gallery-tile"><img src="/gallery-4.jpg" alt="Gallery" /></div>
+                <div class="gallery-tile"><img src="/gallery-5.jpg" alt="Gallery" /></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="frame-wrap">
+          <div class="frame-label">10 Contact</div>
+          <div class="phone">
+            <div class="screen paper-screen">
+              <div class="section-head">
+                <p class="eyebrow">Reach Out</p>
+                <h2 class="section-title">With Love, Contact Us</h2>
+                <p class="section-copy">Warm contact cards for WhatsApp and a soft closing signature.</p>
+              </div>
+              <div class="contact-card">
+                <div class="icon">Msg</div>
+                <div><p class="card-label">The Bride</p><p class="card-title">Myo Myat Khine</p><p class="section-copy" style="text-align:left;margin-top:6px">Message on WhatsApp</p></div>
+              </div>
+              <div class="contact-card">
+                <div class="icon">Msg</div>
+                <div><p class="card-label">The Groom</p><p class="card-title">Than Htay Hlaing</p><p class="section-copy" style="text-align:left;margin-top:6px">Message on WhatsApp</p></div>
+              </div>
+              <p class="footer-names">Myo Myat Khine<br />&<br />Than Htay Hlaing</p>
+              <p class="card-label" style="text-align:center;margin-top:18px">29 January 2027</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="frame-wrap">
+          <div class="frame-label">11 Not Found</div>
+          <div class="phone">
+            <div class="screen paper-screen">
+              <div class="notfound">
+                <p class="eyebrow">Invitation page</p>
+                <div class="number">404</div>
+                <h2 class="section-title">This page slipped away</h2>
+                <p class="section-copy">
+                  Keep the fallback page graceful and on-brand, with one clear path back to the invitation.
+                </p>
+                <div class="button gold" style="margin-top:30px">Return Home</div>
+                <div class="rule" style="margin-top:44px"></div>
+                <p class="footer-names" style="margin-top:0;font-size:26px">Myo Myat Khine<br />&<br />Than Htay Hlaing</p>
+                <p class="card-label" style="text-align:center;margin-top:18px">29 January 2027</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="desktop-row">
+        <div class="desktop-frame">
+          <img class="image-bg" src="/hero-couple.jpg" alt="Desktop hero" />
+          <div class="desktop-panel">
+            <p class="eyebrow">Desktop companion</p>
+            <h2>Myo Myat Khine & Than Htay Hlaing</h2>
+            <p style="font-size:19px;line-height:1.7;color:rgba(33,24,22,.68)">
+              Desktop keeps the same luxury direction while allowing the couple image,
+              RSVP action, and event detail navigation to sit above the fold.
+            </p>
+            <div class="cta-row" style="width:320px">
+              <div class="button gold">View Details</div>
+              <div class="button ghost" style="color:#211816;border-color:rgba(33,24,22,.18)">RSVP</div>
+            </div>
+          </div>
+        </div>
+        <div class="desktop-notes">
+          <h3>Mobile Priority Notes</h3>
+          <p>Use 44px minimum tap targets for RSVP, audio, gallery, and map actions.</p>
+          <p>Keep names large and image-led; supporting copy stays short so mobile screens feel ceremonial, not crowded.</p>
+          <p>Luxury direction: antique gold accents, ivory paper, deep noir overlays, restrained wine and sage accents.</p>
+          <p>Cards stay crisp with 8px radius; the phone shell is the only highly rounded surface.</p>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
