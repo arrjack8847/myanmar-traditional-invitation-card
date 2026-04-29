@@ -3,7 +3,6 @@ import {
   CalendarDays,
   Clock3,
   MapPin,
-  Navigation,
   Sparkles,
 } from "lucide-react";
 import type { ReactNode } from "react";
@@ -262,22 +261,6 @@ const ClickHereButton = ({
           }}
         />
       )}
-
-      <motion.span
-        className="relative z-10 inline-flex items-center"
-        animate={reduceMotion ? {} : { x: [0, 4, 0] }}
-        transition={
-          reduceMotion
-            ? {}
-            : {
-                duration: 0.9,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }
-        }
-      >
-        <Navigation className="h-4 w-4" />
-      </motion.span>
 
       <span className="relative z-10">
         {isMyanmar ? "နှိပ်ပါ" : "Click Here"}
