@@ -30,3 +30,5 @@ public/Git push and edit steps.html
 *.njsproj
 *.sln
 *.sw?
+
+.vercel
