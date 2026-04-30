@@ -25,7 +25,7 @@ const Index = () => {
 
   return (
     <>
-      <LanguageToggle />
+      {opened && <LanguageToggle />}
 
       <AnimatePresence mode="wait">
         {!opened ? (

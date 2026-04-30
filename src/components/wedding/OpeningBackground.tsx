@@ -15,9 +15,9 @@ const BG = {
 
   videoStyle: {
     scale: 1.01,
-    brightness: 1.02,
-    contrast: 1.04,
-    saturate: 1.03,
+    brightness: 0.96,
+    contrast: 1.08,
+    saturate: 1.08,
   },
 
   blur: {
@@ -25,22 +25,22 @@ const BG = {
   },
 
   overlay: {
-    opacity: 0.16,
+    opacity: 0.06,
   },
 
   lightWash: {
-    opacity: 0.08,
+    opacity: 0.02,
   },
 
   centerGlow: {
-    opacity: 0.34,
+    opacity: 0.18,
   },
 
   glow: {
     sizeMobile: 360,
     sizeDesktop: 680,
-    opacityMin: 0.22,
-    opacityMax: 0.38,
+    opacityMin: 0.12,
+    opacityMax: 0.22,
   },
 
   floralFrame: {
@@ -51,7 +51,7 @@ const BG = {
     opacity: 0.72,
 
     // ✅ when card becomes fullscreen
-    opacityFullscreen: 0.05,
+    opacityFullscreen: 0.2,
 
     // ✅ when video transition starts
     opacityTransition: 0,
@@ -71,7 +71,7 @@ const BG = {
   },
 
   transitionOverlay: {
-    opacityFullscreen: 0.5,
+    opacityFullscreen: 0.1,
     opacityTransition: 0.88,
   },
 };
@@ -233,7 +233,7 @@ const OpeningBackground = ({ isFullscreen, isTransitioning }: Props) => {
           transition={{ duration: 0.55, ease: EASE }}
           style={{
             background:
-              "linear-gradient(180deg, rgba(255,250,244,0.62), rgba(245,234,216,0.78))",
+              "linear-gradient(180deg, rgba(255,250,244,0.2), rgba(245,234,216,0.24))",
             pointerEvents: "none",
           }}
         />
