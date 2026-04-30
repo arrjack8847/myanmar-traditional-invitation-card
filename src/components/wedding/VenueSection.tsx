@@ -6,13 +6,24 @@ const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
 const CORNER_IMAGE = "/detail-corner.png";
 
+const VENUE_LAYOUT = {
+  sectionPaddingTop: "clamp(3.5rem, 8vw, 6.25rem)",
+  sectionPaddingBottom:
+    "calc(env(safe-area-inset-bottom) + clamp(3.5rem, 7vw, 5.5rem))",
+  cardPaddingX: "clamp(1rem, 4vw, 2.75rem)",
+  cardPaddingY: "clamp(1.7rem, 5vw, 3.8rem)",
+  mainPhotoMarginTop: "clamp(1.25rem, 4vw, 2.6rem)",
+  buttonMarginTop: "clamp(1.35rem, 4vw, 2.35rem)",
+  buttonMarginBottom: "clamp(0.8rem, 3vw, 2rem)",
+};
+
 const Divider = () => (
   <motion.div
     className="mx-auto my-4 flex origin-center items-center justify-center gap-2 text-gold"
     initial={{ opacity: 0, scaleX: 0.72 }}
     whileInView={{ opacity: 1, scaleX: 1 }}
-    transition={{ duration: 0.8, ease: EASE }}
-    viewport={{ once: true, amount: 0.6 }}
+    transition={{ duration: 1.45, ease: EASE }}
+    viewport={{ once: true, amount: 0.16 }}
   >
     <span className="h-px w-16 bg-gradient-to-r from-transparent via-gold/55 to-gold/75" />
     <span className="h-1.5 w-1.5 rotate-45 border border-gold/70" />
@@ -75,7 +86,11 @@ const VenueSection = () => {
   return (
     <section
       id="venue"
-      className="myanmar-paper-bg relative overflow-hidden px-4 pb-[calc(env(safe-area-inset-bottom)+7rem)] pt-36 sm:px-6 sm:py-24"
+      className="myanmar-paper-bg relative overflow-hidden px-4 sm:px-6"
+      style={{
+        paddingTop: VENUE_LAYOUT.sectionPaddingTop,
+        paddingBottom: VENUE_LAYOUT.sectionPaddingBottom,
+      }}
     >
       <div className="section-glow absolute inset-0" />
 
@@ -83,10 +98,18 @@ const VenueSection = () => {
         className="relative z-10 mx-auto max-w-3xl"
         initial={{ opacity: 0, y: reduceMotion ? 0 : 22 }}
         whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: EASE }}
-        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 1.55, ease: EASE }}
+        viewport={{ once: true, amount: 0.12 }}
       >
-        <div className="relative overflow-hidden rounded-[30px] border border-gold/45 bg-[#fffaf0]/88 px-4 py-9 shadow-[0_28px_80px_rgba(111,84,42,0.14)] backdrop-blur-sm sm:rounded-[36px] sm:px-10 sm:py-16">
+        <div
+          className="relative overflow-hidden rounded-[30px] border border-gold/45 bg-[#fffaf0]/88 shadow-[0_28px_80px_rgba(111,84,42,0.14)] backdrop-blur-sm sm:rounded-[36px]"
+          style={{
+            paddingLeft: VENUE_LAYOUT.cardPaddingX,
+            paddingRight: VENUE_LAYOUT.cardPaddingX,
+            paddingTop: VENUE_LAYOUT.cardPaddingY,
+            paddingBottom: VENUE_LAYOUT.cardPaddingY,
+          }}
+        >
           {/* Double border */}
           <div className="pointer-events-none absolute inset-3 z-[1] rounded-[22px] border border-gold/35 sm:inset-5 sm:rounded-[28px]" />
           <div className="pointer-events-none absolute inset-5 z-[1] rounded-[18px] border border-gold/15 sm:inset-8 sm:rounded-[22px]" />
@@ -108,7 +131,7 @@ const VenueSection = () => {
               className="mx-auto mb-4 flex justify-center text-[#b78728]"
               initial={{ opacity: 0, scale: reduceMotion ? 1 : 0.92 }}
               whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.7, ease: EASE }}
+              transition={{ duration: 1.35, ease: EASE }}
               viewport={{ once: true }}
             >
               <Sparkles className="h-8 w-8" />
@@ -122,7 +145,7 @@ const VenueSection = () => {
               }`}
               initial={{ opacity: 0, y: reduceMotion ? 0 : 10 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, ease: EASE }}
+              transition={{ duration: 1.35, ease: EASE }}
               viewport={{ once: true }}
             >
               {venue.eyebrow}
@@ -131,12 +154,12 @@ const VenueSection = () => {
             <motion.h2
               className={`mx-auto mt-2 max-w-[20rem] font-bold leading-[1.08] text-[#3f2d1f] sm:max-w-none ${
                 isMyanmar
-                  ? "font-myanmar text-[2.65rem] sm:text-[4rem]"
-                  : "font-display text-[2.75rem] sm:text-[4.25rem]"
+                  ? "font-myanmar text-[clamp(1.9rem,9vw,2.45rem)] sm:text-[4rem]"
+                  : "font-display text-[clamp(2.1rem,10vw,2.75rem)] sm:text-[4.25rem]"
               }`}
               initial={{ opacity: 0, y: reduceMotion ? 0 : 16 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: EASE }}
+              transition={{ duration: 1.45, ease: EASE }}
               viewport={{ once: true }}
             >
               {venue.title}
@@ -152,7 +175,7 @@ const VenueSection = () => {
               }`}
               initial={{ opacity: 0, y: reduceMotion ? 0 : 12 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.05, duration: 0.75, ease: EASE }}
+              transition={{ delay: 0.12, duration: 1.4, ease: EASE }}
               viewport={{ once: true }}
             >
               {venue.description}
@@ -161,7 +184,8 @@ const VenueSection = () => {
             {/* Main venue image */}
             {mainPhoto && (
               <motion.div
-                className="mx-auto mt-9 overflow-hidden rounded-[28px] border border-gold/35 bg-white/55 p-2 shadow-[0_20px_60px_rgba(111,84,42,0.16)]"
+                className="mx-auto overflow-hidden rounded-[28px] border border-gold/35 bg-white/55 p-2 shadow-[0_20px_60px_rgba(111,84,42,0.16)]"
+                style={{ marginTop: VENUE_LAYOUT.mainPhotoMarginTop }}
                 initial={{
                   opacity: 0,
                   y: reduceMotion ? 0 : 22,
@@ -172,18 +196,18 @@ const VenueSection = () => {
                   y: 0,
                   clipPath: "inset(0% 0% 0% 0% round 28px)",
                 }}
-                transition={{ delay: 0.08, duration: 0.95, ease: EASE }}
-                viewport={{ once: true, amount: 0.25 }}
+                transition={{ delay: 0.18, duration: 1.75, ease: EASE }}
+                viewport={{ once: true, amount: 0.16 }}
               >
                 <div className="overflow-hidden rounded-[22px]">
                   <motion.img
                     src={mainPhoto}
                     alt={ui.venueAlt}
-                    className="h-[330px] w-full object-cover sm:h-[460px]"
+                    className="h-[260px] w-full object-cover sm:h-[460px]"
                     initial={{ scale: reduceMotion ? 1 : 1.045 }}
                     whileInView={{ scale: 1 }}
-                    transition={{ duration: 1.7, ease: EASE }}
-                    viewport={{ once: true, amount: 0.35 }}
+                    transition={{ duration: 3.2, ease: EASE }}
+                    viewport={{ once: true, amount: 0.18 }}
                   />
                 </div>
               </motion.div>
@@ -199,11 +223,11 @@ const VenueSection = () => {
                     initial={{ opacity: 0, y: reduceMotion ? 0 : 18 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{
-                      delay: 0.12 + index * 0.06,
-                      duration: 0.7,
+                      delay: 0.18 + index * 0.12,
+                      duration: 1.35,
                       ease: EASE,
                     }}
-                    viewport={{ once: true, amount: 0.25 }}
+                    viewport={{ once: true, amount: 0.16 }}
                     whileHover={reduceMotion ? undefined : { y: -3 }}
                   >
                     <div className="overflow-hidden rounded-[17px]">
@@ -214,7 +238,7 @@ const VenueSection = () => {
                         initial={{ scale: reduceMotion ? 1 : 1.04 }}
                         whileInView={{ scale: 1 }}
                         whileHover={reduceMotion ? undefined : { scale: 1.035 }}
-                        transition={{ duration: 0.9, ease: EASE }}
+                        transition={{ duration: 1.85, ease: EASE }}
                       />
                     </div>
                   </motion.div>
@@ -224,11 +248,14 @@ const VenueSection = () => {
 
             {/* Location button */}
             <motion.div
-              className="mb-10 mt-8"
+              style={{
+                marginTop: VENUE_LAYOUT.buttonMarginTop,
+                marginBottom: VENUE_LAYOUT.buttonMarginBottom,
+              }}
               initial={{ opacity: 0, y: reduceMotion ? 0 : 14 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.15, duration: 0.75, ease: EASE }}
-              viewport={{ once: true, amount: 0.3 }}
+              transition={{ delay: 0.28, duration: 1.4, ease: EASE }}
+              viewport={{ once: true, amount: 0.18 }}
             >
               <a
                 href={venue.mapUrl}

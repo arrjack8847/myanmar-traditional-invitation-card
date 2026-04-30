@@ -1,14 +1,5 @@
 import { motion, useReducedMotion } from "framer-motion";
-import {
-  ChevronDown,
-  Pause,
-  Play,
-  Repeat,
-  Shuffle,
-  SkipBack,
-  SkipForward,
-  Volume2,
-} from "lucide-react";
+import { ChevronDown, Pause, Play } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useLanguage } from "@/context/language";
 
@@ -40,16 +31,16 @@ const MUSIC = {
 
 /* PAGE / HERO CONTROL */
 const HERO = {
-  minHeight: "100dvh",
+  minHeight: "100svh",
 
-  paddingX: "clamp(14px, 4vw, 24px)",
-  paddingTop: "max(18px, env(safe-area-inset-top))",
-  paddingBottom: "max(18px, env(safe-area-inset-bottom))",
+  paddingX: "clamp(12px, 4vw, 24px)",
+  paddingTop: "max(12px, env(safe-area-inset-top))",
+  paddingBottom: "max(12px, env(safe-area-inset-bottom))",
 
-  contentMaxWidth: "min(100%, 430px)",
+  contentMaxWidth: "min(100%, 410px)",
 
   contentX: "0px",
-  contentY: "clamp(-30px, -4dvh, -12px)",
+  contentY: "clamp(-22px, -3svh, -6px)",
 
   verticalAlign: "center" as "flex-start" | "center",
 };
@@ -74,12 +65,12 @@ const DIVIDER = {
   show: true,
 
   x: "0px",
-  y: "0px",
-  scale: 1,
-  width: "clamp(150px, 44vw, 270px)",
+  y: "-60px",
+  scale: 2,
+  width: "clamp(120px, 34vw, 230px)",
 
-  opacity: 0.8,
-  marginBottom: -18,
+  opacity: 1,
+  marginBottom: -20,
 
   animationDelay: 0.04,
 };
@@ -89,11 +80,11 @@ const TITLE = {
   show: true,
 
   x: "0px",
-  y: "-22px",
-  scale: 1,
-  width: "clamp(218px, 70vw, 350px)",
+  y: "-50px",
+  scale: 1.4,
+  width: "clamp(170px, 54vw, 300px)",
 
-  marginBottom: -28,
+  marginBottom: -30,
 
   animationDelay: 0.08,
 };
@@ -105,11 +96,11 @@ const PHOTO_CARD = {
   x: 0,
   y: 0,
 
-  width: "min(100%, clamp(240px, calc(100dvh - 292px), 430px))",
-  padding: 7,
+  width: "min(100%, clamp(205px, calc(100svh - 340px), 380px))",
+  padding: 6,
 
-  borderRadius: 28,
-  innerBorderRadius: 22,
+  borderRadius: 24,
+  innerBorderRadius: 19,
 
   borderOpacity: 0.3,
   backgroundOpacity: 0.45,
@@ -139,35 +130,30 @@ const CAPTION = {
   color: "#b78728",
 };
 
-/* MUSIC PLAYER CONTROL */
+/* PREMIUM MUSIC PILL CONTROL */
 const PLAYER = {
   show: true,
 
   marginTop: 8,
+  minHeight: 34,
+  paddingX: 12,
+  iconButtonSize: 25,
+  iconSize: 13,
+  fontSize: 11,
 
-  timeFontSize: 11,
-  progressMarginTop: 3,
-
-  controlsMarginTop: 6,
-  controlsGap: 18,
-
-  smallIconSize: 14,
-  bigIconSize: 20,
-
-  playButtonSize: 42,
-
-  darkColor: "#2f251b",
+  color: "#7a5620",
+  darkColor: "#3a2a1d",
   lightColor: "#fffaf0",
 
-  progressActiveColor: "#c89424",
-  progressTrackColor: "#d8c38d",
+  backgroundOpacity: 0.5,
+  borderOpacity: 0.38,
 };
 
 /* CONTINUE BUTTON CONTROL */
 const CTA_BUTTON = {
   show: true,
 
-  marginTop: 6,
+  marginTop: 7,
 
   minHeight: 36,
   paddingX: 18,
@@ -180,31 +166,8 @@ const CTA_BUTTON = {
   borderOpacity: 0.35,
 
   shake: true,
-  shakeDistance: 4,
-  shakeDuration: 1.8,
-};
-
-/* VOLUME ICON CONTROL */
-const VOLUME_ICON = {
-  show: false,
-
-  marginTop: 10,
-  size: 16,
-  opacity: 0.7,
-};
-
-/* ========================================================= */
-
-const formatTime = (time: number) => {
-  if (!Number.isFinite(time)) return "00:00";
-
-  const minutes = Math.floor(time / 60);
-  const seconds = Math.floor(time % 60);
-
-  return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(
-    2,
-    "0"
-  )}`;
+  shakeDistance: 2,
+  shakeDuration: 4.2,
 };
 
 const MusicIntroHero = () => {
@@ -214,9 +177,19 @@ const MusicIntroHero = () => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const [isPlaying, setIsPlaying] = useState(false);
-  const [isLooping, setIsLooping] = useState(MUSIC.loop);
-  const [duration, setDuration] = useState(0);
-  const [currentTime, setCurrentTime] = useState(0);
+  const [isCoarsePointer, setIsCoarsePointer] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(pointer: coarse)");
+    const updatePointerMode = () => setIsCoarsePointer(mediaQuery.matches);
+
+    updatePointerMode();
+    mediaQuery.addEventListener("change", updatePointerMode);
+
+    return () => {
+      mediaQuery.removeEventListener("change", updatePointerMode);
+    };
+  }, []);
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -226,13 +199,9 @@ const MusicIntroHero = () => {
     audio.volume = MUSIC.volume;
     audio.muted = MUSIC.startMuted;
 
-    const handleLoadedMetadata = () => setDuration(audio.duration || 0);
-    const handleTimeUpdate = () => setCurrentTime(audio.currentTime || 0);
     const handlePlay = () => setIsPlaying(true);
     const handlePause = () => setIsPlaying(false);
 
-    audio.addEventListener("loadedmetadata", handleLoadedMetadata);
-    audio.addEventListener("timeupdate", handleTimeUpdate);
     audio.addEventListener("play", handlePlay);
     audio.addEventListener("pause", handlePause);
 
@@ -278,8 +247,6 @@ const MusicIntroHero = () => {
     return () => {
       audio.pause();
 
-      audio.removeEventListener("loadedmetadata", handleLoadedMetadata);
-      audio.removeEventListener("timeupdate", handleTimeUpdate);
       audio.removeEventListener("play", handlePlay);
       audio.removeEventListener("pause", handlePause);
 
@@ -305,53 +272,27 @@ const MusicIntroHero = () => {
     }
   };
 
-  const handleSeek = (value: string) => {
-    const audio = audioRef.current;
-    if (!audio) return;
-
-    const nextTime = Number(value);
-    audio.currentTime = nextTime;
-    setCurrentTime(nextTime);
-  };
-
-  const restartSong = () => {
-    const audio = audioRef.current;
-    if (!audio) return;
-
-    audio.currentTime = 0;
-    setCurrentTime(0);
-  };
-
-  const toggleLoop = () => {
-    setIsLooping((current) => {
-      const next = !current;
-
-      if (audioRef.current) {
-        audioRef.current.loop = next;
-      }
-
-      return next;
-    });
-  };
-
-  const skipForward = () => {
-    const audio = audioRef.current;
-    if (!audio) return;
-
-    audio.currentTime = Math.min(
-      audio.currentTime + 10,
-      duration || audio.currentTime
-    );
-  };
-
   const goToInvitation = () => {
     const nextSection =
-      document.getElementById("main-invitation") ||
-      document.getElementById("top");
-    nextSection?.scrollIntoView({ behavior: "smooth", block: "start" });
-  };
+      document.getElementById("top") ||
+      document.getElementById("main-invitation");
 
-  const progress = duration > 0 ? (currentTime / duration) * 100 : 0;
+    if (!nextSection) return;
+
+    const introSection = document.getElementById("music-intro");
+    const targetTop =
+      introSection && nextSection.id === "top"
+        ? introSection.offsetTop + introSection.offsetHeight
+        : nextSection.getBoundingClientRect().top + window.scrollY;
+
+    window.scrollTo({ top: targetTop, behavior: "smooth" });
+    window.history.replaceState(null, "", "#main-invitation");
+    window.setTimeout(() => {
+      if (Math.abs(window.scrollY - targetTop) > 2) {
+        window.scrollTo({ top: targetTop, behavior: "smooth" });
+      }
+    }, 900);
+  };
 
   return (
     <section
@@ -414,7 +355,7 @@ const MusicIntroHero = () => {
         }}
         initial={{ opacity: 0, y: reduceMotion ? 0 : 18 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.85, ease: EASE }}
+        transition={{ duration: 1.55, ease: EASE }}
       >
         {/* Myanmar traditional divider */}
         {DIVIDER.show && (
@@ -427,7 +368,7 @@ const MusicIntroHero = () => {
             animate={{ opacity: DIVIDER.opacity, y: 0 }}
             transition={{
               delay: DIVIDER.animationDelay,
-              duration: 0.75,
+              duration: 1.45,
               ease: EASE,
             }}
           >
@@ -457,7 +398,7 @@ const MusicIntroHero = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{
               delay: TITLE.animationDelay,
-              duration: 0.8,
+              duration: 1.5,
               ease: EASE,
             }}
           >
@@ -476,7 +417,7 @@ const MusicIntroHero = () => {
               <h1
                 className="font-display font-semibold leading-[0.95] text-[#b78728] text-shadow-gold"
                 style={{
-                  fontSize: "clamp(2.5rem, 12vw, 4.6rem)",
+                  fontSize: "clamp(2.15rem, 10vw, 4.4rem)",
                   transform: `translate(${TITLE.x}, ${TITLE.y}) scale(${TITLE.scale})`,
                   transformOrigin: "center",
                 }}
@@ -502,7 +443,7 @@ const MusicIntroHero = () => {
             }}
             initial={{ opacity: 0, scale: reduceMotion ? 1 : 0.97 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.15, duration: 0.85, ease: EASE }}
+            transition={{ delay: 0.2, duration: 1.6, ease: EASE }}
           >
             <div
               className="overflow-hidden"
@@ -544,146 +485,63 @@ const MusicIntroHero = () => {
         {/* Music player */}
         {PLAYER.show && (
           <motion.div
-            className="w-full"
+            className="flex w-full justify-center"
             style={{
               marginTop: PLAYER.marginTop,
             }}
             initial={{ opacity: 0, y: reduceMotion ? 0 : 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.22, duration: 0.75, ease: EASE }}
+            transition={{ delay: 0.32, duration: 1.45, ease: EASE }}
           >
-            <div
-              className="flex items-center justify-between px-3 font-display font-semibold"
+            <button
+              type="button"
+              onClick={toggleMusic}
+              className={`inline-flex items-center justify-center gap-2 rounded-full border shadow-[0_12px_28px_rgba(111,84,42,0.11)] backdrop-blur-md transition active:scale-[0.97] ${
+                isMyanmar ? "font-myanmar" : "font-display tracking-[0.04em]"
+              }`}
               style={{
-                fontSize: PLAYER.timeFontSize,
-                color: PLAYER.darkColor,
+                minHeight: PLAYER.minHeight,
+                paddingLeft: PLAYER.paddingX,
+                paddingRight: PLAYER.paddingX,
+                color: PLAYER.color,
+                fontSize: PLAYER.fontSize,
+                backgroundColor: `rgba(255, 255, 255, ${PLAYER.backgroundOpacity})`,
+                borderColor: `rgba(212, 175, 55, ${PLAYER.borderOpacity})`,
               }}
+              aria-label={isPlaying ? content.ui.muteMusic : content.ui.unmuteMusic}
             >
-              <span>{formatTime(currentTime)}</span>
-              <span>{formatTime(duration)}</span>
-            </div>
-
-            <div
-              className="relative px-3"
-              style={{
-                marginTop: PLAYER.progressMarginTop,
-              }}
-            >
-              <input
-                type="range"
-                min="0"
-                max={duration || 0}
-                step="1"
-                value={Math.min(currentTime, duration || currentTime)}
-                onChange={(e) => handleSeek(e.target.value)}
-                className="music-range h-1 w-full cursor-pointer appearance-none rounded-full"
+              <span
+                className="flex shrink-0 items-center justify-center rounded-full shadow-[0_8px_18px_rgba(47,37,27,0.18)]"
                 style={{
-                  background: `linear-gradient(to right, ${PLAYER.progressActiveColor} ${progress}%, ${PLAYER.progressTrackColor} ${progress}%)`,
-                }}
-                aria-label="Music progress"
-              />
-            </div>
-
-            <div
-              className="flex items-center justify-center"
-              style={{
-                marginTop: PLAYER.controlsMarginTop,
-                gap: PLAYER.controlsGap,
-                color: PLAYER.darkColor,
-              }}
-            >
-              <button
-                type="button"
-                onClick={toggleLoop}
-                aria-label={isLooping ? "Disable loop" : "Enable loop"}
-                aria-pressed={isLooping}
-                className="transition active:scale-95"
-              >
-                <Repeat
-                  style={{
-                    width: PLAYER.smallIconSize,
-                    height: PLAYER.smallIconSize,
-                    opacity: isLooping ? 1 : 0.45,
-                  }}
-                />
-              </button>
-
-              <button
-                type="button"
-                onClick={restartSong}
-                aria-label="Restart music"
-                className="transition active:scale-95"
-              >
-                <SkipBack
-                  style={{
-                    width: PLAYER.bigIconSize,
-                    height: PLAYER.bigIconSize,
-                    fill: PLAYER.darkColor,
-                  }}
-                />
-              </button>
-
-              <button
-                type="button"
-                onClick={toggleMusic}
-                className="flex items-center justify-center rounded-full shadow-[0_12px_28px_rgba(47,37,27,0.2)] transition active:scale-95"
-                style={{
-                  width: PLAYER.playButtonSize,
-                  height: PLAYER.playButtonSize,
+                  width: PLAYER.iconButtonSize,
+                  height: PLAYER.iconButtonSize,
                   backgroundColor: PLAYER.darkColor,
                   color: PLAYER.lightColor,
                 }}
-                aria-label={isPlaying ? "Pause music" : "Play music"}
               >
                 {isPlaying ? (
                   <Pause
                     style={{
-                      width: PLAYER.bigIconSize,
-                      height: PLAYER.bigIconSize,
+                      width: PLAYER.iconSize,
+                      height: PLAYER.iconSize,
                       fill: PLAYER.lightColor,
                     }}
                   />
                 ) : (
                   <Play
-                    className="ml-1"
+                    className="ml-0.5"
                     style={{
-                      width: PLAYER.bigIconSize,
-                      height: PLAYER.bigIconSize,
+                      width: PLAYER.iconSize,
+                      height: PLAYER.iconSize,
                       fill: PLAYER.lightColor,
                     }}
                   />
                 )}
-              </button>
-
-              <button
-                type="button"
-                onClick={skipForward}
-                aria-label="Skip forward 10 seconds"
-                className="transition active:scale-95"
-              >
-                <SkipForward
-                  style={{
-                    width: PLAYER.bigIconSize,
-                    height: PLAYER.bigIconSize,
-                    fill: PLAYER.darkColor,
-                  }}
-                />
-              </button>
-
-              <button
-                type="button"
-                disabled
-                aria-label="Shuffle unavailable"
-                className="cursor-not-allowed opacity-45"
-              >
-                <Shuffle
-                  style={{
-                    width: PLAYER.smallIconSize,
-                    height: PLAYER.smallIconSize,
-                  }}
-                />
-              </button>
-            </div>
+              </span>
+              <span className="max-w-[8.5rem] truncate">
+                {isPlaying ? content.ui.muteMusic : content.ui.unmuteMusic}
+              </span>
+            </button>
           </motion.div>
         )}
 
@@ -707,7 +565,7 @@ const MusicIntroHero = () => {
               borderColor: `rgba(212, 175, 55, ${CTA_BUTTON.borderOpacity})`,
             }}
             animate={
-              !reduceMotion && CTA_BUTTON.shake
+              !reduceMotion && !isCoarsePointer && CTA_BUTTON.shake
                 ? { y: [0, CTA_BUTTON.shakeDistance, 0] }
                 : {}
             }
@@ -722,23 +580,6 @@ const MusicIntroHero = () => {
           </motion.button>
         )}
 
-        {/* Volume icon */}
-        {VOLUME_ICON.show && (
-          <div
-            className="flex justify-center text-gold"
-            style={{
-              marginTop: VOLUME_ICON.marginTop,
-              opacity: VOLUME_ICON.opacity,
-            }}
-          >
-            <Volume2
-              style={{
-                width: VOLUME_ICON.size,
-                height: VOLUME_ICON.size,
-              }}
-            />
-          </div>
-        )}
       </motion.div>
     </section>
   );

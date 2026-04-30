@@ -120,7 +120,7 @@ const Gallery = () => {
           initial={{ opacity: 0, scale: 0.96, y: 18 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.96, y: 12 }}
-          transition={{ duration: 0.25 }}
+          transition={{ duration: 0.45, ease: EASE }}
           style={{
             maxWidth: popup.maxWidth,
             maxHeight: popup.maxHeight,
@@ -148,24 +148,24 @@ const Gallery = () => {
     ) : null;
 
   return (
-    <section id="gallery" className="relative px-4 py-24 sm:py-28">
+    <section id="gallery" className="myanmar-paper-bg relative overflow-hidden px-4 py-16 sm:py-28">
       <div className="mx-auto max-w-5xl text-center">
         <motion.p
           className="mb-4 text-[10px] uppercase tracking-[0.42em] text-gold/75 sm:text-[11px]"
           initial={{ opacity: 0, y: reduceMotion ? 0 : 8 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.65, ease: EASE }}
-          viewport={{ once: true, amount: 0.4 }}
+          transition={{ duration: 1.35, ease: EASE }}
+          viewport={{ once: true, amount: 0.18 }}
         >
           {gallery.eyebrow}
         </motion.p>
 
         <motion.h2
-          className="font-display text-4xl text-foreground sm:text-5xl md:text-6xl"
+          className="font-display text-[clamp(2rem,10vw,2.65rem)] leading-tight text-foreground sm:text-5xl md:text-6xl"
           initial={{ opacity: 0, y: reduceMotion ? 0 : 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: EASE }}
-          viewport={{ once: true, amount: 0.4 }}
+          transition={{ duration: 1.45, ease: EASE }}
+          viewport={{ once: true, amount: 0.18 }}
         >
           {gallery.title}
         </motion.h2>
@@ -174,11 +174,11 @@ const Gallery = () => {
           className="gold-line mx-auto mt-5 h-px w-24 sm:w-28"
           initial={{ scaleX: 0, opacity: 0 }}
           whileInView={{ scaleX: 1, opacity: 1 }}
-          transition={{ duration: 0.75, delay: 0.1, ease: EASE }}
-          viewport={{ once: true, amount: 0.7 }}
+          transition={{ duration: 1.35, delay: 0.12, ease: EASE }}
+          viewport={{ once: true, amount: 0.22 }}
         />
 
-        <div className="mt-14 grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3">
+        <div className="mt-10 grid grid-cols-2 gap-3 sm:mt-14 sm:gap-4 md:grid-cols-3">
           {gallery.photos.map((photo, i) => (
             <motion.button
               key={photo.src}
@@ -194,7 +194,7 @@ const Gallery = () => {
                 y: 0,
                 clipPath: "inset(0% 0% 0% 0% round 24px)",
               }}
-              transition={{ delay: i * 0.055, duration: 0.72, ease: EASE }}
+              transition={{ delay: i * 0.11, duration: 1.45, ease: EASE }}
               viewport={{ once: true, amount: 0.18 }}
               whileHover={reduceMotion ? undefined : { y: -4, scale: 1.015 }}
               whileTap={{ scale: 0.98 }}
@@ -207,7 +207,8 @@ const Gallery = () => {
                 className="aspect-[4/5] w-full object-cover transition duration-700 group-hover:scale-[1.035]"
                 initial={{ scale: reduceMotion ? 1 : 1.04 }}
                 whileInView={{ scale: 1 }}
-                transition={{ duration: 1.2, ease: EASE }}
+                transition={{ duration: 1.6, ease: EASE }}
+                viewport={{ once: true, amount: 0.18 }}
               />
             </motion.button>
           ))}

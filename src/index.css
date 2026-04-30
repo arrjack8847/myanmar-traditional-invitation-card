@@ -511,6 +511,13 @@
   }
 }
 
+@media (pointer: coarse) {
+  .premium-button-shine::after {
+    animation: none;
+    opacity: 0;
+  }
+}
+
 /* =========================================================
    MYANMAR LANGUAGE FIXES
 ========================================================= */

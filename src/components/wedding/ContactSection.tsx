@@ -1,5 +1,6 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight, Heart, MessageCircle, Sparkles } from "lucide-react";
+import { useEffect, useState } from "react";
 import { useWeddingContent } from "@/context/language";
 
 const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
@@ -7,15 +8,23 @@ const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
 const ContactSection = () => {
   const { contact, couple } = useWeddingContent();
   const reduceMotion = useReducedMotion();
+  const [isCoarsePointer, setIsCoarsePointer] = useState(false);
+  const motionDisabled = Boolean(reduceMotion || isCoarsePointer);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(pointer: coarse)");
+    const updatePointerMode = () => setIsCoarsePointer(mediaQuery.matches);
+
+    updatePointerMode();
+    mediaQuery.addEventListener("change", updatePointerMode);
+
+    return () => mediaQuery.removeEventListener("change", updatePointerMode);
+  }, []);
 
   return (
-    <section className="relative flex min-h-[100svh] items-center overflow-hidden px-4 py-8 sm:min-h-screen sm:px-6 sm:py-24">
+    <section className="myanmar-paper-bg relative flex items-center overflow-hidden px-4 py-14 sm:min-h-screen sm:px-6 sm:py-24">
       {/* BACKGROUND */}
       <div className="section-glow absolute inset-0" />
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-[#f8f1e8] to-background" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_16%,rgba(212,175,108,0.16),transparent_36%)]" />
-      <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-white/50 to-transparent" />
-      <div className="absolute inset-x-0 bottom-0 h-52 bg-gradient-to-t from-white/45 to-transparent" />
 
       {/* DECOR */}
       <div className="pointer-events-none absolute left-8 top-24 hidden h-2 w-2 rounded-full bg-gold/45 sm:block" />
@@ -26,11 +35,11 @@ const ContactSection = () => {
       <motion.div
         className="pointer-events-none absolute left-1/2 top-[18%] h-[260px] w-[260px] -translate-x-1/2 rounded-full bg-gold/10 blur-[90px] sm:h-[460px] sm:w-[460px]"
         animate={
-          reduceMotion
+          motionDisabled
             ? { opacity: 0.14 }
             : { opacity: [0.1, 0.24, 0.1], scale: [1, 1.06, 1] }
         }
-        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+        transition={{ duration: 8.5, repeat: Infinity, ease: "easeInOut" }}
       />
 
       <div className="relative z-10 mx-auto w-full max-w-6xl">
@@ -40,8 +49,8 @@ const ContactSection = () => {
             className="mb-2 flex items-center justify-center gap-2 text-gold/75 sm:mb-4 sm:gap-3"
             initial={{ opacity: 0, y: reduceMotion ? 0 : 8 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: EASE }}
-            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 1.35, ease: EASE }}
+            viewport={{ once: true, amount: 0.18 }}
           >
             <div className="h-px w-8 bg-gold/35 sm:w-10" />
             <Sparkles className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
@@ -52,18 +61,18 @@ const ContactSection = () => {
             className="mb-2 text-[8px] uppercase tracking-[0.32em] text-gold/80 sm:mb-3 sm:text-[11px] sm:tracking-[0.45em]"
             initial={{ opacity: 0, y: reduceMotion ? 0 : 8 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: EASE }}
-            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 1.35, ease: EASE }}
+            viewport={{ once: true, amount: 0.18 }}
           >
             {contact.eyebrow}
           </motion.p>
 
           <motion.h2
-            className="font-display text-[2.2rem] font-medium leading-[0.98] tracking-[0.01em] text-foreground sm:text-5xl md:text-6xl"
+            className="font-display text-[clamp(1.85rem,8.5vw,2.35rem)] font-medium leading-[1.08] tracking-[0.01em] text-foreground sm:text-5xl md:text-6xl"
             initial={{ opacity: 0, y: reduceMotion ? 0 : 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.85, ease: EASE }}
-            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 1.45, ease: EASE }}
+            viewport={{ once: true, amount: 0.18 }}
           >
             {contact.title}
           </motion.h2>
@@ -72,16 +81,16 @@ const ContactSection = () => {
             className="gold-line mx-auto mt-4 h-px w-20 sm:mt-5 sm:w-28"
             initial={{ scaleX: 0, opacity: 0 }}
             whileInView={{ scaleX: 1, opacity: 1 }}
-            transition={{ duration: 0.7, delay: 0.1, ease: EASE }}
-            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 1.35, delay: 0.12, ease: EASE }}
+            viewport={{ once: true, amount: 0.18 }}
           />
 
           <motion.p
             className="mx-auto mt-3 max-w-[19rem] text-[12.5px] leading-[1.55] text-muted-foreground sm:mt-5 sm:max-w-2xl sm:text-base sm:leading-8"
             initial={{ opacity: 0, y: reduceMotion ? 0 : 14 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.15, duration: 0.8, ease: EASE }}
-            viewport={{ once: true, amount: 0.3 }}
+            transition={{ delay: 0.18, duration: 1.4, ease: EASE }}
+            viewport={{ once: true, amount: 0.18 }}
           >
             {contact.description}
           </motion.p>
@@ -98,9 +107,9 @@ const ContactSection = () => {
               className="luxury-card group relative overflow-hidden rounded-[20px] border border-white/50 bg-white/40 p-3.5 text-left shadow-[0_18px_45px_rgba(111,84,42,0.1)] backdrop-blur-xl sm:rounded-[30px] sm:p-7 sm:shadow-[0_24px_65px_rgba(111,84,42,0.12)]"
               initial={{ opacity: 0, y: reduceMotion ? 0 : 24 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.1, duration: 0.75, ease: EASE }}
-              viewport={{ once: true, amount: 0.25 }}
-              whileHover={reduceMotion ? undefined : { y: -5 }}
+              transition={{ delay: i * 0.14, duration: 1.35, ease: EASE }}
+              viewport={{ once: true, amount: 0.16 }}
+              whileHover={motionDisabled ? undefined : { y: -5 }}
             >
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(212,175,108,0.14),transparent_45%)]" />
               <div className="absolute -right-12 -top-12 h-24 w-24 rounded-full bg-gold/10 blur-3xl transition-opacity duration-500 group-hover:opacity-100 sm:h-32 sm:w-32" />
@@ -156,8 +165,8 @@ const ContactSection = () => {
           className="mx-auto mt-6 max-w-2xl rounded-[22px] border border-gold/15 bg-white/35 px-5 py-4 text-center shadow-[0_16px_44px_rgba(111,84,42,0.07)] backdrop-blur-xl sm:mt-14 sm:rounded-[32px] sm:px-8 sm:py-10 sm:shadow-[0_20px_60px_rgba(111,84,42,0.08)]"
           initial={{ opacity: 0, y: reduceMotion ? 0 : 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2, ease: EASE }}
-          viewport={{ once: true, amount: 0.25 }}
+          transition={{ duration: 1.4, delay: 0.24, ease: EASE }}
+          viewport={{ once: true, amount: 0.16 }}
         >
           <div className="flex items-center justify-center gap-3 text-gold/75">
             <div className="h-px w-10 bg-gold/30" />

@@ -24,25 +24,37 @@ const FloatingPetals = () => {
       return;
     }
 
-    const isMobile = window.matchMedia("(max-width: 640px)").matches;
-    const count = isMobile ? 7 : 14;
+    const isTouchLayout = window.matchMedia("(max-width: 1024px)").matches;
+    const count = isTouchLayout ? 4 : 14;
 
-    const generated: Petal[] = Array.from({ length: count }, (_, i) => ({
-      id: i,
-      x: 6 + Math.random() * 88,
-      delay: Math.random() * 8,
-      duration: isMobile ? 15 + Math.random() * 10 : 9 + Math.random() * 12,
-      size: isMobile ? 7 + Math.random() * 10 : 8 + Math.random() * 16,
-      opacity: isMobile
-        ? 0.12 + Math.random() * 0.18
-        : 0.15 + Math.random() * 0.25,
-      drift: isMobile ? -18 + Math.random() * 36 : -28 + Math.random() * 56,
-    }));
+    const generated: Petal[] = Array.from({ length: count }, (_, i) => {
+      const edgeX = i % 2 === 0 ? 3 + Math.random() * 14 : 83 + Math.random() * 14;
+
+      return {
+        id: i,
+        x: isTouchLayout ? edgeX : 6 + Math.random() * 88,
+        delay: Math.random() * 8,
+        duration: isTouchLayout
+          ? 34 + Math.random() * 18
+          : 9 + Math.random() * 12,
+        size: isTouchLayout ? 7 + Math.random() * 7 : 8 + Math.random() * 16,
+        opacity: isTouchLayout
+          ? 0.08 + Math.random() * 0.08
+          : 0.15 + Math.random() * 0.25,
+        drift: isTouchLayout
+          ? (i % 2 === 0 ? 5 : -5) + Math.random() * 8
+          : -28 + Math.random() * 56,
+      };
+    });
     setPetals(generated);
   }, []);
 
   return (
-    <div className="pointer-events-none fixed inset-0 z-10 overflow-hidden">
+    <div
+      aria-hidden="true"
+      className="pointer-events-none fixed inset-0 z-[2] overflow-hidden"
+      style={{ contain: "layout paint" }}
+    >
       {petals.map((petal) => (
         <motion.div
           key={petal.id}

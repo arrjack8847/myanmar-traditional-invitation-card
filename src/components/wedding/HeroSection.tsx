@@ -1,5 +1,6 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { CalendarCheck } from "lucide-react";
+import { useEffect, useState } from "react";
 import { useLanguage } from "@/context/language";
 
 const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
@@ -33,19 +34,65 @@ const OrnamentLine = () => (
   </div>
 );
 
-/* 🎛️ PORTRAIT PHOTO + FRAME CONTROL */
+/* 
+  🎛️ PORTRAIT PHOTO + FRAME CONTROL
+
+  Change MOBILE values when it looks wrong on phone.
+  Change DESKTOP values when it looks wrong on laptop/desktop.
+*/
+
+type FrameMode = "mobile" | "tablet" | "desktop";
+
 const PORTRAIT_FRAME = {
-  photoTop: "10.2%",
-  photoSide: "10.8%",
-  photoBottom: "4%",
+  mobile: {
+    photoTop: "11.8%",
+    photoSide: "21%",
+    photoBottom: "3%",
 
-  photoRadius: "999px 999px 16px 16px / 50% 50% 4% 4%",
+    photoRadius: "999px 999px 18px 18px / 48% 48% 5% 5%",
 
-  imageScale: 1.05,
-  imageX: "0px",
-  imageY: "0px",
+    imageScale: 1.12,
+    imageX: "0px",
+    imageY: "-2px",
 
-  frameScale: 1.1,
+    frameScale: 1.08,
+  },
+
+  tablet: {
+    photoTop: "10.8%",
+    photoSide: "11.5%",
+    photoBottom: "5%",
+
+    photoRadius: "999px 999px 18px 18px / 49% 49% 5% 5%",
+
+    imageScale: 1.08,
+    imageX: "0px",
+    imageY: "-1px",
+
+    frameScale: 1.09,
+  },
+
+  desktop: {
+    photoTop: "10.2%",
+    photoSide: "10.8%",
+    photoBottom: "4%",
+
+    photoRadius: "999px 999px 16px 16px / 50% 50% 4% 4%",
+
+    imageScale: 1.05,
+    imageX: "0px",
+    imageY: "0px",
+
+    frameScale: 1.1,
+  },
+};
+
+const getFrameMode = (): FrameMode => {
+  if (typeof window === "undefined") return "desktop";
+
+  if (window.innerWidth < 640) return "mobile";
+  if (window.innerWidth < 1024) return "tablet";
+  return "desktop";
 };
 
 const ArchPortrait = ({
@@ -55,6 +102,8 @@ const ArchPortrait = ({
   objectPosition = "center",
   revealDelay = 0,
   revealX = 0,
+  calmMotion = false,
+  frameMode = "desktop",
 }: {
   src: string;
   alt: string;
@@ -62,24 +111,44 @@ const ArchPortrait = ({
   objectPosition?: string;
   revealDelay?: number;
   revealX?: number;
+  calmMotion?: boolean;
+  frameMode?: FrameMode;
 }) => {
+  const frame = PORTRAIT_FRAME[frameMode];
+
   return (
     <motion.div
       className={`mm-ornamental-arch-frame will-change-transform ${className}`}
-      initial={{ opacity: 0, x: revealX, y: 18, scale: 0.96 }}
-      whileInView={{ opacity: 1, x: 0, y: 0, scale: 1 }}
-      transition={{ duration: 0.85, delay: revealDelay, ease: EASE }}
-      viewport={{ once: true, amount: 0.25 }}
+      initial={{
+        opacity: 0,
+        x: calmMotion ? 0 : revealX,
+        y: calmMotion ? 10 : 28,
+        scale: calmMotion ? 1 : 0.94,
+        filter: calmMotion ? "blur(0px)" : "blur(10px)",
+      }}
+      whileInView={{
+        opacity: 1,
+        x: 0,
+        y: 0,
+        scale: 1,
+        filter: "blur(0px)",
+      }}
+      transition={{
+        duration: calmMotion ? 0.7 : 1.75,
+        delay: calmMotion ? revealDelay * 0.6 : revealDelay,
+        ease: EASE,
+      }}
+      viewport={{ once: true, amount: calmMotion ? 0.28 : 0.16 }}
     >
       {/* Photo cropped into the arch opening. */}
       <div
         className="mm-ornamental-arch-photo"
         style={{
-          top: PORTRAIT_FRAME.photoTop,
-          left: PORTRAIT_FRAME.photoSide,
-          right: PORTRAIT_FRAME.photoSide,
-          bottom: PORTRAIT_FRAME.photoBottom,
-          borderRadius: PORTRAIT_FRAME.photoRadius,
+          top: frame.photoTop,
+          left: frame.photoSide,
+          right: frame.photoSide,
+          bottom: frame.photoBottom,
+          borderRadius: frame.photoRadius,
         }}
       >
         <img
@@ -87,7 +156,7 @@ const ArchPortrait = ({
           alt={alt}
           style={{
             objectPosition,
-            transform: `translate(${PORTRAIT_FRAME.imageX}, ${PORTRAIT_FRAME.imageY}) scale(${PORTRAIT_FRAME.imageScale})`,
+            transform: `translate(${frame.imageX}, ${frame.imageY}) scale(${frame.imageScale})`,
           }}
         />
       </div>
@@ -99,7 +168,7 @@ const ArchPortrait = ({
         aria-hidden="true"
         className="mm-ornamental-arch-overlay"
         style={{
-          transform: `scale(${PORTRAIT_FRAME.frameScale})`,
+          transform: `scale(${frame.frameScale})`,
         }}
       />
     </motion.div>
@@ -116,6 +185,7 @@ const NameBlock = ({
   imageY = 0,
   imageMarginTop = 6,
   revealDelay = 0,
+  calmMotion = false,
 }: {
   role: string;
   name?: string;
@@ -126,14 +196,29 @@ const NameBlock = ({
   imageY?: number;
   imageMarginTop?: number;
   revealDelay?: number;
+  calmMotion?: boolean;
 }) => {
   return (
     <motion.div
       className="text-center will-change-transform"
-      initial={{ opacity: 0, y: 14 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.75, delay: revealDelay, ease: EASE }}
-      viewport={{ once: true, amount: 0.35 }}
+      initial={{
+        opacity: 0,
+        y: calmMotion ? 8 : 18,
+        scale: calmMotion ? 1 : 0.96,
+        filter: calmMotion ? "blur(0px)" : "blur(7px)",
+      }}
+      whileInView={{
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        filter: "blur(0px)",
+      }}
+      transition={{
+        duration: calmMotion ? 0.65 : 1.45,
+        delay: calmMotion ? revealDelay * 0.6 : revealDelay,
+        ease: EASE,
+      }}
+      viewport={{ once: true, amount: calmMotion ? 0.3 : 0.18 }}
     >
       <p
         className={`text-[11px] font-bold leading-none text-gold/75 sm:text-sm ${
@@ -156,8 +241,8 @@ const NameBlock = ({
             alt={imageAlt || role}
             className="h-auto object-contain"
             style={{
-              width: `min(${imageWidth}px, 70vw)`,
-              maxWidth: "70vw",
+              width: `min(${imageWidth}px, 44vw)`,
+              maxWidth: "44vw",
             }}
           />
         </div>
@@ -177,17 +262,35 @@ const NameBlock = ({
 const RingsOrnament = ({
   alt,
   revealDelay = 0,
+  calmMotion = false,
 }: {
   alt: string;
   revealDelay?: number;
+  calmMotion?: boolean;
 }) => {
   return (
     <motion.div
       className="relative flex items-center justify-center will-change-transform"
-      initial={{ opacity: 0, scale: 0.92 }}
-      whileInView={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.8, delay: revealDelay, ease: EASE }}
-      viewport={{ once: true, amount: 0.4 }}
+      initial={{
+        opacity: 0,
+        y: calmMotion ? 4 : 14,
+        scale: calmMotion ? 1 : 0.86,
+        rotate: calmMotion ? 0 : -3,
+        filter: calmMotion ? "blur(0px)" : "blur(8px)",
+      }}
+      whileInView={{
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        rotate: 0,
+        filter: "blur(0px)",
+      }}
+      transition={{
+        duration: calmMotion ? 0.65 : 1.5,
+        delay: calmMotion ? revealDelay * 0.6 : revealDelay,
+        ease: EASE,
+      }}
+      viewport={{ once: true, amount: calmMotion ? 0.3 : 0.18 }}
     >
       <span className="absolute h-px w-[68vw] max-w-[280px] gold-line" />
 
@@ -207,40 +310,68 @@ const HeroSection = () => {
     language,
     content: { couple, hero, ui },
   } = useLanguage();
+
   const reduceMotion = useReducedMotion();
+  const [frameMode, setFrameMode] = useState<FrameMode>("desktop");
+
   const isMyanmar = language === "my";
+
+  /*
+    Animation only:
+    Mobile should still feel slow and luxury.
+    So calmMotion now only follows the user's reduced-motion setting,
+    not phone/touch detection.
+  */
+  const calmMotion = Boolean(reduceMotion);
+
   const groomNameImage = isMyanmar ? GROOM_NAME_IMAGE : undefined;
   const brideNameImage = isMyanmar ? BRIDE_NAME_IMAGE : undefined;
+
+  useEffect(() => {
+    const updateFrameMode = () => {
+      setFrameMode(getFrameMode());
+    };
+
+    updateFrameMode();
+    window.addEventListener("resize", updateFrameMode);
+
+    return () => {
+      window.removeEventListener("resize", updateFrameMode);
+    };
+  }, []);
 
   return (
     <section
       id="top"
-      className="myanmar-paper-bg relative min-h-[100dvh] overflow-hidden px-4 pb-[calc(env(safe-area-inset-bottom)+1rem)] pt-16 text-[#6d5226] sm:pt-8 lg:px-10 lg:pb-12 lg:pt-14"
+      className="myanmar-paper-bg relative min-h-[100svh] overflow-hidden px-4 pb-[calc(env(safe-area-inset-bottom)+1rem)] pt-12 text-[#6d5226] sm:pt-8 lg:px-10 lg:pb-12 lg:pt-14"
     >
       {/* Soft background glow */}
       <div className="pointer-events-none absolute left-1/2 top-40 z-0 h-72 w-72 -translate-x-1/2 rounded-full bg-gold/10 blur-[90px]" />
       <div className="pointer-events-none absolute -bottom-20 -left-20 z-0 h-64 w-64 rounded-full bg-white/50 blur-[70px]" />
       <div className="pointer-events-none absolute -bottom-20 -right-20 z-0 h-64 w-64 rounded-full bg-gold/10 blur-[70px]" />
+
       {!reduceMotion && (
         <motion.div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-x-0 top-0 z-0 h-[42dvh] bg-[radial-gradient(circle_at_50%_0%,rgba(255,241,198,0.42),transparent_58%)]"
-          animate={{ opacity: [0.45, 0.8, 0.45], scale: [1, 1.025, 1] }}
-          transition={{ duration: 6.5, repeat: Infinity, ease: "easeInOut" }}
+          className="pointer-events-none absolute inset-x-0 top-0 z-0 hidden h-[42dvh] bg-[radial-gradient(circle_at_50%_0%,rgba(255,241,198,0.42),transparent_58%)] lg:block"
+          animate={{ opacity: [0.35, 0.72, 0.35], scale: [1, 1.035, 1] }}
+          transition={{ duration: 10.5, repeat: Infinity, ease: "easeInOut" }}
         />
       )}
 
       {/* Mobile-first one-page hero */}
-      <div className="relative z-10 mx-auto grid min-h-[calc(100dvh-36px)] max-w-6xl grid-cols-2 grid-rows-[1fr_auto_1fr_auto] gap-x-3 gap-y-2 lg:min-h-0 lg:grid-cols-[1fr_0.86fr_1fr] lg:grid-rows-none lg:items-center lg:gap-12">
+      <div className="relative z-10 mx-auto grid min-h-[calc(100svh-2.75rem)] max-w-6xl grid-cols-2 grid-rows-[1fr_auto_1fr_auto] gap-x-3 gap-y-1.5 lg:min-h-0 lg:grid-cols-[1fr_0.86fr_1fr] lg:grid-rows-none lg:items-center lg:gap-12">
         {/* Top-left photo */}
         <div className="flex items-start justify-end">
           <ArchPortrait
             src={BRIDE_IMAGE}
             alt={couple.bride}
             objectPosition="center"
-            revealDelay={0.08}
+            revealDelay={0.15}
             revealX={-14}
-            className="h-[clamp(165px,25dvh,220px)] w-full max-w-[150px] sm:h-[340px] sm:max-w-[240px] lg:h-[560px] lg:max-w-[370px]"
+            calmMotion={calmMotion}
+            frameMode={frameMode}
+            className="h-[clamp(145px,22svh,208px)] w-full max-w-[142px] sm:h-[340px] sm:max-w-[240px] lg:h-[560px] lg:max-w-[370px]"
           />
         </div>
 
@@ -255,7 +386,8 @@ const HeroSection = () => {
             imageWidth={GROOM_NAME_PNG.width}
             imageY={GROOM_NAME_PNG.y}
             imageMarginTop={GROOM_NAME_PNG.marginTop}
-            revealDelay={0.18}
+            revealDelay={0.55}
+            calmMotion={calmMotion}
           />
         </div>
 
@@ -270,11 +402,16 @@ const HeroSection = () => {
             imageWidth={GROOM_NAME_PNG.width}
             imageY={GROOM_NAME_PNG.y}
             imageMarginTop={GROOM_NAME_PNG.marginTop}
-            revealDelay={0.22}
+            revealDelay={0.45}
+            calmMotion={calmMotion}
           />
 
           <div className="my-8">
-            <RingsOrnament alt={ui.weddingRingsAlt} revealDelay={0.34} />
+            <RingsOrnament
+              alt={ui.weddingRingsAlt}
+              revealDelay={0.8}
+              calmMotion={calmMotion}
+            />
           </div>
 
           <NameBlock
@@ -286,13 +423,18 @@ const HeroSection = () => {
             imageWidth={BRIDE_NAME_PNG.width}
             imageY={BRIDE_NAME_PNG.y}
             imageMarginTop={BRIDE_NAME_PNG.marginTop}
-            revealDelay={0.46}
+            revealDelay={1.1}
+            calmMotion={calmMotion}
           />
         </div>
 
         {/* Mobile ring */}
         <div className="col-span-2 flex items-center justify-center py-1 lg:hidden">
-          <RingsOrnament alt={ui.weddingRingsAlt} revealDelay={0.3} />
+          <RingsOrnament
+            alt={ui.weddingRingsAlt}
+            revealDelay={0.85}
+            calmMotion={calmMotion}
+          />
         </div>
 
         {/* Bottom-left bride name on mobile */}
@@ -306,7 +448,8 @@ const HeroSection = () => {
             imageWidth={BRIDE_NAME_PNG.width}
             imageY={BRIDE_NAME_PNG.y}
             imageMarginTop={BRIDE_NAME_PNG.marginTop}
-            revealDelay={0.42}
+            revealDelay={1.15}
+            calmMotion={calmMotion}
           />
         </div>
 
@@ -316,19 +459,35 @@ const HeroSection = () => {
             src={GROOM_IMAGE}
             alt={couple.groom}
             objectPosition="center"
-            revealDelay={0.2}
+            revealDelay={0.35}
             revealX={14}
-            className="h-[clamp(165px,25dvh,220px)] w-full max-w-[150px] sm:h-[340px] sm:max-w-[240px] lg:h-[560px] lg:max-w-[370px]"
+            calmMotion={calmMotion}
+            frameMode={frameMode}
+            className="h-[clamp(145px,22svh,208px)] w-full max-w-[142px] sm:h-[340px] sm:max-w-[240px] lg:h-[560px] lg:max-w-[370px]"
           />
         </div>
 
         {/* Message + buttons */}
         <motion.div
           className="col-span-2 mx-auto w-full max-w-md text-center lg:col-span-3 lg:mt-10 lg:max-w-xl"
-          initial={{ opacity: 0, y: reduceMotion ? 0 : 18 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.75, ease: EASE }}
-          viewport={{ once: true, amount: 0.3 }}
+          initial={{
+            opacity: 0,
+            y: calmMotion ? 8 : 20,
+            scale: calmMotion ? 1 : 0.97,
+            filter: calmMotion ? "blur(0px)" : "blur(6px)",
+          }}
+          whileInView={{
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            filter: "blur(0px)",
+          }}
+          transition={{
+            duration: calmMotion ? 0.65 : 1.35,
+            delay: calmMotion ? 0 : 1.25,
+            ease: EASE,
+          }}
+          viewport={{ once: true, amount: calmMotion ? 0.3 : 0.18 }}
         >
           <OrnamentLine />
 
@@ -343,8 +502,8 @@ const HeroSection = () => {
           <div className="mt-3 flex flex-col gap-2 px-1 sm:mx-auto sm:max-w-md">
             <motion.a
               href="#details"
-              className="mm-gold-button premium-button-shine inline-flex min-h-[44px] items-center justify-center gap-2 overflow-hidden rounded-2xl px-5 font-display text-base font-semibold transition active:scale-[0.98] sm:min-h-[54px] sm:text-lg"
-              whileHover={reduceMotion ? undefined : { y: -2, scale: 1.01 }}
+              className="mm-gold-button premium-button-shine inline-flex min-h-[42px] items-center justify-center gap-2 overflow-hidden rounded-2xl px-5 font-display text-[14px] font-semibold transition active:scale-[0.98] sm:min-h-[54px] sm:text-lg"
+              whileHover={calmMotion ? undefined : { y: -2, scale: 1.01 }}
               whileTap={{ scale: 0.98 }}
             >
               {ui.viewInvitation}
@@ -352,10 +511,10 @@ const HeroSection = () => {
 
             <motion.a
               href="#rsvp"
-              className={`mm-outline-button inline-flex min-h-[44px] items-center justify-center gap-2 rounded-2xl px-5 text-base font-bold transition active:scale-[0.98] sm:min-h-[54px] sm:text-lg ${
+              className={`mm-outline-button inline-flex min-h-[42px] items-center justify-center gap-2 rounded-2xl px-5 text-[14px] font-bold transition active:scale-[0.98] sm:min-h-[54px] sm:text-lg ${
                 isMyanmar ? "font-myanmar" : "font-display"
               }`}
-              whileHover={reduceMotion ? undefined : { y: -2, scale: 1.01 }}
+              whileHover={calmMotion ? undefined : { y: -2, scale: 1.01 }}
               whileTap={{ scale: 0.98 }}
             >
               <CalendarCheck className="h-4 w-4" />

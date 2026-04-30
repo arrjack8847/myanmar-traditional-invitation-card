@@ -22,15 +22,15 @@ const StorySection = () => {
             : ui.finalChapter;
 
         return (
-          <section key={i} className="relative overflow-hidden bg-[#fbf5eb]">
+          <section key={i} className="myanmar-paper-bg relative overflow-hidden">
             {/* Mobile layout keeps the full photo visible. */}
             <div className="block px-4 py-12 sm:hidden">
               <motion.div
                 className="mx-auto max-w-[420px]"
                 initial={{ opacity: 0, y: reduceMotion ? 0 : 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.85, ease: EASE }}
-                viewport={{ once: true, amount: 0.25 }}
+                transition={{ duration: 1.55, ease: EASE }}
+                viewport={{ once: true, amount: 0.16 }}
               >
                 {/* Photo card */}
                 <motion.div
@@ -43,8 +43,8 @@ const StorySection = () => {
                     opacity: 1,
                     clipPath: "inset(0% 0% 0% 0% round 30px)",
                   }}
-                  transition={{ duration: 0.9, ease: EASE }}
-                  viewport={{ once: true, amount: 0.25 }}
+                  transition={{ duration: 1.6, ease: EASE }}
+                  viewport={{ once: true, amount: 0.16 }}
                 >
                   {/* soft blurred fill behind image */}
                   <img
@@ -61,8 +61,8 @@ const StorySection = () => {
                     className="relative z-10 block h-auto w-full object-contain"
                     initial={{ scale: reduceMotion ? 1 : 1.035 }}
                     whileInView={{ scale: 1 }}
-                    transition={{ duration: 1.25, ease: EASE }}
-                    viewport={{ once: true, amount: 0.3 }}
+                    transition={{ duration: 1.65, ease: EASE }}
+                    viewport={{ once: true, amount: 0.18 }}
                   />
 
                   <div className="pointer-events-none absolute inset-0 z-20 bg-gradient-to-t from-black/18 via-transparent to-white/8" />
@@ -73,8 +73,8 @@ const StorySection = () => {
                   className="relative z-10 mx-auto -mt-7 w-[92%] rounded-[28px] border border-[#ead9b8] bg-[#fffaf2]/95 px-5 py-7 text-center shadow-[0_18px_50px_rgba(111,84,42,0.13)] backdrop-blur-md"
                   initial={{ opacity: 0, y: reduceMotion ? 0 : 18 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.75, delay: 0.08, ease: EASE }}
-                  viewport={{ once: true, amount: 0.25 }}
+                  transition={{ duration: 1.45, delay: 0.16, ease: EASE }}
+                  viewport={{ once: true, amount: 0.16 }}
                 >
                   <p className="mb-3 text-[8.5px] uppercase tracking-[0.32em] text-[#b99245]">
                     {chapterLabel}
@@ -88,7 +88,7 @@ const StorySection = () => {
                     <div className="h-px w-8 bg-gradient-to-l from-transparent to-[#c89d43]/70" />
                   </div>
 
-                  <h2 className="font-display mb-4 text-[2rem] leading-[1.05] text-[#3d3128]">
+                  <h2 className="font-display mb-4 text-[clamp(1.75rem,8.5vw,2rem)] leading-[1.08] text-[#3d3128]">
                     {story.title}
                   </h2>
 
@@ -119,7 +119,7 @@ const StorySection = () => {
                   duration: reduceMotion ? 0 : 12,
                   ease: "linear",
                 }}
-                viewport={{ once: true, amount: 0.25 }}
+                viewport={{ once: true, amount: 0.16 }}
               >
                 <img
                   src={story.image}
@@ -158,7 +158,7 @@ const StorySection = () => {
                       className="mx-auto mb-8 flex items-center justify-center gap-3"
                       initial={{ opacity: 0, scaleX: 0.85 }}
                       whileInView={{ opacity: 1, scaleX: 1 }}
-                      transition={{ duration: 0.8, ease: EASE }}
+                      transition={{ duration: 1.45, ease: EASE }}
                       viewport={{ once: true }}
                     >
                       <div className="h-px w-12 bg-gradient-to-r from-transparent to-gold/60" />
@@ -172,7 +172,7 @@ const StorySection = () => {
                       className="font-display mb-6 text-5xl leading-tight text-white drop-shadow-[0_6px_24px_rgba(0,0,0,0.45)] md:text-6xl"
                       initial={{ opacity: 0, y: reduceMotion ? 0 : 36 }}
                       whileInView={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 1, ease: EASE }}
+                      transition={{ duration: 1.65, ease: EASE }}
                       viewport={{ once: true }}
                     >
                       {story.title}
@@ -182,7 +182,7 @@ const StorySection = () => {
                       className="mx-auto max-w-2xl text-lg font-light leading-8 text-white/85"
                       initial={{ opacity: 0, y: reduceMotion ? 0 : 20 }}
                       whileInView={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 1, delay: 0.25, ease: EASE }}
+                      transition={{ duration: 1.65, delay: 0.32, ease: EASE }}
                       viewport={{ once: true }}
                     >
                       {story.text}
@@ -192,7 +192,7 @@ const StorySection = () => {
                       className="mx-auto mt-8 h-px w-16 bg-gold"
                       initial={{ scaleX: 0 }}
                       whileInView={{ scaleX: 1 }}
-                      transition={{ duration: 0.8, delay: 0.45, ease: EASE }}
+                      transition={{ duration: 1.4, delay: 0.54, ease: EASE }}
                       viewport={{ once: true }}
                     />
                   </div>
@@ -207,7 +207,7 @@ const StorySection = () => {
                         x: reduceMotion ? 0 : -36,
                       }}
                       whileInView={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.9, ease: EASE }}
+                      transition={{ duration: 1.55, ease: EASE }}
                       viewport={{ once: true }}
                       whileHover={reduceMotion ? undefined : { y: -4 }}
                     >
@@ -215,7 +215,7 @@ const StorySection = () => {
                         className="mb-4 text-[10px] uppercase tracking-[0.42em] text-gold/80"
                         initial={{ opacity: 0, y: reduceMotion ? 0 : 12 }}
                         whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.7, delay: 0.1, ease: EASE }}
+                        transition={{ duration: 1.35, delay: 0.16, ease: EASE }}
                         viewport={{ once: true }}
                       >
                         {ui.chapterTwo}
@@ -225,7 +225,7 @@ const StorySection = () => {
                         className="font-display mb-5 text-5xl leading-tight text-white"
                         initial={{ opacity: 0, y: reduceMotion ? 0 : 26 }}
                         whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.9, delay: 0.16, ease: EASE }}
+                        transition={{ duration: 1.55, delay: 0.24, ease: EASE }}
                         viewport={{ once: true }}
                       >
                         {story.title}
@@ -235,7 +235,7 @@ const StorySection = () => {
                         className="mb-6 h-px w-16 bg-gold"
                         initial={{ scaleX: 0 }}
                         whileInView={{ scaleX: 1 }}
-                        transition={{ duration: 0.7, delay: 0.24, ease: EASE }}
+                        transition={{ duration: 1.35, delay: 0.34, ease: EASE }}
                         viewport={{ once: true }}
                       />
 
@@ -243,7 +243,7 @@ const StorySection = () => {
                         className="text-lg font-light leading-8 text-white/85"
                         initial={{ opacity: 0, y: reduceMotion ? 0 : 18 }}
                         whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.9, delay: 0.3, ease: EASE }}
+                        transition={{ duration: 1.55, delay: 0.42, ease: EASE }}
                         viewport={{ once: true }}
                       >
                         {story.text}
@@ -258,7 +258,7 @@ const StorySection = () => {
                       className="mb-4 text-[10px] uppercase tracking-[0.42em] text-gold/80"
                       initial={{ opacity: 0, y: reduceMotion ? 0 : 12 }}
                       whileInView={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.7, ease: EASE }}
+                      transition={{ duration: 1.35, ease: EASE }}
                       viewport={{ once: true }}
                     >
                       {ui.finalChapter}
@@ -268,7 +268,7 @@ const StorySection = () => {
                       className="font-display mb-6 text-5xl leading-tight text-white drop-shadow-[0_6px_24px_rgba(0,0,0,0.45)] md:text-6xl"
                       initial={{ opacity: 0, y: reduceMotion ? 0 : 34 }}
                       whileInView={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 1, ease: EASE }}
+                      transition={{ duration: 1.65, ease: EASE }}
                       viewport={{ once: true }}
                     >
                       {story.title}
@@ -278,7 +278,7 @@ const StorySection = () => {
                       className="mx-auto mb-7 flex items-center justify-center gap-3"
                       initial={{ opacity: 0, scaleX: 0.85 }}
                       whileInView={{ opacity: 1, scaleX: 1 }}
-                      transition={{ duration: 0.8, delay: 0.15, ease: EASE }}
+                      transition={{ duration: 1.45, delay: 0.22, ease: EASE }}
                       viewport={{ once: true }}
                     >
                       <div className="h-px w-16 bg-gold/40" />
@@ -290,7 +290,7 @@ const StorySection = () => {
                       className="mx-auto max-w-2xl text-lg font-light leading-8 text-white/85"
                       initial={{ opacity: 0, y: reduceMotion ? 0 : 18 }}
                       whileInView={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.95, delay: 0.25, ease: EASE }}
+                      transition={{ duration: 1.6, delay: 0.34, ease: EASE }}
                       viewport={{ once: true }}
                     >
                       {story.text}
@@ -300,7 +300,7 @@ const StorySection = () => {
                       className="mx-auto mt-8 h-px w-20 bg-gradient-to-r from-transparent via-gold to-transparent"
                       initial={{ scaleX: 0 }}
                       whileInView={{ scaleX: 1 }}
-                      transition={{ duration: 0.8, delay: 0.45, ease: EASE }}
+                      transition={{ duration: 1.4, delay: 0.54, ease: EASE }}
                       viewport={{ once: true }}
                     />
                   </div>

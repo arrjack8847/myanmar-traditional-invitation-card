@@ -5,7 +5,7 @@ import {
   MapPin,
   Sparkles,
 } from "lucide-react";
-import type { ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { useLanguage } from "@/context/language";
 
 const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
@@ -23,9 +23,9 @@ const DETAILS_TITLE_IMAGE = "/mingalar-Photoroom.png";
 const DETAILS_TITLE = {
   x: 0, // negative = left, positive = right
   y: 0, // negative = up, positive = down
-  width: 250, // PNG title size
+  width: 220, // PNG title size
   marginTop: -10, // space above title
-  marginBottom:-30, // space below title
+  marginBottom:-24, // space below title
 };
 
 /* 🎛️ DETAILS DIVIDER PNG CONTROL PANEL */
@@ -52,22 +52,23 @@ const DETAILS_DIVIDER = {
 
 /* 🎛️ CARD SPACING CONTROL */
 const DETAILS_CARD = {
-  sectionPaddingTop: 24,
-  sectionPaddingBottom: "calc(env(safe-area-inset-bottom) + 9rem)",
+  sectionPaddingTop: "clamp(3.25rem, 8vw, 6.25rem)",
+  sectionPaddingBottom:
+    "calc(env(safe-area-inset-bottom) + clamp(3.25rem, 7vw, 5.5rem))",
 
-  cardPaddingX: 16,
-  cardPaddingY: 36,
+  cardPaddingX: "clamp(1.1rem, 4vw, 2.75rem)",
+  cardPaddingY: "clamp(1.65rem, 5vw, 3.8rem)",
 
   contentMaxWidth: 576,
 
-  iconMarginBottom: 20,
+  iconMarginBottom: 12,
   descriptionMarginTop: 0,
 
-  itemsMarginTop: 32,
-  itemGap: 32,
+  itemsMarginTop: 20,
+  itemGap: 10,
 
-  buttonMarginTop: 40,
-  buttonMarginBottom: 48,
+  buttonMarginTop: 18,
+  buttonMarginBottom: 10,
 };
 
 /* ========================================================= */
@@ -80,8 +81,8 @@ const Divider = ({ compact = false }: { compact?: boolean }) => {
       className="mx-auto flex origin-center items-center justify-center"
       initial={{ opacity: 0, clipPath: "inset(0% 50% 0% 50%)" }}
       whileInView={{ opacity: 1, clipPath: "inset(0% 0% 0% 0%)" }}
-      transition={{ duration: 0.8, ease: EASE }}
-      viewport={{ once: true, amount: 0.6 }}
+      transition={{ duration: 1.45, ease: EASE }}
+      viewport={{ once: true, amount: 0.16 }}
       style={{
         marginTop: compact
           ? DETAILS_DIVIDER.compactMarginTop
@@ -116,7 +117,7 @@ const CornerImage = ({
   position: "top-left" | "top-right" | "bottom-left" | "bottom-right";
 }) => {
   const base =
-    "pointer-events-none absolute z-[2] h-[78px] w-[78px] opacity-80 sm:h-[132px] sm:w-[132px]";
+    "pointer-events-none absolute z-[2] h-[58px] w-[58px] opacity-55 sm:h-[132px] sm:w-[132px] sm:opacity-80";
 
   const config = {
     "top-left": {
@@ -163,37 +164,43 @@ const DetailItem = ({
   isMyanmar: boolean;
 }) => (
   <motion.div
-    className="mx-auto max-w-[19rem] text-center"
-    initial={{ opacity: 0, y: 14 }}
+    className="mx-auto w-full max-w-[19rem] rounded-[22px] border border-gold/20 bg-white/38 px-3.5 py-3 text-left shadow-[0_12px_30px_rgba(111,84,42,0.08)] sm:border-0 sm:bg-transparent sm:p-0 sm:text-center sm:shadow-none"
+    initial={{ opacity: 0, y: 24 }}
     whileInView={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.65, ease: EASE }}
-    viewport={{ once: true, amount: 0.35 }}
+    transition={{ duration: 1.25, ease: EASE }}
+    viewport={{ once: true, amount: 0.18 }}
   >
-    <div className="mx-auto mb-3 flex h-11 w-11 items-center justify-center rounded-full border border-gold/25 bg-white/60 text-[#b78728] shadow-[0_10px_24px_rgba(184,135,36,0.10)]">
-      {icon}
+    <div className="flex items-start gap-3 sm:block">
+      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-gold/25 bg-white/65 text-[#b78728] shadow-[0_10px_24px_rgba(184,135,36,0.10)] sm:mx-auto sm:mb-3 sm:h-11 sm:w-11">
+        {icon}
+      </div>
+
+      <div className="min-w-0 flex-1">
+        <p
+          className={
+            isMyanmar
+              ? "font-myanmar text-[12px] font-bold text-[#b78728] sm:text-base"
+              : "font-display text-[11px] font-bold uppercase tracking-[0.08em] text-[#b78728] sm:text-base"
+          }
+        >
+          {label}
+        </p>
+
+        <div className="hidden sm:block">
+          <Divider compact />
+        </div>
+
+        <p
+          className={
+            isMyanmar
+              ? "whitespace-pre-line break-words font-myanmar text-[0.82rem] font-bold leading-[1.58] text-[#91651c] sm:text-[1.55rem] sm:leading-[1.9]"
+              : "whitespace-pre-line break-words font-display text-[0.88rem] font-bold leading-[1.5] text-[#91651c] sm:text-[1.55rem] sm:leading-[1.65]"
+          }
+        >
+          {value}
+        </p>
+      </div>
     </div>
-
-    <p
-      className={
-        isMyanmar
-          ? "font-myanmar text-[14px] font-bold text-[#b78728] sm:text-base"
-          : "font-display text-[14px] font-bold tracking-[0.08em] text-[#b78728] sm:text-base"
-      }
-    >
-      {label}
-    </p>
-
-    <Divider compact />
-
-    <p
-      className={
-        isMyanmar
-          ? "whitespace-pre-line break-words font-myanmar text-[0.98rem] font-bold leading-[1.9] text-[#91651c] sm:text-[1.55rem]"
-          : "whitespace-pre-line break-words font-display text-[1.05rem] font-bold leading-[1.65] text-[#91651c] sm:text-[1.55rem]"
-      }
-    >
-      {value}
-    </p>
   </motion.div>
 );
 
@@ -232,7 +239,7 @@ const ClickHereButton = ({
         reduceMotion
           ? {}
           : {
-              duration: 1.45,
+              duration: 4.2,
               repeat: Infinity,
               ease: "easeInOut",
             }
@@ -245,9 +252,9 @@ const ClickHereButton = ({
           className="pointer-events-none absolute inset-y-0 -left-1/3 w-1/3 rotate-12 bg-gradient-to-r from-transparent via-white/55 to-transparent"
           animate={{ x: ["-120%", "420%"] }}
           transition={{
-            duration: 1.35,
+            duration: 3.5,
             repeat: Infinity,
-            repeatDelay: 0.55,
+            repeatDelay: 1.6,
             ease: "easeInOut",
           }}
         />
@@ -261,7 +268,7 @@ const ClickHereButton = ({
             opacity: [0.25, 0.65, 0.25],
           }}
           transition={{
-            duration: 1.45,
+            duration: 4.2,
             repeat: Infinity,
             ease: "easeInOut",
           }}
@@ -281,8 +288,20 @@ const EventDetails = () => {
     content: { event },
   } = useLanguage();
   const reduceMotion = useReducedMotion();
+  const [isCoarsePointer, setIsCoarsePointer] = useState(false);
 
   const isMyanmar = language === "my";
+  const motionDisabled = Boolean(reduceMotion || isCoarsePointer);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(pointer: coarse)");
+    const updatePointerMode = () => setIsCoarsePointer(mediaQuery.matches);
+
+    updatePointerMode();
+    mediaQuery.addEventListener("change", updatePointerMode);
+
+    return () => mediaQuery.removeEventListener("change", updatePointerMode);
+  }, []);
 
   const dateItem = event.items.find((item) => item.icon === "calendar");
   const timeItem = event.items.find((item) => item.icon === "clock");
@@ -303,8 +322,8 @@ const EventDetails = () => {
         className="relative z-10 mx-auto max-w-3xl"
         initial={{ opacity: 0, y: reduceMotion ? 0 : 22 }}
         whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: EASE }}
-        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 1.55, ease: EASE }}
+        viewport={{ once: true, amount: 0.12 }}
       >
         <div
           className="relative overflow-hidden rounded-[30px] border border-gold/45 bg-[#fffaf0]/88 shadow-[0_28px_80px_rgba(111,84,42,0.14)] backdrop-blur-sm sm:rounded-[36px]"
@@ -341,7 +360,7 @@ const EventDetails = () => {
               }}
               initial={{ opacity: 0, scale: reduceMotion ? 1 : 0.92 }}
               whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.7, ease: EASE }}
+              transition={{ duration: 1.35, ease: EASE }}
               viewport={{ once: true }}
             >
               <Sparkles className="h-8 w-8" />
@@ -355,7 +374,7 @@ const EventDetails = () => {
               }
               initial={{ opacity: 0, y: reduceMotion ? 0 : 10 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, ease: EASE }}
+              transition={{ duration: 1.35, ease: EASE }}
               viewport={{ once: true }}
             >
               {event.eyebrow}
@@ -372,7 +391,7 @@ const EventDetails = () => {
                 }}
                 initial={{ opacity: 0, y: reduceMotion ? 0 : 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, ease: EASE }}
+                transition={{ duration: 1.45, ease: EASE }}
                 viewport={{ once: true }}
               >
                 <img
@@ -380,8 +399,8 @@ const EventDetails = () => {
                   alt="မင်္ဂလာ အသေးစိတ်"
                   className="h-auto object-contain"
                   style={{
-                    width: `min(${DETAILS_TITLE.width}px, 88vw)`,
-                    maxWidth: "88vw",
+                    width: `min(${DETAILS_TITLE.width}px, 70vw)`,
+                    maxWidth: "70vw",
                   }}
                 />
               </motion.div>
@@ -390,7 +409,7 @@ const EventDetails = () => {
                 className="mx-auto mt-2 max-w-[16rem] font-display text-[2rem] font-bold leading-[1.15] text-[#b17d20] drop-shadow-[0_8px_24px_rgba(184,135,36,0.18)] sm:max-w-none sm:text-[3rem]"
                 initial={{ opacity: 0, y: reduceMotion ? 0 : 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, ease: EASE }}
+                transition={{ duration: 1.45, ease: EASE }}
                 viewport={{ once: true }}
               >
                 {event.title}
@@ -410,7 +429,7 @@ const EventDetails = () => {
               }}
               initial={{ opacity: 0, y: reduceMotion ? 0 : 12 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.05, duration: 0.75, ease: EASE }}
+              transition={{ delay: 0.16, duration: 1.4, ease: EASE }}
               viewport={{ once: true }}
             >
               {event.description}
@@ -459,13 +478,13 @@ const EventDetails = () => {
               }}
               initial={{ opacity: 0, y: reduceMotion ? 0 : 14 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.12, duration: 0.75, ease: EASE }}
+              transition={{ delay: 0.24, duration: 1.4, ease: EASE }}
               viewport={{ once: true }}
             >
               <ClickHereButton
                 href={event.mapUrl}
                 label={event.buttonText}
-                reduceMotion={reduceMotion}
+                reduceMotion={motionDisabled}
                 isMyanmar={isMyanmar}
               />
             </motion.div>

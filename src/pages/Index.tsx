@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import EnvelopeOpening from "@/components/wedding/EnvelopeOpening";
 import HeroSection from "@/components/wedding/HeroSection";
@@ -16,6 +16,13 @@ import LanguageToggle from "@/components/wedding/LanguageToggle";
 const Index = () => {
   const [opened, setOpened] = useState(false);
 
+  useEffect(() => {
+    if (!opened) return;
+
+    window.history.replaceState(null, "", window.location.pathname);
+    window.scrollTo({ top: 0, behavior: "auto" });
+  }, [opened]);
+
   return (
     <>
       <LanguageToggle />
@@ -26,11 +33,11 @@ const Index = () => {
         ) : (
           <motion.div
             key="main-site"
-            initial={{ opacity: 0, filter: "blur(8px)" }}
-            animate={{ opacity: 1, filter: "blur(0px)" }}
-            exit={{ opacity: 0, filter: "blur(6px)" }}
-            transition={{ duration: 1.2, ease: "easeOut" }}
-            className="relative w-full overflow-x-hidden"
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 1.25, ease: [0.16, 1, 0.3, 1] }}
+            className="myanmar-paper-bg relative w-full overflow-x-hidden"
           >
             <MusicPlayer />
 

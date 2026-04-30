@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -26,6 +26,8 @@ const RSVPSection = () => {
   const { toast } = useToast();
   const { rsvp, ui } = useWeddingContent();
   const reduceMotion = useReducedMotion();
+  const [isCoarsePointer, setIsCoarsePointer] = useState(false);
+  const motionDisabled = Boolean(reduceMotion || isCoarsePointer);
 
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -36,6 +38,16 @@ const RSVPSection = () => {
     guests: "1",
     message: "",
   });
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(pointer: coarse)");
+    const updatePointerMode = () => setIsCoarsePointer(mediaQuery.matches);
+
+    updatePointerMode();
+    mediaQuery.addEventListener("change", updatePointerMode);
+
+    return () => mediaQuery.removeEventListener("change", updatePointerMode);
+  }, []);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -91,23 +103,20 @@ const RSVPSection = () => {
   return (
     <section
       id="rsvp"
-      className="relative flex min-h-[100dvh] items-center overflow-hidden px-3 py-10 sm:px-6 sm:py-24"
+      className="myanmar-paper-bg relative flex items-center overflow-hidden px-4 py-14 sm:min-h-[100dvh] sm:px-6 sm:py-24"
     >
       {/* BACKGROUND */}
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-[#f8f1e8] to-background" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_14%,rgba(212,175,108,0.16),transparent_34%)]" />
-      <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-white/55 to-transparent" />
-      <div className="absolute inset-x-0 bottom-0 h-52 bg-gradient-to-t from-white/45 to-transparent" />
+      <div className="section-glow absolute inset-0" />
 
       {/* SOFT GLOW */}
       <motion.div
         className="pointer-events-none absolute left-1/2 top-[18%] h-[260px] w-[260px] -translate-x-1/2 rounded-full bg-gold/10 blur-[90px] sm:h-[460px] sm:w-[460px]"
         animate={
-          reduceMotion
+          motionDisabled
             ? { opacity: 0.16 }
             : { opacity: [0.1, 0.23, 0.1], scale: [1, 1.06, 1] }
         }
-        transition={{ duration: 5.8, repeat: Infinity, ease: "easeInOut" }}
+        transition={{ duration: 8.5, repeat: Infinity, ease: "easeInOut" }}
       />
 
       {/* DECOR DOTS */}
@@ -121,21 +130,21 @@ const RSVPSection = () => {
           {/* LEFT HEADER */}
           <div className="text-center lg:text-left">
             <motion.p
-              className="mx-auto mb-2 max-w-[18rem] text-[9px] uppercase leading-5 tracking-[0.24em] text-gold/80 sm:mb-3 sm:max-w-none sm:text-[11px] sm:tracking-[0.45em] lg:mx-0"
+              className="mx-auto mb-2 max-w-[18rem] text-[9px] uppercase leading-5 tracking-[0.2em] text-gold/80 sm:mb-3 sm:max-w-none sm:text-[11px] sm:tracking-[0.45em] lg:mx-0"
               initial={{ opacity: 0, y: reduceMotion ? 0 : 8 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, ease: EASE }}
-              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 1.35, ease: EASE }}
+              viewport={{ once: true, amount: 0.18 }}
             >
               {rsvp.eyebrow}
             </motion.p>
 
             <motion.h2
-              className="mx-auto max-w-[20rem] text-balance font-display text-[2.35rem] leading-[1.08] text-foreground sm:max-w-none sm:text-6xl sm:leading-none md:text-7xl lg:mx-0"
+              className="mx-auto max-w-[20rem] text-balance font-display text-[clamp(1.8rem,8vw,2.6rem)] leading-[1.14] text-foreground sm:max-w-none sm:text-6xl sm:leading-none md:text-7xl lg:mx-0"
               initial={{ opacity: 0, y: reduceMotion ? 0 : 16 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.85, ease: EASE }}
-              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 1.45, ease: EASE }}
+              viewport={{ once: true, amount: 0.18 }}
             >
               {rsvp.title}
             </motion.h2>
@@ -144,16 +153,16 @@ const RSVPSection = () => {
               className="gold-line mx-auto mt-3 h-px w-20 sm:mt-5 sm:w-24 lg:mx-0"
               initial={{ scaleX: 0, opacity: 0 }}
               whileInView={{ scaleX: 1, opacity: 1 }}
-              transition={{ duration: 0.7, delay: 0.1, ease: EASE }}
-              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 1.35, delay: 0.12, ease: EASE }}
+              viewport={{ once: true, amount: 0.18 }}
             />
 
             <motion.p
               className="mx-auto mt-3 line-clamp-2 max-w-[20rem] text-[13px] leading-[1.6] text-muted-foreground sm:mt-6 sm:line-clamp-none sm:max-w-lg sm:text-base sm:leading-8 lg:mx-0"
               initial={{ opacity: 0, y: reduceMotion ? 0 : 12 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.12, ease: EASE }}
-              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 1.4, delay: 0.16, ease: EASE }}
+              viewport={{ once: true, amount: 0.18 }}
             >
               {ui.rsvpHelper}
             </motion.p>
@@ -162,8 +171,8 @@ const RSVPSection = () => {
               className="mx-auto mt-7 hidden max-w-sm rounded-[28px] border border-gold/15 bg-white/35 p-5 text-left shadow-[0_20px_55px_rgba(111,84,42,0.08)] backdrop-blur-xl lg:block"
               initial={{ opacity: 0, y: reduceMotion ? 0 : 14 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.75, delay: 0.18, ease: EASE }}
-              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 1.35, delay: 0.22, ease: EASE }}
+              viewport={{ once: true, amount: 0.18 }}
             >
               <p className="text-[10px] uppercase tracking-[0.32em] text-gold/80">
                 {ui.kindlyReply}
@@ -179,18 +188,18 @@ const RSVPSection = () => {
             {!submitted ? (
               <motion.form
                 key="form"
-                className="glass relative mx-auto w-full max-w-[360px] overflow-hidden rounded-[24px] border border-white/50 bg-white/40 p-4 text-left shadow-[0_24px_70px_rgba(111,84,42,0.12)] backdrop-blur-xl sm:max-w-xl sm:rounded-[32px] sm:p-8"
+                className="glass relative mx-auto w-full max-w-[390px] overflow-hidden rounded-[24px] border border-white/50 bg-white/40 p-5 text-left shadow-[0_24px_70px_rgba(111,84,42,0.12)] backdrop-blur-xl sm:max-w-xl sm:rounded-[32px] sm:p-8"
                 onSubmit={handleSubmit}
                 initial={{ opacity: 0, y: reduceMotion ? 0 : 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.97 }}
-                transition={{ duration: 0.7, ease: EASE }}
-                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 1.35, ease: EASE }}
+                viewport={{ once: true, amount: 0.12 }}
               >
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(212,175,108,0.14),transparent_45%)]" />
                 <div className="absolute inset-0 rounded-[24px] ring-1 ring-white/35 sm:rounded-[32px]" />
 
-                <div className="relative z-10 space-y-3 sm:space-y-5">
+                <div className="relative z-10 space-y-4 sm:space-y-5">
                   {/* NAME */}
                   <div>
                     <label className="mb-1.5 block text-[12px] text-muted-foreground sm:mb-2 sm:text-sm">
@@ -264,7 +273,7 @@ const RSVPSection = () => {
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: "auto", opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.35, ease: EASE }}
+                        transition={{ duration: 0.5, ease: EASE }}
                       >
                         <label className="mb-1.5 block text-[12px] text-muted-foreground sm:mb-2 sm:text-sm">
                           {rsvp.guestsLabel}
@@ -328,7 +337,7 @@ const RSVPSection = () => {
                 className="glass relative mx-auto flex w-full max-w-[390px] flex-col items-center overflow-hidden rounded-[32px] border border-white/50 bg-white/40 px-6 py-10 text-center shadow-[0_24px_70px_rgba(111,84,42,0.12)] backdrop-blur-xl sm:max-w-xl sm:p-12"
                 initial={{ opacity: 0, scale: reduceMotion ? 1 : 0.94, y: 10 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
-                transition={{ type: "spring", duration: 0.9 }}
+                transition={{ type: "spring", duration: 1.25 }}
               >
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(212,175,108,0.16),transparent_45%)]" />
 
@@ -344,7 +353,7 @@ const RSVPSection = () => {
                   className="relative z-10 mb-2 mt-6 font-display text-[1.9rem] leading-tight text-foreground sm:text-3xl"
                   initial={{ opacity: 0, y: reduceMotion ? 0 : 12 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.12, duration: 0.5 }}
+                  transition={{ delay: 0.12, duration: 0.9 }}
                 >
                   {rsvp.successTitle}
                 </motion.h3>
@@ -353,7 +362,7 @@ const RSVPSection = () => {
                   className="relative z-10 max-w-sm text-[14px] leading-[1.8] text-muted-foreground sm:text-sm sm:leading-7"
                   initial={{ opacity: 0, y: reduceMotion ? 0 : 12 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.2, duration: 0.55 }}
+                  transition={{ delay: 0.2, duration: 0.95 }}
                 >
                   {rsvp.successText}
                 </motion.p>
@@ -362,7 +371,7 @@ const RSVPSection = () => {
                   className="relative z-10 mt-7 h-px w-24 bg-gradient-to-r from-transparent via-gold to-transparent"
                   initial={{ scaleX: 0, opacity: 0 }}
                   animate={{ scaleX: 1, opacity: 1 }}
-                  transition={{ delay: 0.28, duration: 0.6 }}
+                  transition={{ delay: 0.28, duration: 1 }}
                 />
 
                 {!reduceMotion &&
