@@ -1,4 +1,4 @@
-import { useEffect, useState, type FormEvent } from "react";
+import { useState, type FormEvent } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -26,8 +26,7 @@ const RSVPSection = () => {
   const { toast } = useToast();
   const { rsvp, ui } = useWeddingContent();
   const reduceMotion = useReducedMotion();
-  const [isCoarsePointer, setIsCoarsePointer] = useState(false);
-  const motionDisabled = Boolean(reduceMotion || isCoarsePointer);
+  const motionDisabled = Boolean(reduceMotion);
 
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -38,16 +37,6 @@ const RSVPSection = () => {
     guests: "1",
     message: "",
   });
-
-  useEffect(() => {
-    const mediaQuery = window.matchMedia("(pointer: coarse)");
-    const updatePointerMode = () => setIsCoarsePointer(mediaQuery.matches);
-
-    updatePointerMode();
-    mediaQuery.addEventListener("change", updatePointerMode);
-
-    return () => mediaQuery.removeEventListener("change", updatePointerMode);
-  }, []);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -131,8 +120,13 @@ const RSVPSection = () => {
           <div className="text-center lg:text-left">
             <motion.p
               className="mx-auto mb-2 max-w-[18rem] text-[9px] uppercase leading-5 tracking-[0.2em] text-gold/80 sm:mb-3 sm:max-w-none sm:text-[11px] sm:tracking-[0.45em] lg:mx-0"
-              initial={{ opacity: 0, y: reduceMotion ? 0 : 8 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={{
+                opacity: 0,
+                y: reduceMotion ? 0 : 14,
+                scale: reduceMotion ? 1 : 0.98,
+                filter: reduceMotion ? "blur(0px)" : "blur(6px)",
+              }}
+              whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
               transition={{ duration: 1.35, ease: EASE }}
               viewport={{ once: true, amount: 0.18 }}
             >
@@ -141,8 +135,13 @@ const RSVPSection = () => {
 
             <motion.h2
               className="mx-auto max-w-[20rem] text-balance font-display text-[clamp(1.8rem,8vw,2.6rem)] leading-[1.14] text-foreground sm:max-w-none sm:text-6xl sm:leading-none md:text-7xl lg:mx-0"
-              initial={{ opacity: 0, y: reduceMotion ? 0 : 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={{
+                opacity: 0,
+                y: reduceMotion ? 0 : 22,
+                scale: reduceMotion ? 1 : 0.97,
+                filter: reduceMotion ? "blur(0px)" : "blur(8px)",
+              }}
+              whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
               transition={{ duration: 1.45, ease: EASE }}
               viewport={{ once: true, amount: 0.18 }}
             >
@@ -159,8 +158,13 @@ const RSVPSection = () => {
 
             <motion.p
               className="mx-auto mt-3 line-clamp-2 max-w-[20rem] text-[13px] leading-[1.6] text-muted-foreground sm:mt-6 sm:line-clamp-none sm:max-w-lg sm:text-base sm:leading-8 lg:mx-0"
-              initial={{ opacity: 0, y: reduceMotion ? 0 : 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={{
+                opacity: 0,
+                y: reduceMotion ? 0 : 16,
+                scale: reduceMotion ? 1 : 0.98,
+                filter: reduceMotion ? "blur(0px)" : "blur(6px)",
+              }}
+              whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
               transition={{ duration: 1.4, delay: 0.16, ease: EASE }}
               viewport={{ once: true, amount: 0.18 }}
             >
@@ -169,8 +173,13 @@ const RSVPSection = () => {
 
             <motion.div
               className="mx-auto mt-7 hidden max-w-sm rounded-[28px] border border-gold/15 bg-white/35 p-5 text-left shadow-[0_20px_55px_rgba(111,84,42,0.08)] backdrop-blur-xl lg:block"
-              initial={{ opacity: 0, y: reduceMotion ? 0 : 14 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={{
+                opacity: 0,
+                y: reduceMotion ? 0 : 18,
+                scale: reduceMotion ? 1 : 0.97,
+                filter: reduceMotion ? "blur(0px)" : "blur(7px)",
+              }}
+              whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
               transition={{ duration: 1.35, delay: 0.22, ease: EASE }}
               viewport={{ once: true, amount: 0.18 }}
             >
@@ -190,8 +199,13 @@ const RSVPSection = () => {
                 key="form"
                 className="glass relative mx-auto w-full max-w-[390px] overflow-hidden rounded-[24px] border border-white/50 bg-white/40 p-5 text-left shadow-[0_24px_70px_rgba(111,84,42,0.12)] backdrop-blur-xl sm:max-w-xl sm:rounded-[32px] sm:p-8"
                 onSubmit={handleSubmit}
-                initial={{ opacity: 0, y: reduceMotion ? 0 : 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{
+                  opacity: 0,
+                  y: reduceMotion ? 0 : 28,
+                  scale: reduceMotion ? 1 : 0.97,
+                  filter: reduceMotion ? "blur(0px)" : "blur(9px)",
+                }}
+                whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
                 exit={{ opacity: 0, scale: 0.97 }}
                 transition={{ duration: 1.35, ease: EASE }}
                 viewport={{ once: true, amount: 0.12 }}
@@ -273,7 +287,7 @@ const RSVPSection = () => {
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: "auto", opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.5, ease: EASE }}
+                        transition={{ duration: 0.9, ease: EASE }}
                       >
                         <label className="mb-1.5 block text-[12px] text-muted-foreground sm:mb-2 sm:text-sm">
                           {rsvp.guestsLabel}
@@ -335,9 +349,14 @@ const RSVPSection = () => {
               <motion.div
                 key="success"
                 className="glass relative mx-auto flex w-full max-w-[390px] flex-col items-center overflow-hidden rounded-[32px] border border-white/50 bg-white/40 px-6 py-10 text-center shadow-[0_24px_70px_rgba(111,84,42,0.12)] backdrop-blur-xl sm:max-w-xl sm:p-12"
-                initial={{ opacity: 0, scale: reduceMotion ? 1 : 0.94, y: 10 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                transition={{ type: "spring", duration: 1.25 }}
+                initial={{
+                  opacity: 0,
+                  scale: reduceMotion ? 1 : 0.96,
+                  y: reduceMotion ? 0 : 22,
+                  filter: reduceMotion ? "blur(0px)" : "blur(8px)",
+                }}
+                animate={{ opacity: 1, scale: 1, y: 0, filter: "blur(0px)" }}
+                transition={{ duration: 1.35, ease: EASE }}
               >
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(212,175,108,0.16),transparent_45%)]" />
 
@@ -351,18 +370,28 @@ const RSVPSection = () => {
 
                 <motion.h3
                   className="relative z-10 mb-2 mt-6 font-display text-[1.9rem] leading-tight text-foreground sm:text-3xl"
-                  initial={{ opacity: 0, y: reduceMotion ? 0 : 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.12, duration: 0.9 }}
+                  initial={{
+                    opacity: 0,
+                    y: reduceMotion ? 0 : 14,
+                    scale: reduceMotion ? 1 : 0.98,
+                    filter: reduceMotion ? "blur(0px)" : "blur(6px)",
+                  }}
+                  animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+                  transition={{ delay: 0.12, duration: 1.05, ease: EASE }}
                 >
                   {rsvp.successTitle}
                 </motion.h3>
 
                 <motion.p
                   className="relative z-10 max-w-sm text-[14px] leading-[1.8] text-muted-foreground sm:text-sm sm:leading-7"
-                  initial={{ opacity: 0, y: reduceMotion ? 0 : 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.2, duration: 0.95 }}
+                  initial={{
+                    opacity: 0,
+                    y: reduceMotion ? 0 : 14,
+                    scale: reduceMotion ? 1 : 0.98,
+                    filter: reduceMotion ? "blur(0px)" : "blur(6px)",
+                  }}
+                  animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+                  transition={{ delay: 0.2, duration: 1.1, ease: EASE }}
                 >
                   {rsvp.successText}
                 </motion.p>

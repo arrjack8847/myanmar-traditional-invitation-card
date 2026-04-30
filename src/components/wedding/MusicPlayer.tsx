@@ -170,6 +170,40 @@ const CTA_BUTTON = {
   shakeDuration: 4.2,
 };
 
+const easeInOutCubic = (progress: number) =>
+  progress < 0.5
+    ? 4 * progress * progress * progress
+    : 1 - Math.pow(-2 * progress + 2, 3) / 2;
+
+const cinematicScrollTo = (targetTop: number, duration: number) => {
+  const startTop = window.scrollY;
+  const distance = targetTop - startTop;
+
+  if (duration <= 0 || Math.abs(distance) < 2) {
+    window.scrollTo({ top: targetTop, behavior: "auto" });
+    return;
+  }
+
+  const startTime = window.performance.now();
+
+  const step = (currentTime: number) => {
+    const elapsed = currentTime - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    const eased = easeInOutCubic(progress);
+
+    window.scrollTo({
+      top: startTop + distance * eased,
+      behavior: "auto",
+    });
+
+    if (progress < 1) {
+      window.requestAnimationFrame(step);
+    }
+  };
+
+  window.requestAnimationFrame(step);
+};
+
 const MusicIntroHero = () => {
   const { language, content } = useLanguage();
   const reduceMotion = useReducedMotion();
@@ -177,19 +211,6 @@ const MusicIntroHero = () => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const [isPlaying, setIsPlaying] = useState(false);
-  const [isCoarsePointer, setIsCoarsePointer] = useState(false);
-
-  useEffect(() => {
-    const mediaQuery = window.matchMedia("(pointer: coarse)");
-    const updatePointerMode = () => setIsCoarsePointer(mediaQuery.matches);
-
-    updatePointerMode();
-    mediaQuery.addEventListener("change", updatePointerMode);
-
-    return () => {
-      mediaQuery.removeEventListener("change", updatePointerMode);
-    };
-  }, []);
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -285,13 +306,15 @@ const MusicIntroHero = () => {
         ? introSection.offsetTop + introSection.offsetHeight
         : nextSection.getBoundingClientRect().top + window.scrollY;
 
-    window.scrollTo({ top: targetTop, behavior: "smooth" });
+    const scrollDuration = reduceMotion ? 0 : 1450;
+
+    cinematicScrollTo(Math.max(targetTop, 0), scrollDuration);
     window.history.replaceState(null, "", "#main-invitation");
     window.setTimeout(() => {
       if (Math.abs(window.scrollY - targetTop) > 2) {
-        window.scrollTo({ top: targetTop, behavior: "smooth" });
+        window.scrollTo({ top: targetTop, behavior: "auto" });
       }
-    }, 900);
+    }, scrollDuration + 160);
   };
 
   return (
@@ -353,8 +376,13 @@ const MusicIntroHero = () => {
           maxWidth: HERO.contentMaxWidth,
           transform: `translate(${HERO.contentX}, ${HERO.contentY})`,
         }}
-        initial={{ opacity: 0, y: reduceMotion ? 0 : 18 }}
-        animate={{ opacity: 1, y: 0 }}
+        initial={{
+          opacity: 0,
+          y: reduceMotion ? 0 : 24,
+          scale: reduceMotion ? 1 : 0.97,
+          filter: reduceMotion ? "blur(0px)" : "blur(9px)",
+        }}
+        animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
         transition={{ duration: 1.55, ease: EASE }}
       >
         {/* Myanmar traditional divider */}
@@ -364,8 +392,18 @@ const MusicIntroHero = () => {
             style={{
               marginBottom: DIVIDER.marginBottom,
             }}
-            initial={{ opacity: 0, y: reduceMotion ? 0 : 8 }}
-            animate={{ opacity: DIVIDER.opacity, y: 0 }}
+            initial={{
+              opacity: 0,
+              y: reduceMotion ? 0 : 14,
+              scale: reduceMotion ? 1 : 0.96,
+              filter: reduceMotion ? "blur(0px)" : "blur(7px)",
+            }}
+            animate={{
+              opacity: DIVIDER.opacity,
+              y: 0,
+              scale: 1,
+              filter: "blur(0px)",
+            }}
             transition={{
               delay: DIVIDER.animationDelay,
               duration: 1.45,
@@ -394,8 +432,13 @@ const MusicIntroHero = () => {
             style={{
               marginBottom: TITLE.marginBottom,
             }}
-            initial={{ opacity: 0, y: reduceMotion ? 0 : 10 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{
+              opacity: 0,
+              y: reduceMotion ? 0 : 16,
+              scale: reduceMotion ? 1 : 0.97,
+              filter: reduceMotion ? "blur(0px)" : "blur(8px)",
+            }}
+            animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
             transition={{
               delay: TITLE.animationDelay,
               duration: 1.5,
@@ -441,8 +484,13 @@ const MusicIntroHero = () => {
               boxShadow: PHOTO_CARD.shadow,
               transform: `translate(${PHOTO_CARD.x}px, ${PHOTO_CARD.y}px)`,
             }}
-            initial={{ opacity: 0, scale: reduceMotion ? 1 : 0.97 }}
-            animate={{ opacity: 1, scale: 1 }}
+            initial={{
+              opacity: 0,
+              y: reduceMotion ? 0 : 18,
+              scale: reduceMotion ? 1 : 0.97,
+              filter: reduceMotion ? "blur(0px)" : "blur(8px)",
+            }}
+            animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
             transition={{ delay: 0.2, duration: 1.6, ease: EASE }}
           >
             <div
@@ -489,8 +537,13 @@ const MusicIntroHero = () => {
             style={{
               marginTop: PLAYER.marginTop,
             }}
-            initial={{ opacity: 0, y: reduceMotion ? 0 : 10 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{
+              opacity: 0,
+              y: reduceMotion ? 0 : 14,
+              scale: reduceMotion ? 1 : 0.98,
+              filter: reduceMotion ? "blur(0px)" : "blur(6px)",
+            }}
+            animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
             transition={{ delay: 0.32, duration: 1.45, ease: EASE }}
           >
             <button
@@ -565,7 +618,7 @@ const MusicIntroHero = () => {
               borderColor: `rgba(212, 175, 55, ${CTA_BUTTON.borderOpacity})`,
             }}
             animate={
-              !reduceMotion && !isCoarsePointer && CTA_BUTTON.shake
+              !reduceMotion && CTA_BUTTON.shake
                 ? { y: [0, CTA_BUTTON.shakeDistance, 0] }
                 : {}
             }

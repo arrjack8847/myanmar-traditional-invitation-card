@@ -37,13 +37,14 @@ const LanguageToggle = () => {
   return (
     <motion.div
       className="fixed left-3 top-[max(0.65rem,env(safe-area-inset-top))] z-[60] origin-top-left rounded-full border border-gold/20 bg-white/55 p-0.5 shadow-[0_10px_26px_rgba(88,63,27,0.12)] backdrop-blur-xl sm:left-6 sm:top-6 sm:p-1"
-      initial={{ opacity: 0, y: -8, scale: 0.96 }}
+      initial={{ opacity: 0, y: -10, scale: 0.96, filter: "blur(7px)" }}
       animate={{
         opacity: compact ? 0.62 : 1,
         y: compact ? -5 : 0,
         scale: compact ? 0.84 : 1,
+        filter: "blur(0px)",
       }}
-      transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+      transition={{ duration: 1.25, ease: [0.16, 1, 0.3, 1] }}
       role="group"
       aria-label={content.ui.languageToggleLabel}
     >

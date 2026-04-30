@@ -8,7 +8,8 @@ export function getHintText(stage: Stage, intro: WeddingContent["intro"]) {
 }
 
 export function getVideoOverlayOpacity(stage: Stage) {
-  if (stage === "videoIntro") return 0.9;
+  if (stage === "videoIntro") return 0.94;
+  if (stage === "siteReveal") return 0.7;
   return 0;
 }
 
@@ -37,11 +38,27 @@ export function getCardAnimate(stage: Stage, isMobile: boolean) {
     : SCENE.card.small.startY;
 
   return {
-    opacity: isVisible ? 1 : 0,
-    scale: isExpandedLike ? 1 : SCENE.card.small.scale,
+    opacity:
+      stage === "siteReveal"
+        ? 0
+        : stage === "videoIntro"
+          ? 0.28
+          : isVisible
+            ? 1
+            : 0,
+    scale:
+      stage === "siteReveal"
+        ? 1.045
+        : stage === "videoIntro"
+          ? 1.025
+          : isExpandedLike
+            ? 1
+            : SCENE.card.small.scale,
     filter:
-      stage === "videoIntro" || stage === "siteReveal"
-        ? "blur(2px)"
+      stage === "siteReveal"
+        ? "blur(16px)"
+        : stage === "videoIntro"
+          ? "blur(8px)"
         : isVisible
           ? "blur(0px)"
           : "blur(7px)",
@@ -49,7 +66,7 @@ export function getCardAnimate(stage: Stage, isMobile: boolean) {
     y: isExpandedLike
       ? isMobile
         ? "calc(-50% - 56px)"
-        : "-50%"
+        : "calc(-50% - 48px)"
       : `calc(-50% + ${
           stage === "cardRising" || stage === "revealed" ? revealY : startY
         }px)`,

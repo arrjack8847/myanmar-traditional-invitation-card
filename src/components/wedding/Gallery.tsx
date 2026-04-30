@@ -117,10 +117,10 @@ const Gallery = () => {
         <motion.div
           className="relative flex max-h-[85vh] w-full items-center justify-center overflow-hidden rounded-2xl"
           onClick={(e) => e.stopPropagation()}
-          initial={{ opacity: 0, scale: 0.96, y: 18 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.96, y: 12 }}
-          transition={{ duration: 0.45, ease: EASE }}
+          initial={{ opacity: 0, scale: 0.96, y: 18, filter: "blur(7px)" }}
+          animate={{ opacity: 1, scale: 1, y: 0, filter: "blur(0px)" }}
+          exit={{ opacity: 0, scale: 0.96, y: 12, filter: "blur(7px)" }}
+          transition={{ duration: 0.85, ease: EASE }}
           style={{
             maxWidth: popup.maxWidth,
             maxHeight: popup.maxHeight,
@@ -152,8 +152,13 @@ const Gallery = () => {
       <div className="mx-auto max-w-5xl text-center">
         <motion.p
           className="mb-4 text-[10px] uppercase tracking-[0.42em] text-gold/75 sm:text-[11px]"
-          initial={{ opacity: 0, y: reduceMotion ? 0 : 8 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{
+            opacity: 0,
+            y: reduceMotion ? 0 : 14,
+            scale: reduceMotion ? 1 : 0.98,
+            filter: reduceMotion ? "blur(0px)" : "blur(6px)",
+          }}
+          whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
           transition={{ duration: 1.35, ease: EASE }}
           viewport={{ once: true, amount: 0.18 }}
         >
@@ -162,8 +167,13 @@ const Gallery = () => {
 
         <motion.h2
           className="font-display text-[clamp(2rem,10vw,2.65rem)] leading-tight text-foreground sm:text-5xl md:text-6xl"
-          initial={{ opacity: 0, y: reduceMotion ? 0 : 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{
+            opacity: 0,
+            y: reduceMotion ? 0 : 24,
+            scale: reduceMotion ? 1 : 0.97,
+            filter: reduceMotion ? "blur(0px)" : "blur(8px)",
+          }}
+          whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
           transition={{ duration: 1.45, ease: EASE }}
           viewport={{ once: true, amount: 0.18 }}
         >
@@ -186,12 +196,16 @@ const Gallery = () => {
               className="group cursor-pointer overflow-hidden rounded-[24px] luxury-card text-left will-change-transform"
               initial={{
                 opacity: 0,
-                y: reduceMotion ? 0 : 22,
+                y: reduceMotion ? 0 : 24,
+                scale: reduceMotion ? 1 : 0.96,
+                filter: reduceMotion ? "blur(0px)" : "blur(7px)",
                 clipPath: "inset(10% 0% 10% 0% round 24px)",
               }}
               whileInView={{
                 opacity: 1,
                 y: 0,
+                scale: 1,
+                filter: "blur(0px)",
                 clipPath: "inset(0% 0% 0% 0% round 24px)",
               }}
               transition={{ delay: i * 0.11, duration: 1.45, ease: EASE }}

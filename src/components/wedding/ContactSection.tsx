@@ -1,6 +1,5 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight, Heart, MessageCircle, Sparkles } from "lucide-react";
-import { useEffect, useState } from "react";
 import { useWeddingContent } from "@/context/language";
 
 const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
@@ -8,18 +7,7 @@ const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
 const ContactSection = () => {
   const { contact, couple } = useWeddingContent();
   const reduceMotion = useReducedMotion();
-  const [isCoarsePointer, setIsCoarsePointer] = useState(false);
-  const motionDisabled = Boolean(reduceMotion || isCoarsePointer);
-
-  useEffect(() => {
-    const mediaQuery = window.matchMedia("(pointer: coarse)");
-    const updatePointerMode = () => setIsCoarsePointer(mediaQuery.matches);
-
-    updatePointerMode();
-    mediaQuery.addEventListener("change", updatePointerMode);
-
-    return () => mediaQuery.removeEventListener("change", updatePointerMode);
-  }, []);
+  const motionDisabled = Boolean(reduceMotion);
 
   return (
     <section className="myanmar-paper-bg relative flex items-center overflow-hidden px-4 py-14 sm:min-h-screen sm:px-6 sm:py-24">
@@ -47,8 +35,13 @@ const ContactSection = () => {
         <div className="mx-auto max-w-3xl text-center">
           <motion.div
             className="mb-2 flex items-center justify-center gap-2 text-gold/75 sm:mb-4 sm:gap-3"
-            initial={{ opacity: 0, y: reduceMotion ? 0 : 8 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{
+              opacity: 0,
+              y: reduceMotion ? 0 : 12,
+              scale: reduceMotion ? 1 : 0.98,
+              filter: reduceMotion ? "blur(0px)" : "blur(6px)",
+            }}
+            whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
             transition={{ duration: 1.35, ease: EASE }}
             viewport={{ once: true, amount: 0.18 }}
           >
@@ -59,8 +52,13 @@ const ContactSection = () => {
 
           <motion.p
             className="mb-2 text-[8px] uppercase tracking-[0.32em] text-gold/80 sm:mb-3 sm:text-[11px] sm:tracking-[0.45em]"
-            initial={{ opacity: 0, y: reduceMotion ? 0 : 8 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{
+              opacity: 0,
+              y: reduceMotion ? 0 : 14,
+              scale: reduceMotion ? 1 : 0.98,
+              filter: reduceMotion ? "blur(0px)" : "blur(6px)",
+            }}
+            whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
             transition={{ duration: 1.35, ease: EASE }}
             viewport={{ once: true, amount: 0.18 }}
           >
@@ -69,8 +67,13 @@ const ContactSection = () => {
 
           <motion.h2
             className="font-display text-[clamp(1.85rem,8.5vw,2.35rem)] font-medium leading-[1.08] tracking-[0.01em] text-foreground sm:text-5xl md:text-6xl"
-            initial={{ opacity: 0, y: reduceMotion ? 0 : 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{
+              opacity: 0,
+              y: reduceMotion ? 0 : 24,
+              scale: reduceMotion ? 1 : 0.97,
+              filter: reduceMotion ? "blur(0px)" : "blur(8px)",
+            }}
+            whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
             transition={{ duration: 1.45, ease: EASE }}
             viewport={{ once: true, amount: 0.18 }}
           >
@@ -87,8 +90,13 @@ const ContactSection = () => {
 
           <motion.p
             className="mx-auto mt-3 max-w-[19rem] text-[12.5px] leading-[1.55] text-muted-foreground sm:mt-5 sm:max-w-2xl sm:text-base sm:leading-8"
-            initial={{ opacity: 0, y: reduceMotion ? 0 : 14 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{
+              opacity: 0,
+              y: reduceMotion ? 0 : 18,
+              scale: reduceMotion ? 1 : 0.98,
+              filter: reduceMotion ? "blur(0px)" : "blur(6px)",
+            }}
+            whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
             transition={{ delay: 0.18, duration: 1.4, ease: EASE }}
             viewport={{ once: true, amount: 0.18 }}
           >
@@ -105,8 +113,13 @@ const ContactSection = () => {
               target="_blank"
               rel="noopener noreferrer"
               className="luxury-card group relative overflow-hidden rounded-[20px] border border-white/50 bg-white/40 p-3.5 text-left shadow-[0_18px_45px_rgba(111,84,42,0.1)] backdrop-blur-xl sm:rounded-[30px] sm:p-7 sm:shadow-[0_24px_65px_rgba(111,84,42,0.12)]"
-              initial={{ opacity: 0, y: reduceMotion ? 0 : 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={{
+                opacity: 0,
+                y: reduceMotion ? 0 : 24,
+                scale: reduceMotion ? 1 : 0.96,
+                filter: reduceMotion ? "blur(0px)" : "blur(7px)",
+              }}
+              whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
               transition={{ delay: i * 0.14, duration: 1.35, ease: EASE }}
               viewport={{ once: true, amount: 0.16 }}
               whileHover={motionDisabled ? undefined : { y: -5 }}
@@ -163,8 +176,13 @@ const ContactSection = () => {
         {/* FOOTER SIGNATURE */}
         <motion.div
           className="mx-auto mt-6 max-w-2xl rounded-[22px] border border-gold/15 bg-white/35 px-5 py-4 text-center shadow-[0_16px_44px_rgba(111,84,42,0.07)] backdrop-blur-xl sm:mt-14 sm:rounded-[32px] sm:px-8 sm:py-10 sm:shadow-[0_20px_60px_rgba(111,84,42,0.08)]"
-          initial={{ opacity: 0, y: reduceMotion ? 0 : 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{
+            opacity: 0,
+            y: reduceMotion ? 0 : 24,
+            scale: reduceMotion ? 1 : 0.97,
+            filter: reduceMotion ? "blur(0px)" : "blur(8px)",
+          }}
+          whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
           transition={{ duration: 1.4, delay: 0.24, ease: EASE }}
           viewport={{ once: true, amount: 0.16 }}
         >

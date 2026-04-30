@@ -160,7 +160,7 @@ const OpeningBackground = ({ isFullscreen, isTransitioning }: Props) => {
           ],
         }}
         transition={{
-          duration: 5.8,
+          duration: 8.5,
           repeat: Infinity,
           ease: "easeInOut",
         }}
@@ -188,7 +188,7 @@ const OpeningBackground = ({ isFullscreen, isTransitioning }: Props) => {
         className="pointer-events-none absolute inset-0 z-[3]"
         initial={{ opacity: 0 }}
         animate={{ opacity: floralOpacity }}
-        transition={{ duration: 0.75, ease: EASE }}
+        transition={{ duration: 1.35, ease: EASE }}
         style={{
           filter: BG.floralFrame.filter,
         }}
@@ -230,7 +230,7 @@ const OpeningBackground = ({ isFullscreen, isTransitioning }: Props) => {
               ? BG.transitionOverlay.opacityTransition
               : BG.transitionOverlay.opacityFullscreen,
           }}
-          transition={{ duration: 0.55, ease: EASE }}
+          transition={{ duration: 1.25, ease: EASE }}
           style={{
             background:
               "linear-gradient(180deg, rgba(255,250,244,0.2), rgba(245,234,216,0.24))",

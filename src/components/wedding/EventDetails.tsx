@@ -5,7 +5,7 @@ import {
   MapPin,
   Sparkles,
 } from "lucide-react";
-import { useEffect, useState, type ReactNode } from "react";
+import type { ReactNode } from "react";
 import { useLanguage } from "@/context/language";
 
 const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
@@ -79,8 +79,20 @@ const Divider = ({ compact = false }: { compact?: boolean }) => {
   return (
     <motion.div
       className="mx-auto flex origin-center items-center justify-center"
-      initial={{ opacity: 0, clipPath: "inset(0% 50% 0% 50%)" }}
-      whileInView={{ opacity: 1, clipPath: "inset(0% 0% 0% 0%)" }}
+      initial={{
+        opacity: 0,
+        y: 10,
+        scale: 0.96,
+        filter: "blur(6px)",
+        clipPath: "inset(0% 50% 0% 50%)",
+      }}
+      whileInView={{
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        filter: "blur(0px)",
+        clipPath: "inset(0% 0% 0% 0%)",
+      }}
       transition={{ duration: 1.45, ease: EASE }}
       viewport={{ once: true, amount: 0.16 }}
       style={{
@@ -165,9 +177,9 @@ const DetailItem = ({
 }) => (
   <motion.div
     className="mx-auto w-full max-w-[19rem] rounded-[22px] border border-gold/20 bg-white/38 px-3.5 py-3 text-left shadow-[0_12px_30px_rgba(111,84,42,0.08)] sm:border-0 sm:bg-transparent sm:p-0 sm:text-center sm:shadow-none"
-    initial={{ opacity: 0, y: 24 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    transition={{ duration: 1.25, ease: EASE }}
+    initial={{ opacity: 0, y: 24, scale: 0.96, filter: "blur(7px)" }}
+    whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+    transition={{ duration: 1.45, ease: EASE }}
     viewport={{ once: true, amount: 0.18 }}
   >
     <div className="flex items-start gap-3 sm:block">
@@ -288,20 +300,8 @@ const EventDetails = () => {
     content: { event },
   } = useLanguage();
   const reduceMotion = useReducedMotion();
-  const [isCoarsePointer, setIsCoarsePointer] = useState(false);
 
   const isMyanmar = language === "my";
-  const motionDisabled = Boolean(reduceMotion || isCoarsePointer);
-
-  useEffect(() => {
-    const mediaQuery = window.matchMedia("(pointer: coarse)");
-    const updatePointerMode = () => setIsCoarsePointer(mediaQuery.matches);
-
-    updatePointerMode();
-    mediaQuery.addEventListener("change", updatePointerMode);
-
-    return () => mediaQuery.removeEventListener("change", updatePointerMode);
-  }, []);
 
   const dateItem = event.items.find((item) => item.icon === "calendar");
   const timeItem = event.items.find((item) => item.icon === "clock");
@@ -320,8 +320,13 @@ const EventDetails = () => {
 
       <motion.div
         className="relative z-10 mx-auto max-w-3xl"
-        initial={{ opacity: 0, y: reduceMotion ? 0 : 22 }}
-        whileInView={{ opacity: 1, y: 0 }}
+        initial={{
+          opacity: 0,
+          y: reduceMotion ? 0 : 28,
+          scale: reduceMotion ? 1 : 0.97,
+          filter: reduceMotion ? "blur(0px)" : "blur(9px)",
+        }}
+        whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
         transition={{ duration: 1.55, ease: EASE }}
         viewport={{ once: true, amount: 0.12 }}
       >
@@ -358,8 +363,13 @@ const EventDetails = () => {
               style={{
                 marginBottom: DETAILS_CARD.iconMarginBottom,
               }}
-              initial={{ opacity: 0, scale: reduceMotion ? 1 : 0.92 }}
-              whileInView={{ opacity: 1, scale: 1 }}
+              initial={{
+                opacity: 0,
+                y: reduceMotion ? 0 : 12,
+                scale: reduceMotion ? 1 : 0.92,
+                filter: reduceMotion ? "blur(0px)" : "blur(7px)",
+              }}
+              whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
               transition={{ duration: 1.35, ease: EASE }}
               viewport={{ once: true }}
             >
@@ -372,8 +382,13 @@ const EventDetails = () => {
                   ? "font-myanmar text-[13px] font-bold leading-relaxed text-[#b78728] sm:text-base"
                   : "font-display text-[12px] font-bold uppercase tracking-[0.22em] text-[#b78728] sm:text-sm"
               }
-              initial={{ opacity: 0, y: reduceMotion ? 0 : 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={{
+                opacity: 0,
+                y: reduceMotion ? 0 : 14,
+                scale: reduceMotion ? 1 : 0.98,
+                filter: reduceMotion ? "blur(0px)" : "blur(6px)",
+              }}
+              whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
               transition={{ duration: 1.35, ease: EASE }}
               viewport={{ once: true }}
             >
@@ -389,14 +404,19 @@ const EventDetails = () => {
                   marginBottom: DETAILS_TITLE.marginBottom,
                   transform: `translate(${DETAILS_TITLE.x}px, ${DETAILS_TITLE.y}px)`,
                 }}
-                initial={{ opacity: 0, y: reduceMotion ? 0 : 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{
+                  opacity: 0,
+                  y: reduceMotion ? 0 : 20,
+                  scale: reduceMotion ? 1 : 0.97,
+                  filter: reduceMotion ? "blur(0px)" : "blur(7px)",
+                }}
+                whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
                 transition={{ duration: 1.45, ease: EASE }}
                 viewport={{ once: true }}
               >
                 <img
                   src={DETAILS_TITLE_IMAGE}
-                  alt="မင်္ဂလာ အသေးစိတ်"
+                  alt={event.title}
                   className="h-auto object-contain"
                   style={{
                     width: `min(${DETAILS_TITLE.width}px, 70vw)`,
@@ -407,8 +427,13 @@ const EventDetails = () => {
             ) : (
               <motion.h2
                 className="mx-auto mt-2 max-w-[16rem] font-display text-[2rem] font-bold leading-[1.15] text-[#b17d20] drop-shadow-[0_8px_24px_rgba(184,135,36,0.18)] sm:max-w-none sm:text-[3rem]"
-                initial={{ opacity: 0, y: reduceMotion ? 0 : 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{
+                  opacity: 0,
+                  y: reduceMotion ? 0 : 20,
+                  scale: reduceMotion ? 1 : 0.97,
+                  filter: reduceMotion ? "blur(0px)" : "blur(7px)",
+                }}
+                whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
                 transition={{ duration: 1.45, ease: EASE }}
                 viewport={{ once: true }}
               >
@@ -427,8 +452,13 @@ const EventDetails = () => {
               style={{
                 marginTop: DETAILS_CARD.descriptionMarginTop,
               }}
-              initial={{ opacity: 0, y: reduceMotion ? 0 : 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={{
+                opacity: 0,
+                y: reduceMotion ? 0 : 18,
+                scale: reduceMotion ? 1 : 0.98,
+                filter: reduceMotion ? "blur(0px)" : "blur(6px)",
+              }}
+              whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
               transition={{ delay: 0.16, duration: 1.4, ease: EASE }}
               viewport={{ once: true }}
             >
@@ -476,15 +506,20 @@ const EventDetails = () => {
                 marginTop: DETAILS_CARD.buttonMarginTop,
                 marginBottom: DETAILS_CARD.buttonMarginBottom,
               }}
-              initial={{ opacity: 0, y: reduceMotion ? 0 : 14 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={{
+                opacity: 0,
+                y: reduceMotion ? 0 : 18,
+                scale: reduceMotion ? 1 : 0.97,
+                filter: reduceMotion ? "blur(0px)" : "blur(7px)",
+              }}
+              whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
               transition={{ delay: 0.24, duration: 1.4, ease: EASE }}
               viewport={{ once: true }}
             >
               <ClickHereButton
                 href={event.mapUrl}
                 label={event.buttonText}
-                reduceMotion={motionDisabled}
+                reduceMotion={reduceMotion}
                 isMyanmar={isMyanmar}
               />
             </motion.div>

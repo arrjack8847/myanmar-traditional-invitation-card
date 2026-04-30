@@ -71,9 +71,13 @@ export function useOpeningFlow({ onOpen }: UseOpeningFlowOptions) {
       setStage("videoIntro");
 
       schedule(() => {
+        setStage("siteReveal");
+      }, DURATIONS.videoIntro * 1000);
+
+      schedule(() => {
         setStage("done");
         onOpen();
-      }, DURATIONS.videoIntro * 1000);
+      }, (DURATIONS.videoIntro + DURATIONS.siteReveal) * 1000);
     }
   }, [stage, isBusy, schedule, clearAllTimeouts, onOpen]);
 

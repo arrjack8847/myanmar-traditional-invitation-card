@@ -20,8 +20,8 @@ const VENUE_LAYOUT = {
 const Divider = () => (
   <motion.div
     className="mx-auto my-4 flex origin-center items-center justify-center gap-2 text-gold"
-    initial={{ opacity: 0, scaleX: 0.72 }}
-    whileInView={{ opacity: 1, scaleX: 1 }}
+    initial={{ opacity: 0, y: 10, scale: 0.96, filter: "blur(6px)" }}
+    whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
     transition={{ duration: 1.45, ease: EASE }}
     viewport={{ once: true, amount: 0.16 }}
   >
@@ -96,8 +96,13 @@ const VenueSection = () => {
 
       <motion.div
         className="relative z-10 mx-auto max-w-3xl"
-        initial={{ opacity: 0, y: reduceMotion ? 0 : 22 }}
-        whileInView={{ opacity: 1, y: 0 }}
+        initial={{
+          opacity: 0,
+          y: reduceMotion ? 0 : 28,
+          scale: reduceMotion ? 1 : 0.97,
+          filter: reduceMotion ? "blur(0px)" : "blur(9px)",
+        }}
+        whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
         transition={{ duration: 1.55, ease: EASE }}
         viewport={{ once: true, amount: 0.12 }}
       >
@@ -129,8 +134,13 @@ const VenueSection = () => {
             {/* Header */}
             <motion.div
               className="mx-auto mb-4 flex justify-center text-[#b78728]"
-              initial={{ opacity: 0, scale: reduceMotion ? 1 : 0.92 }}
-              whileInView={{ opacity: 1, scale: 1 }}
+              initial={{
+                opacity: 0,
+                y: reduceMotion ? 0 : 12,
+                scale: reduceMotion ? 1 : 0.92,
+                filter: reduceMotion ? "blur(0px)" : "blur(7px)",
+              }}
+              whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
               transition={{ duration: 1.35, ease: EASE }}
               viewport={{ once: true }}
             >
@@ -143,8 +153,13 @@ const VenueSection = () => {
                   ? "font-myanmar"
                   : "font-display uppercase tracking-[0.18em]"
               }`}
-              initial={{ opacity: 0, y: reduceMotion ? 0 : 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={{
+                opacity: 0,
+                y: reduceMotion ? 0 : 14,
+                scale: reduceMotion ? 1 : 0.98,
+                filter: reduceMotion ? "blur(0px)" : "blur(6px)",
+              }}
+              whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
               transition={{ duration: 1.35, ease: EASE }}
               viewport={{ once: true }}
             >
@@ -157,8 +172,13 @@ const VenueSection = () => {
                   ? "font-myanmar text-[clamp(1.9rem,9vw,2.45rem)] sm:text-[4rem]"
                   : "font-display text-[clamp(2.1rem,10vw,2.75rem)] sm:text-[4.25rem]"
               }`}
-              initial={{ opacity: 0, y: reduceMotion ? 0 : 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={{
+                opacity: 0,
+                y: reduceMotion ? 0 : 20,
+                scale: reduceMotion ? 1 : 0.97,
+                filter: reduceMotion ? "blur(0px)" : "blur(7px)",
+              }}
+              whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
               transition={{ duration: 1.45, ease: EASE }}
               viewport={{ once: true }}
             >
@@ -173,8 +193,13 @@ const VenueSection = () => {
                   ? "font-myanmar leading-[1.9]"
                   : "font-display leading-[1.75]"
               }`}
-              initial={{ opacity: 0, y: reduceMotion ? 0 : 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={{
+                opacity: 0,
+                y: reduceMotion ? 0 : 18,
+                scale: reduceMotion ? 1 : 0.98,
+                filter: reduceMotion ? "blur(0px)" : "blur(6px)",
+              }}
+              whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
               transition={{ delay: 0.12, duration: 1.4, ease: EASE }}
               viewport={{ once: true }}
             >
@@ -189,11 +214,15 @@ const VenueSection = () => {
                 initial={{
                   opacity: 0,
                   y: reduceMotion ? 0 : 22,
+                  scale: reduceMotion ? 1 : 0.97,
+                  filter: reduceMotion ? "blur(0px)" : "blur(9px)",
                   clipPath: "inset(8% 0% 8% 0% round 28px)",
                 }}
                 whileInView={{
                   opacity: 1,
                   y: 0,
+                  scale: 1,
+                  filter: "blur(0px)",
                   clipPath: "inset(0% 0% 0% 0% round 28px)",
                 }}
                 transition={{ delay: 0.18, duration: 1.75, ease: EASE }}
@@ -220,8 +249,18 @@ const VenueSection = () => {
                   <motion.div
                     key={src}
                     className="group overflow-hidden rounded-[22px] border border-gold/25 bg-white/50 p-1.5 shadow-[0_12px_34px_rgba(111,84,42,0.12)]"
-                    initial={{ opacity: 0, y: reduceMotion ? 0 : 18 }}
-                    whileInView={{ opacity: 1, y: 0 }}
+                    initial={{
+                      opacity: 0,
+                      y: reduceMotion ? 0 : 22,
+                      scale: reduceMotion ? 1 : 0.96,
+                      filter: reduceMotion ? "blur(0px)" : "blur(7px)",
+                    }}
+                    whileInView={{
+                      opacity: 1,
+                      y: 0,
+                      scale: 1,
+                      filter: "blur(0px)",
+                    }}
                     transition={{
                       delay: 0.18 + index * 0.12,
                       duration: 1.35,
@@ -252,8 +291,13 @@ const VenueSection = () => {
                 marginTop: VENUE_LAYOUT.buttonMarginTop,
                 marginBottom: VENUE_LAYOUT.buttonMarginBottom,
               }}
-              initial={{ opacity: 0, y: reduceMotion ? 0 : 14 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={{
+                opacity: 0,
+                y: reduceMotion ? 0 : 18,
+                scale: reduceMotion ? 1 : 0.97,
+                filter: reduceMotion ? "blur(0px)" : "blur(7px)",
+              }}
+              whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
               transition={{ delay: 0.28, duration: 1.4, ease: EASE }}
               viewport={{ once: true, amount: 0.18 }}
             >

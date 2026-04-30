@@ -35,25 +35,17 @@ const InvitationCardStage = ({
   ui,
 }: InvitationCardStageProps) => {
   /**
-   * EXPANDED CARD PAGE CONTROLS
-   *
-   * Sentence + button are centered under the card.
-   * They use the SAME X center as the card because they are inside
-   * the same card wrapper and use width: "100%".
+   * Keep the Myanmar text and CTA visually attached to the same PNG card.
+   * This value must stay positive so the stack always sits below the card.
    */
-  const underCardGap = isMobile ? "10px" : "14px";
+  const underCardGap = isMobile ? "clamp(10px, 1.6svh, 14px)" : "16px";
 
   /**
-   * X adjustment.
-   *
-   * 0px = exactly same center as card.
-   * Positive = move right.
-   * Negative = move left.
-   *
-   * Example:
-   * const contentXOffset = isMobile ? "-4px" : "0px";
+   * Responsive content width inside the same card width.
+   * This keeps the sentence centered and safe on all devices.
    */
-  const contentXOffset = "-190px";
+  const sentenceWidth = isMobile ? "84%" : "78%";
+  const buttonMinWidth = isMobile ? "178px" : "210px";
 
   return (
     <motion.div
@@ -87,12 +79,12 @@ const InvitationCardStage = ({
                   ease: "easeInOut",
                 },
                 opacity: {
-                  duration: 0.4,
+                  duration: 0.95,
                   ease: EASE,
                 },
               }
             : {
-                duration: 0.4,
+                duration: 0.95,
                 ease: EASE,
               }
         }
@@ -116,28 +108,29 @@ const InvitationCardStage = ({
 
       {isInvitationHold && (
         <motion.div
-          className="absolute z-[20] flex flex-col items-center text-center"
+          className="absolute left-0 right-0 z-[20] flex flex-col items-center text-center"
           style={{
             top: `calc(100% + ${underCardGap})`,
-            left: `calc(50% + ${contentXOffset})`,
             width: "100%",
-            transform: "translateX(-50%)",
           }}
-          initial={{ opacity: 0, y: 14 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.65, ease: EASE }}
+          initial={{ opacity: 0, y: 18, scale: 0.97, filter: "blur(7px)" }}
+          animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+          transition={{ duration: 1.35, ease: EASE }}
         >
           <motion.p
             className="pointer-events-none uppercase text-[#9f7937]"
             style={{
-              width: isMobile ? "86%" : "82%",
+              width: sentenceWidth,
               fontSize: isMobile ? "8.5px" : "10px",
-              letterSpacing: isMobile ? "0.16em" : "0.22em",
-              lineHeight: 1.35,
+              letterSpacing: isMobile ? "0.12em" : "0.18em",
+              lineHeight: 1.45,
+              marginInline: "auto",
+              textAlign: "center",
+              wordBreak: "break-word",
             }}
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 0.88, y: 0 }}
-            transition={{ duration: 0.55, ease: EASE, delay: 0.06 }}
+            initial={{ opacity: 0, y: 12, scale: 0.98, filter: "blur(6px)" }}
+            animate={{ opacity: 0.88, y: 0, scale: 1, filter: "blur(0px)" }}
+            transition={{ duration: 1.15, ease: EASE, delay: 0.12 }}
           >
             {intro.welcomeEyebrow}
           </motion.p>
@@ -148,22 +141,24 @@ const InvitationCardStage = ({
               event.stopPropagation();
               onContinue();
             }}
-            className="mt-3 rounded-full border border-[#d8b869]/70 bg-white/72 px-6 py-3 text-[10px] font-medium uppercase tracking-[0.22em] text-[#806026] shadow-[0_18px_45px_rgba(93,70,28,0.14)] backdrop-blur-md transition-colors duration-300 hover:bg-white/88"
+            className="mt-3 rounded-full border border-[#d8b869]/70 bg-white/72 px-6 py-3 text-[10px] font-medium uppercase tracking-[0.18em] text-[#806026] shadow-[0_18px_45px_rgba(93,70,28,0.14)] backdrop-blur-md transition-colors duration-300 hover:bg-white/88"
             style={{
-              minWidth: isMobile ? "178px" : "210px",
+              minWidth: buttonMinWidth,
             }}
-            initial={{ opacity: 0, y: 14, scale: 0.96 }}
+            initial={{ opacity: 0, y: 18, scale: 0.96, filter: "blur(7px)" }}
             animate={{
               opacity: 1,
               y: 0,
               scale: [1, 1.025, 1],
+              filter: "blur(0px)",
             }}
             whileTap={{ scale: 0.96 }}
             transition={{
-              opacity: { duration: 0.55, ease: EASE, delay: 0.12 },
-              y: { duration: 0.55, ease: EASE, delay: 0.12 },
+              opacity: { duration: 1.2, ease: EASE, delay: 0.22 },
+              y: { duration: 1.2, ease: EASE, delay: 0.22 },
+              filter: { duration: 1.2, ease: EASE, delay: 0.22 },
               scale: {
-                duration: 2.2,
+                duration: 4.2,
                 repeat: Infinity,
                 ease: "easeInOut",
               },

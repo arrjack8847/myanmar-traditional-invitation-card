@@ -5,18 +5,18 @@ export const INVITATION_CARD_SRC = "/wedding-card.png";
 export const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
 export const DURATIONS = {
-  ribbonDrop: 0.62,
-  openFade: 0.72,
-  cardRise: 1.28,
-  expand: 0.82,
-  invitationHold: 0.45,
-  videoIntro: 1.7,
-  siteReveal: 0.9,
-  cardRiseDelay: 0.12,
-  quick: 0.35,
-  medium: 0.7,
-  soft: 0.9,
-  long: 1.15,
+  ribbonDrop: 1.05,
+  openFade: 1.25,
+  cardRise: 1.75,
+  expand: 1.35,
+  invitationHold: 1.05,
+  videoIntro: 2.85,
+  siteReveal: 1.65,
+  cardRiseDelay: 0.16,
+  quick: 0.75,
+  medium: 1.15,
+  soft: 1.45,
+  long: 1.75,
 } as const;
 
 export const FLOAT_TRANSITION: Transition = {
@@ -59,8 +59,8 @@ export const SCENE = {
     fullscreen: {
       aspectRatio: "2 / 3",
       mobileAspectRatio: "2 / 3",
-      width: "min(72vw, 380px)",
-      mobileWidth: "min(78vw, 330px)",
+      width: "min(72vw, 380px, 52svh)",
+      mobileWidth: "min(78vw, 330px, 52svh)",
     },
   },
 

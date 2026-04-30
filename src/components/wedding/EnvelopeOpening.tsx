@@ -105,7 +105,7 @@ const EnvelopeOpening = ({ onOpen }: Props) => {
       <motion.div
         className="pointer-events-none absolute left-1/2 top-[28%] z-[1] h-[340px] w-[340px] -translate-x-1/2 rounded-full bg-gold/10 blur-[100px] sm:h-[460px] sm:w-[460px]"
         animate={{ opacity: [0.16, 0.3, 0.16], scale: [1, 1.08, 1] }}
-        transition={{ duration: 5.8, repeat: Infinity, ease: "easeInOut" }}
+        transition={{ duration: 8.5, repeat: Infinity, ease: "easeInOut" }}
       />
 
       {(isVideoIntro || isSiteReveal) && (
@@ -155,9 +155,9 @@ const EnvelopeOpening = ({ onOpen }: Props) => {
               >
                 <motion.p
                   key={stage}
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.45 }}
+                  initial={{ opacity: 0, y: 12, scale: 0.98, filter: "blur(6px)" }}
+                  animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+                  transition={{ duration: 1.1, ease: EASE }}
                   className="uppercase text-[#af8d42]"
                   style={{
                     fontSize: isMobile ? "9px" : "11px",
@@ -217,12 +217,12 @@ const EnvelopeOpening = ({ onOpen }: Props) => {
                           ease: "linear",
                         },
                         scale: {
-                          duration: 2.4,
+                          duration: 4.2,
                           repeat: Infinity,
                           ease: "easeInOut",
                         },
                         opacity: {
-                          duration: 0.4,
+                          duration: 1.1,
                           ease: EASE,
                         },
                       }
@@ -311,7 +311,7 @@ const EnvelopeOpening = ({ onOpen }: Props) => {
                       : "-50%",
                     scale: isExpandedLike ? 1.55 : 1,
                   }}
-                  transition={{ duration: 0.8, delay: 0.12, ease: EASE }}
+                  transition={{ duration: 1.35, delay: 0.12, ease: EASE }}
                   style={{
                     width: `${glowSize}px`,
                     height: `${glowSize}px`,
@@ -356,7 +356,7 @@ const EnvelopeOpening = ({ onOpen }: Props) => {
                     y: `calc(-50% + ${openedFrontY}px)`,
                   }}
                   transition={{
-                    opacity: { duration: 0.45, ease: EASE },
+                    opacity: { duration: 1.1, ease: EASE },
                     scale: TRANSITIONS.scaleSoft,
                   }}
                 >
@@ -375,7 +375,7 @@ const EnvelopeOpening = ({ onOpen }: Props) => {
                     className="absolute inset-0 z-[30] rounded-full"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: isSiteReveal ? 0.68 : 0.48 }}
-                    transition={{ duration: 0.58 }}
+                    transition={{ duration: 1.2, ease: EASE }}
                     style={{
                       background:
                         "radial-gradient(circle, rgba(255,255,255,0.96) 0%, rgba(255,255,255,0.65) 32%, rgba(255,255,255,0) 72%)",

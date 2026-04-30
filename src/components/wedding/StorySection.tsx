@@ -27,8 +27,13 @@ const StorySection = () => {
             <div className="block px-4 py-12 sm:hidden">
               <motion.div
                 className="mx-auto max-w-[420px]"
-                initial={{ opacity: 0, y: reduceMotion ? 0 : 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{
+                  opacity: 0,
+                  y: reduceMotion ? 0 : 28,
+                  scale: reduceMotion ? 1 : 0.97,
+                  filter: reduceMotion ? "blur(0px)" : "blur(9px)",
+                }}
+                whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
                 transition={{ duration: 1.55, ease: EASE }}
                 viewport={{ once: true, amount: 0.16 }}
               >
@@ -37,10 +42,16 @@ const StorySection = () => {
                   className="relative overflow-hidden rounded-[30px] border border-[#e8d7b4] bg-[#f6ecdc] shadow-[0_24px_60px_rgba(111,84,42,0.14)]"
                   initial={{
                     opacity: 0,
+                    y: reduceMotion ? 0 : 22,
+                    scale: reduceMotion ? 1 : 0.97,
+                    filter: reduceMotion ? "blur(0px)" : "blur(9px)",
                     clipPath: "inset(8% 0% 8% 0% round 30px)",
                   }}
                   whileInView={{
                     opacity: 1,
+                    y: 0,
+                    scale: 1,
+                    filter: "blur(0px)",
                     clipPath: "inset(0% 0% 0% 0% round 30px)",
                   }}
                   transition={{ duration: 1.6, ease: EASE }}
@@ -71,8 +82,13 @@ const StorySection = () => {
                 {/* Text card */}
                 <motion.div
                   className="relative z-10 mx-auto -mt-7 w-[92%] rounded-[28px] border border-[#ead9b8] bg-[#fffaf2]/95 px-5 py-7 text-center shadow-[0_18px_50px_rgba(111,84,42,0.13)] backdrop-blur-md"
-                  initial={{ opacity: 0, y: reduceMotion ? 0 : 18 }}
-                  whileInView={{ opacity: 1, y: 0 }}
+                  initial={{
+                    opacity: 0,
+                    y: reduceMotion ? 0 : 22,
+                    scale: reduceMotion ? 1 : 0.97,
+                    filter: reduceMotion ? "blur(0px)" : "blur(8px)",
+                  }}
+                  whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
                   transition={{ duration: 1.45, delay: 0.16, ease: EASE }}
                   viewport={{ once: true, amount: 0.16 }}
                 >
@@ -156,8 +172,13 @@ const StorySection = () => {
                   <div className="mx-auto max-w-3xl text-center">
                     <motion.div
                       className="mx-auto mb-8 flex items-center justify-center gap-3"
-                      initial={{ opacity: 0, scaleX: 0.85 }}
-                      whileInView={{ opacity: 1, scaleX: 1 }}
+                      initial={{
+                        opacity: 0,
+                        y: reduceMotion ? 0 : 12,
+                        scale: reduceMotion ? 1 : 0.96,
+                        filter: reduceMotion ? "blur(0px)" : "blur(6px)",
+                      }}
+                      whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
                       transition={{ duration: 1.45, ease: EASE }}
                       viewport={{ once: true }}
                     >
@@ -170,8 +191,13 @@ const StorySection = () => {
 
                     <motion.h2
                       className="font-display mb-6 text-5xl leading-tight text-white drop-shadow-[0_6px_24px_rgba(0,0,0,0.45)] md:text-6xl"
-                      initial={{ opacity: 0, y: reduceMotion ? 0 : 36 }}
-                      whileInView={{ opacity: 1, y: 0 }}
+                      initial={{
+                        opacity: 0,
+                        y: reduceMotion ? 0 : 28,
+                        scale: reduceMotion ? 1 : 0.97,
+                        filter: reduceMotion ? "blur(0px)" : "blur(8px)",
+                      }}
+                      whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
                       transition={{ duration: 1.65, ease: EASE }}
                       viewport={{ once: true }}
                     >
@@ -180,8 +206,13 @@ const StorySection = () => {
 
                     <motion.p
                       className="mx-auto max-w-2xl text-lg font-light leading-8 text-white/85"
-                      initial={{ opacity: 0, y: reduceMotion ? 0 : 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
+                      initial={{
+                        opacity: 0,
+                        y: reduceMotion ? 0 : 20,
+                        scale: reduceMotion ? 1 : 0.98,
+                        filter: reduceMotion ? "blur(0px)" : "blur(6px)",
+                      }}
+                      whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
                       transition={{ duration: 1.65, delay: 0.32, ease: EASE }}
                       viewport={{ once: true }}
                     >
@@ -204,17 +235,24 @@ const StorySection = () => {
                       className="w-full max-w-xl rounded-[30px] border border-white/10 bg-black/30 p-9 text-left shadow-[0_24px_60px_rgba(0,0,0,0.22)] backdrop-blur-md will-change-transform"
                       initial={{
                         opacity: 0,
-                        x: reduceMotion ? 0 : -36,
+                        y: reduceMotion ? 0 : 28,
+                        scale: reduceMotion ? 1 : 0.97,
+                        filter: reduceMotion ? "blur(0px)" : "blur(8px)",
                       }}
-                      whileInView={{ opacity: 1, x: 0 }}
+                      whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
                       transition={{ duration: 1.55, ease: EASE }}
                       viewport={{ once: true }}
                       whileHover={reduceMotion ? undefined : { y: -4 }}
                     >
                       <motion.p
                         className="mb-4 text-[10px] uppercase tracking-[0.42em] text-gold/80"
-                        initial={{ opacity: 0, y: reduceMotion ? 0 : 12 }}
-                        whileInView={{ opacity: 1, y: 0 }}
+                        initial={{
+                          opacity: 0,
+                          y: reduceMotion ? 0 : 14,
+                          scale: reduceMotion ? 1 : 0.98,
+                          filter: reduceMotion ? "blur(0px)" : "blur(6px)",
+                        }}
+                        whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
                         transition={{ duration: 1.35, delay: 0.16, ease: EASE }}
                         viewport={{ once: true }}
                       >
@@ -223,8 +261,13 @@ const StorySection = () => {
 
                       <motion.h2
                         className="font-display mb-5 text-5xl leading-tight text-white"
-                        initial={{ opacity: 0, y: reduceMotion ? 0 : 26 }}
-                        whileInView={{ opacity: 1, y: 0 }}
+                        initial={{
+                          opacity: 0,
+                          y: reduceMotion ? 0 : 24,
+                          scale: reduceMotion ? 1 : 0.97,
+                          filter: reduceMotion ? "blur(0px)" : "blur(8px)",
+                        }}
+                        whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
                         transition={{ duration: 1.55, delay: 0.24, ease: EASE }}
                         viewport={{ once: true }}
                       >
@@ -241,8 +284,13 @@ const StorySection = () => {
 
                       <motion.p
                         className="text-lg font-light leading-8 text-white/85"
-                        initial={{ opacity: 0, y: reduceMotion ? 0 : 18 }}
-                        whileInView={{ opacity: 1, y: 0 }}
+                        initial={{
+                          opacity: 0,
+                          y: reduceMotion ? 0 : 20,
+                          scale: reduceMotion ? 1 : 0.98,
+                          filter: reduceMotion ? "blur(0px)" : "blur(6px)",
+                        }}
+                        whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
                         transition={{ duration: 1.55, delay: 0.42, ease: EASE }}
                         viewport={{ once: true }}
                       >
@@ -256,8 +304,13 @@ const StorySection = () => {
                   <div className="mx-auto max-w-3xl text-center">
                     <motion.p
                       className="mb-4 text-[10px] uppercase tracking-[0.42em] text-gold/80"
-                      initial={{ opacity: 0, y: reduceMotion ? 0 : 12 }}
-                      whileInView={{ opacity: 1, y: 0 }}
+                      initial={{
+                        opacity: 0,
+                        y: reduceMotion ? 0 : 14,
+                        scale: reduceMotion ? 1 : 0.98,
+                        filter: reduceMotion ? "blur(0px)" : "blur(6px)",
+                      }}
+                      whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
                       transition={{ duration: 1.35, ease: EASE }}
                       viewport={{ once: true }}
                     >
@@ -266,8 +319,13 @@ const StorySection = () => {
 
                     <motion.h2
                       className="font-display mb-6 text-5xl leading-tight text-white drop-shadow-[0_6px_24px_rgba(0,0,0,0.45)] md:text-6xl"
-                      initial={{ opacity: 0, y: reduceMotion ? 0 : 34 }}
-                      whileInView={{ opacity: 1, y: 0 }}
+                      initial={{
+                        opacity: 0,
+                        y: reduceMotion ? 0 : 28,
+                        scale: reduceMotion ? 1 : 0.97,
+                        filter: reduceMotion ? "blur(0px)" : "blur(8px)",
+                      }}
+                      whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
                       transition={{ duration: 1.65, ease: EASE }}
                       viewport={{ once: true }}
                     >
@@ -276,8 +334,13 @@ const StorySection = () => {
 
                     <motion.div
                       className="mx-auto mb-7 flex items-center justify-center gap-3"
-                      initial={{ opacity: 0, scaleX: 0.85 }}
-                      whileInView={{ opacity: 1, scaleX: 1 }}
+                      initial={{
+                        opacity: 0,
+                        y: reduceMotion ? 0 : 12,
+                        scale: reduceMotion ? 1 : 0.96,
+                        filter: reduceMotion ? "blur(0px)" : "blur(6px)",
+                      }}
+                      whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
                       transition={{ duration: 1.45, delay: 0.22, ease: EASE }}
                       viewport={{ once: true }}
                     >
@@ -288,8 +351,13 @@ const StorySection = () => {
 
                     <motion.p
                       className="mx-auto max-w-2xl text-lg font-light leading-8 text-white/85"
-                      initial={{ opacity: 0, y: reduceMotion ? 0 : 18 }}
-                      whileInView={{ opacity: 1, y: 0 }}
+                      initial={{
+                        opacity: 0,
+                        y: reduceMotion ? 0 : 20,
+                        scale: reduceMotion ? 1 : 0.98,
+                        filter: reduceMotion ? "blur(0px)" : "blur(6px)",
+                      }}
+                      whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
                       transition={{ duration: 1.6, delay: 0.34, ease: EASE }}
                       viewport={{ once: true }}
                     >

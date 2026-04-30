@@ -47,17 +47,21 @@ const HeroCountdown = ({ targetDate }: Props) => {
           <motion.div
             key={item.label}
             className="flex min-h-[4.7rem] flex-col items-center justify-center rounded-xl border border-white/15 bg-black/20 px-1.5 py-2 shadow-[0_10px_30px_rgba(0,0,0,0.18),inset_0_1px_0_rgba(255,255,255,0.12)] backdrop-blur-xl sm:min-h-[6.25rem] sm:rounded-2xl sm:bg-white/5 sm:px-4 sm:py-4"
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: i * 0.08 }}
-            viewport={{ once: true }}
+            initial={{ opacity: 0, y: 18, scale: 0.96, filter: "blur(7px)" }}
+            whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+            transition={{
+              duration: 1.25,
+              delay: i * 0.12,
+              ease: [0.16, 1, 0.3, 1],
+            }}
+            viewport={{ once: true, amount: 0.18 }}
           >
             <motion.p
               key={item.value}
               className="font-display text-[1.65rem] leading-none text-white sm:text-3xl"
               initial={{ scale: 0.9, opacity: 0.6 }}
               animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 0.3 }}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             >
               {item.value}
             </motion.p>
