@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import { motion } from "framer-motion";
-import { useWeddingContent } from "@/context/language";
+import { useLanguage } from "@/context/language";
+import LanguageToggle from "./LanguageToggle";
 import OpeningBackground from "./OpeningBackground";
 import InvitationCardStage from "./opening/InvitationCardStage";
 import VideoIntroOverlay from "./opening/VideoIntroOverlay";
@@ -20,7 +21,8 @@ interface Props {
 
 const EnvelopeOpening = ({ onOpen }: Props) => {
   const { stage, handleClick } = useOpeningFlow({ onOpen });
-  const { intro, ui } = useWeddingContent();
+  const { language, content } = useLanguage();
+  const { intro, ui } = content;
 
   const isSealed = stage === "sealed";
   const isRibbonDrop = stage === "ribbonDrop";
@@ -101,6 +103,8 @@ const EnvelopeOpening = ({ onOpen }: Props) => {
         isFullscreen={isExpandedLike}
         isTransitioning={isVideoIntro || isSiteReveal}
       />
+
+      <LanguageToggle placement="opening" />
 
       <motion.div
         className="pointer-events-none absolute left-1/2 top-[28%] z-[1] h-[340px] w-[340px] -translate-x-1/2 rounded-full bg-gold/10 blur-[100px] sm:h-[460px] sm:w-[460px]"
@@ -329,6 +333,7 @@ const EnvelopeOpening = ({ onOpen }: Props) => {
                   isExpandedLike={isExpandedLike}
                   isInvitationHold={isInvitationHold}
                   isMobile={isMobile}
+                  language={language}
                   onContinue={handleClick}
                   stage={stage}
                   ui={ui}

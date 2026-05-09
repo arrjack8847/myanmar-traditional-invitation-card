@@ -1,6 +1,7 @@
 import type { Transition } from "framer-motion";
 
-export const INVITATION_CARD_SRC = "/wedding-card.png";
+export const INVITATION_CARD_SRC = "/wedding-card.webp";
+export const EN_INVITATION_CARD_SRC = "/eng-photo.webp";
 
 export const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
 

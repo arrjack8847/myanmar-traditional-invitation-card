@@ -22,7 +22,7 @@ const StorySection = () => {
             : ui.finalChapter;
 
         return (
-          <section key={i} className="myanmar-paper-bg relative overflow-hidden">
+          <section key={i} className="relative overflow-hidden">
             {/* Mobile layout keeps the full photo visible. */}
             <div className="block px-4 py-12 sm:hidden">
               <motion.div

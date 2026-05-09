@@ -25,7 +25,7 @@ const FloatingPetals = () => {
     }
 
     const isTouchLayout = window.matchMedia("(max-width: 1024px)").matches;
-    const count = isTouchLayout ? 4 : 14;
+    const count = isTouchLayout ? 9 : 24;
 
     const generated: Petal[] = Array.from({ length: count }, (_, i) => {
       const edgeX = i % 2 === 0 ? 3 + Math.random() * 14 : 83 + Math.random() * 14;
@@ -35,12 +35,12 @@ const FloatingPetals = () => {
         x: isTouchLayout ? edgeX : 6 + Math.random() * 88,
         delay: Math.random() * 8,
         duration: isTouchLayout
-          ? 34 + Math.random() * 18
-          : 9 + Math.random() * 12,
-        size: isTouchLayout ? 7 + Math.random() * 7 : 8 + Math.random() * 16,
+          ? 30 + Math.random() * 16
+          : 12 + Math.random() * 13,
+        size: isTouchLayout ? 8 + Math.random() * 8 : 9 + Math.random() * 17,
         opacity: isTouchLayout
-          ? 0.08 + Math.random() * 0.08
-          : 0.15 + Math.random() * 0.25,
+          ? 0.18 + Math.random() * 0.16
+          : 0.22 + Math.random() * 0.26,
         drift: isTouchLayout
           ? (i % 2 === 0 ? 5 : -5) + Math.random() * 8
           : -28 + Math.random() * 56,
@@ -52,7 +52,7 @@ const FloatingPetals = () => {
   return (
     <div
       aria-hidden="true"
-      className="pointer-events-none fixed inset-0 z-[2] overflow-hidden"
+      className="pointer-events-none fixed inset-0 z-[6] overflow-hidden"
       style={{ contain: "layout paint" }}
     >
       {petals.map((petal) => (
@@ -64,6 +64,8 @@ const FloatingPetals = () => {
             top: -24,
             width: petal.size,
             height: petal.size,
+            filter:
+              "drop-shadow(0 0 10px rgba(214, 169, 60, 0.42)) drop-shadow(0 8px 14px rgba(111, 84, 42, 0.12))",
           }}
           animate={{
             y: ["0vh", "105vh"],
@@ -85,6 +87,12 @@ const FloatingPetals = () => {
             <path
               d="M12 2C8 6 4 10 4 14c0 4.4 3.6 8 8 8s8-3.6 8-8c0-4-4-8-8-12z"
               fill="hsl(var(--gold))"
+            />
+            <path
+              d="M12 4.7c-2.2 2.6-4.4 5.4-4.4 8.1 0 2.9 2 5.2 4.4 5.2"
+              stroke="rgba(255,255,255,0.42)"
+              strokeWidth="1.2"
+              strokeLinecap="round"
             />
           </svg>
         </motion.div>

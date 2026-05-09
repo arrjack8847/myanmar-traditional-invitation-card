@@ -11,8 +11,8 @@ const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
 /* ASSETS */
 const MUSIC_SRC = "/music.mp3";
-const DIVIDER_IMAGE_SRC = "/boarder.png";
-const TITLE_IMAGE_SRC = "/v2.png";
+const DIVIDER_IMAGE_SRC = "/boarder.webp";
+const TITLE_IMAGE_SRC = "/v2.webp";
 const INTRO_IMAGE = "/hero-couple.jpg";
 
 /* MUSIC AUTO PLAY CONTROL */
@@ -33,31 +33,36 @@ const MUSIC = {
 const HERO = {
   minHeight: "100svh",
 
-  paddingX: "clamp(12px, 4vw, 24px)",
-  paddingTop: "max(12px, env(safe-area-inset-top))",
-  paddingBottom: "max(12px, env(safe-area-inset-bottom))",
+  paddingX: "clamp(14px, 4vw, 26px)",
+  paddingTop: "max(14px, env(safe-area-inset-top))",
+  paddingBottom: "max(18px, env(safe-area-inset-bottom))",
 
-  contentMaxWidth: "min(100%, 410px)",
+  contentMaxWidth: "min(100%, 420px)",
 
   contentX: "0px",
-  contentY: "clamp(-22px, -3svh, -6px)",
+  contentY: "clamp(-20px, -2.8svh, -4px)",
 
   verticalAlign: "center" as "flex-start" | "center",
 };
 
-/* BACKGROUND GLOW CONTROL */
+/* BACKGROUND CONTROL */
 const BACKGROUND = {
   showGlow: true,
+  showTexture: true,
+  showVignette: true,
 
-  topGlowSize: 280,
-  topGlowOpacity: 0.1,
-  topGlowY: 80,
+  topGlowSize: 300,
+  topGlowOpacity: 0.12,
+  topGlowY: 70,
+
+  centerGlowSize: 360,
+  centerGlowOpacity: 0.3,
 
   leftGlowSize: 280,
-  leftGlowOpacity: 0.6,
+  leftGlowOpacity: 0.52,
 
   rightGlowSize: 280,
-  rightGlowOpacity: 0.1,
+  rightGlowOpacity: 0.12,
 };
 
 /* DIVIDER CONTROL */
@@ -65,12 +70,12 @@ const DIVIDER = {
   show: true,
 
   x: "0px",
-  y: "-60px",
+  y: "-58px",
   scale: 2,
-  width: "clamp(120px, 34vw, 230px)",
+  width: "clamp(128px, 35vw, 235px)",
 
   opacity: 1,
-  marginBottom: -20,
+  marginBottom: -22,
 
   animationDelay: 0.04,
 };
@@ -81,10 +86,10 @@ const TITLE = {
 
   x: "0px",
   y: "-50px",
-  scale: 1.4,
-  width: "clamp(170px, 54vw, 300px)",
+  scale: 1.42,
+  width: "clamp(175px, 55vw, 305px)",
 
-  marginBottom: -30,
+  marginBottom: -32,
 
   animationDelay: 0.08,
 };
@@ -96,16 +101,17 @@ const PHOTO_CARD = {
   x: 0,
   y: 0,
 
-  width: "min(100%, clamp(205px, calc(100svh - 340px), 380px))",
-  padding: 6,
+  width: "min(100%, clamp(215px, calc(100svh - 342px), 385px))",
+  padding: 7,
 
-  borderRadius: 24,
-  innerBorderRadius: 19,
+  borderRadius: 28,
+  innerBorderRadius: 21,
 
-  borderOpacity: 0.3,
-  backgroundOpacity: 0.45,
+  borderOpacity: 0.42,
+  backgroundOpacity: 0.58,
 
-  shadow: "0 18px 45px rgba(111,84,42,0.13)",
+  shadow:
+    "0 24px 60px rgba(95, 68, 31, 0.15), 0 8px 24px rgba(120, 83, 28, 0.08)",
 };
 
 /* PHOTO IMAGE CONTROL */
@@ -122,52 +128,53 @@ const CAPTION = {
 
   text: "အောက်ရှိသီချင်းကိုဖွင့်၍ မင်္ဂလာအခမ်းအနားဖိတ်စာကို ကြည့်ရှုနိုင်ပါသည်။",
 
-  marginTop: 8,
+  marginTop: 10,
   maxWidth: 352,
 
   fontSize: 12,
-  lineHeight: 1.5,
-  color: "#b78728",
+  lineHeight: 1.6,
+  color: "#9f7222",
 };
 
 /* PREMIUM MUSIC PILL CONTROL */
 const PLAYER = {
   show: true,
 
-  marginTop: 8,
-  minHeight: 34,
-  paddingX: 12,
-  iconButtonSize: 25,
+  marginTop: 10,
+  minHeight: 38,
+  paddingX: 13,
+  iconButtonSize: 27,
   iconSize: 13,
   fontSize: 11,
 
   color: "#7a5620",
-  darkColor: "#3a2a1d",
+  darkColor: "#392719",
   lightColor: "#fffaf0",
 
-  backgroundOpacity: 0.5,
-  borderOpacity: 0.38,
+  backgroundOpacity: 0.62,
+  borderOpacity: 0.42,
 };
 
 /* CONTINUE BUTTON CONTROL */
 const CTA_BUTTON = {
   show: true,
 
-  marginTop: 7,
+  marginTop: 9,
 
-  minHeight: 36,
-  paddingX: 18,
+  minHeight: 39,
+  paddingX: 20,
 
   fontSize: 12,
   borderRadius: 999,
 
-  color: "#b78728",
-  backgroundOpacity: 0.45,
-  borderOpacity: 0.35,
+  color: "#fffaf0",
+  backgroundColor: "#b78728",
+  borderOpacity: 0.5,
 
-  shake: true,
-  shakeDistance: 2,
-  shakeDuration: 4.2,
+  glow: true,
+  float: true,
+  floatDistance: 3,
+  floatDuration: 3.8,
 };
 
 const easeInOutCubic = (progress: number) =>
@@ -246,7 +253,7 @@ const MusicIntroHero = () => {
         audio.muted = MUSIC.startMuted;
         audio.volume = MUSIC.volume;
         await audio.play();
-      } catch (error) {
+      } catch {
         console.warn("Autoplay blocked. Waiting for first user tap.");
 
         if (MUSIC.unlockOnFirstTap) {
@@ -295,14 +302,15 @@ const MusicIntroHero = () => {
 
   const goToInvitation = () => {
     const nextSection =
-      document.getElementById("top") ||
-      document.getElementById("main-invitation");
+      document.getElementById("main-invitation") ||
+      document.getElementById("top");
 
     if (!nextSection) return;
 
     const introSection = document.getElementById("music-intro");
+
     const targetTop =
-      introSection && nextSection.id === "top"
+      introSection && nextSection.id === "main-invitation"
         ? introSection.offsetTop + introSection.offsetHeight
         : nextSection.getBoundingClientRect().top + window.scrollY;
 
@@ -310,6 +318,7 @@ const MusicIntroHero = () => {
 
     cinematicScrollTo(Math.max(targetTop, 0), scrollDuration);
     window.history.replaceState(null, "", "#main-invitation");
+
     window.setTimeout(() => {
       if (Math.abs(window.scrollY - targetTop) > 2) {
         window.scrollTo({ top: targetTop, behavior: "auto" });
@@ -320,7 +329,7 @@ const MusicIntroHero = () => {
   return (
     <section
       id="music-intro"
-      className="myanmar-paper-bg relative flex justify-center overflow-hidden text-[#6d5226]"
+      className="relative flex justify-center overflow-hidden bg-[#fffaf1] text-[#6d5226]"
       style={{
         minHeight: HERO.minHeight,
         paddingLeft: HERO.paddingX,
@@ -337,16 +346,33 @@ const MusicIntroHero = () => {
         autoPlay={MUSIC.autoPlay}
       />
 
+      {/* Luxury background base */}
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.95),rgba(255,250,239,0.78)_38%,rgba(247,231,198,0.44)_100%)]" />
+
+      {/* Subtle texture */}
+      {BACKGROUND.showTexture && (
+        <div className="pointer-events-none absolute inset-0 opacity-[0.28] mix-blend-soft-light [background-image:linear-gradient(115deg,rgba(183,135,40,0.18)_0px,transparent_1px),linear-gradient(245deg,rgba(255,255,255,0.9)_0px,transparent_1px)] [background-size:42px_42px]" />
+      )}
+
       {/* Background glow */}
       {BACKGROUND.showGlow && (
         <>
           <div
-            className="pointer-events-none absolute left-1/2 -translate-x-1/2 rounded-full bg-gold blur-[90px]"
+            className="pointer-events-none absolute left-1/2 -translate-x-1/2 rounded-full bg-gold blur-[95px]"
             style={{
               top: BACKGROUND.topGlowY,
               width: BACKGROUND.topGlowSize,
               height: BACKGROUND.topGlowSize,
               opacity: BACKGROUND.topGlowOpacity,
+            }}
+          />
+
+          <div
+            className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white blur-[80px]"
+            style={{
+              width: BACKGROUND.centerGlowSize,
+              height: BACKGROUND.centerGlowSize,
+              opacity: BACKGROUND.centerGlowOpacity,
             }}
           />
 
@@ -360,7 +386,7 @@ const MusicIntroHero = () => {
           />
 
           <div
-            className="pointer-events-none absolute bottom-0 right-0 rounded-full bg-gold blur-[80px]"
+            className="pointer-events-none absolute bottom-0 right-0 rounded-full bg-gold blur-[85px]"
             style={{
               width: BACKGROUND.rightGlowSize,
               height: BACKGROUND.rightGlowSize,
@@ -368,6 +394,11 @@ const MusicIntroHero = () => {
             }}
           />
         </>
+      )}
+
+      {/* Soft vignette */}
+      {BACKGROUND.showVignette && (
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,transparent_52%,rgba(130,88,25,0.08)_100%)]" />
       )}
 
       <motion.div
@@ -382,7 +413,12 @@ const MusicIntroHero = () => {
           scale: reduceMotion ? 1 : 0.97,
           filter: reduceMotion ? "blur(0px)" : "blur(9px)",
         }}
-        animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+        animate={{
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          filter: "blur(0px)",
+        }}
         transition={{ duration: 1.55, ease: EASE }}
       >
         {/* Myanmar traditional divider */}
@@ -414,7 +450,7 @@ const MusicIntroHero = () => {
               src={DIVIDER_IMAGE_SRC}
               alt=""
               aria-hidden="true"
-              className="h-auto object-contain"
+              className="h-auto object-contain drop-shadow-[0_10px_18px_rgba(151,105,29,0.12)]"
               style={{
                 width: DIVIDER.width,
                 opacity: DIVIDER.opacity,
@@ -438,7 +474,12 @@ const MusicIntroHero = () => {
               scale: reduceMotion ? 1 : 0.97,
               filter: reduceMotion ? "blur(0px)" : "blur(8px)",
             }}
-            animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+            animate={{
+              opacity: 1,
+              y: 0,
+              scale: 1,
+              filter: "blur(0px)",
+            }}
             transition={{
               delay: TITLE.animationDelay,
               duration: 1.5,
@@ -449,7 +490,7 @@ const MusicIntroHero = () => {
               <img
                 src={TITLE_IMAGE_SRC}
                 alt={content.intro.label}
-                className="h-auto object-contain"
+                className="h-auto object-contain drop-shadow-[0_12px_22px_rgba(151,105,29,0.12)]"
                 style={{
                   width: TITLE.width,
                   transform: `translate(${TITLE.x}, ${TITLE.y}) scale(${TITLE.scale})`,
@@ -458,10 +499,10 @@ const MusicIntroHero = () => {
               />
             ) : (
               <h1
-                className="font-display font-semibold leading-[0.95] text-[#b78728] text-shadow-gold"
+                className="mx-auto max-w-[18rem] text-balance font-display font-semibold leading-[1.02] text-[#b78728] text-shadow-gold sm:max-w-[30rem]"
                 style={{
-                  fontSize: "clamp(2.15rem, 10vw, 4.4rem)",
-                  transform: `translate(${TITLE.x}, ${TITLE.y}) scale(${TITLE.scale})`,
+                  fontSize: "clamp(1.55rem, 7.2vw, 3.2rem)",
+                  transform: `translate(${TITLE.x}, ${TITLE.y})`,
                   transformOrigin: "center",
                 }}
               >
@@ -474,7 +515,7 @@ const MusicIntroHero = () => {
         {/* Main image card */}
         {PHOTO_CARD.show && (
           <motion.div
-            className="mx-auto overflow-hidden border border-gold bg-white"
+            className="relative mx-auto overflow-hidden border border-gold bg-white/60"
             style={{
               width: PHOTO_CARD.width,
               padding: PHOTO_CARD.padding,
@@ -490,11 +531,20 @@ const MusicIntroHero = () => {
               scale: reduceMotion ? 1 : 0.97,
               filter: reduceMotion ? "blur(0px)" : "blur(8px)",
             }}
-            animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+            animate={{
+              opacity: 1,
+              y: 0,
+              scale: 1,
+              filter: "blur(0px)",
+            }}
             transition={{ delay: 0.2, duration: 1.6, ease: EASE }}
           >
+            {/* outer glass shine */}
+            <div className="pointer-events-none absolute inset-[1px] rounded-[inherit] border border-white/70" />
+            <div className="pointer-events-none absolute left-8 right-8 top-1 h-px bg-gradient-to-r from-transparent via-white/90 to-transparent" />
+
             <div
-              className="overflow-hidden"
+              className="relative overflow-hidden bg-[#fff8ea]"
               style={{
                 borderRadius: PHOTO_CARD.innerBorderRadius,
               }}
@@ -510,6 +560,9 @@ const MusicIntroHero = () => {
                   objectPosition: PHOTO.objectPosition,
                 }}
               />
+
+              {/* soft photo depth */}
+              <div className="pointer-events-none absolute inset-0 rounded-[inherit] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.48),inset_0_-30px_50px_rgba(94,64,22,0.05)]" />
             </div>
           </motion.div>
         )}
@@ -543,13 +596,18 @@ const MusicIntroHero = () => {
               scale: reduceMotion ? 1 : 0.98,
               filter: reduceMotion ? "blur(0px)" : "blur(6px)",
             }}
-            animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+            animate={{
+              opacity: 1,
+              y: 0,
+              scale: 1,
+              filter: "blur(0px)",
+            }}
             transition={{ delay: 0.32, duration: 1.45, ease: EASE }}
           >
             <button
               type="button"
               onClick={toggleMusic}
-              className={`inline-flex items-center justify-center gap-2 rounded-full border shadow-[0_12px_28px_rgba(111,84,42,0.11)] backdrop-blur-md transition active:scale-[0.97] ${
+              className={`group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-full border shadow-[0_14px_30px_rgba(111,84,42,0.12)] backdrop-blur-xl transition hover:-translate-y-0.5 active:scale-[0.97] ${
                 isMyanmar ? "font-myanmar" : "font-display tracking-[0.04em]"
               }`}
               style={{
@@ -561,10 +619,15 @@ const MusicIntroHero = () => {
                 backgroundColor: `rgba(255, 255, 255, ${PLAYER.backgroundOpacity})`,
                 borderColor: `rgba(212, 175, 55, ${PLAYER.borderOpacity})`,
               }}
-              aria-label={isPlaying ? content.ui.muteMusic : content.ui.unmuteMusic}
+              aria-label={
+                isPlaying ? content.ui.muteMusic : content.ui.unmuteMusic
+              }
             >
+              <span className="pointer-events-none absolute inset-0 bg-gradient-to-r from-white/55 via-[#fff4d7]/45 to-white/55 opacity-90" />
+              <span className="pointer-events-none absolute inset-[1px] rounded-full border border-white/55" />
+
               <span
-                className="flex shrink-0 items-center justify-center rounded-full shadow-[0_8px_18px_rgba(47,37,27,0.18)]"
+                className="relative z-10 flex shrink-0 items-center justify-center rounded-full shadow-[0_8px_18px_rgba(47,37,27,0.18)]"
                 style={{
                   width: PLAYER.iconButtonSize,
                   height: PLAYER.iconButtonSize,
@@ -591,8 +654,34 @@ const MusicIntroHero = () => {
                   />
                 )}
               </span>
-              <span className="max-w-[8.5rem] truncate">
+
+              <span className="relative z-10 max-w-[8.8rem] truncate">
                 {isPlaying ? content.ui.muteMusic : content.ui.unmuteMusic}
+              </span>
+
+              {/* Tiny luxury equalizer */}
+              <span className="relative z-10 ml-0.5 flex h-4 items-end gap-[2px]">
+                {[0, 1, 2].map((bar) => (
+                  <motion.span
+                    key={bar}
+                    className="w-[2px] rounded-full bg-[#b78728]/70"
+                    animate={
+                      isPlaying && !reduceMotion
+                        ? {
+                            height: [5, 12, 7, 14, 5],
+                          }
+                        : {
+                            height: 5,
+                          }
+                    }
+                    transition={{
+                      duration: 1.1 + bar * 0.15,
+                      repeat: isPlaying ? Infinity : 0,
+                      ease: "easeInOut",
+                      delay: bar * 0.12,
+                    }}
+                  />
+                ))}
               </span>
             </button>
           </motion.div>
@@ -603,7 +692,7 @@ const MusicIntroHero = () => {
           <motion.button
             type="button"
             onClick={goToInvitation}
-            className={`mx-auto inline-flex items-center justify-center gap-2 border font-bold shadow-[0_10px_22px_rgba(184,135,36,0.10)] backdrop-blur-md transition active:scale-[0.98] ${
+            className={`group relative mx-auto inline-flex items-center justify-center gap-2 overflow-hidden border font-bold shadow-[0_16px_34px_rgba(184,135,36,0.22)] backdrop-blur-md transition hover:-translate-y-0.5 active:scale-[0.98] ${
               isMyanmar ? "font-myanmar" : "font-display tracking-[0.04em]"
             }`}
             style={{
@@ -614,25 +703,62 @@ const MusicIntroHero = () => {
               fontSize: CTA_BUTTON.fontSize,
               borderRadius: CTA_BUTTON.borderRadius,
               color: CTA_BUTTON.color,
-              backgroundColor: `rgba(255, 255, 255, ${CTA_BUTTON.backgroundOpacity})`,
-              borderColor: `rgba(212, 175, 55, ${CTA_BUTTON.borderOpacity})`,
+              backgroundColor: CTA_BUTTON.backgroundColor,
+              borderColor: `rgba(255, 244, 210, ${CTA_BUTTON.borderOpacity})`,
             }}
             animate={
-              !reduceMotion && CTA_BUTTON.shake
-                ? { y: [0, CTA_BUTTON.shakeDistance, 0] }
+              !reduceMotion && CTA_BUTTON.float
+                ? {
+                    y: [0, CTA_BUTTON.floatDistance, 0],
+                  }
                 : {}
             }
             transition={{
-              duration: CTA_BUTTON.shakeDuration,
+              duration: CTA_BUTTON.floatDuration,
               repeat: Infinity,
               ease: "easeInOut",
             }}
           >
-            {content.ui.viewInvitation}
-            <ChevronDown className="h-4 w-4" />
+            {CTA_BUTTON.glow && (
+              <motion.span
+                className="pointer-events-none absolute inset-0 bg-gradient-to-r from-transparent via-white/35 to-transparent"
+                animate={
+                  reduceMotion
+                    ? {}
+                    : {
+                        x: ["-120%", "120%"],
+                      }
+                }
+                transition={{
+                  duration: 2.6,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  repeatDelay: 1.2,
+                }}
+              />
+            )}
+
+            <span className="relative z-10">{content.ui.viewInvitation}</span>
+
+            <motion.span
+              className="relative z-10"
+              animate={
+                reduceMotion
+                  ? {}
+                  : {
+                      y: [0, 2, 0],
+                    }
+              }
+              transition={{
+                duration: 1.4,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+            >
+              <ChevronDown className="h-4 w-4" />
+            </motion.span>
           </motion.button>
         )}
-
       </motion.div>
     </section>
   );

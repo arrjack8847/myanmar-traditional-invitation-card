@@ -44,20 +44,20 @@ const BG = {
   },
 
   floralFrame: {
-    desktopSrc: "/floral-frame-desktop.png",
-    mobileSrc: "/floral-frame-mobile.png",
+    desktopSrc: "/floral-frame-desktop.webp",
+    mobileSrc: "/floral-frame-mobile.webp",
 
     // ✅ main flower visibility
-    opacity: 0.72,
+    opacity: 1,
 
     // ✅ when card becomes fullscreen
-    opacityFullscreen: 0.2,
+    opacityFullscreen: 1,
 
     // ✅ when video transition starts
     opacityTransition: 0,
 
     // ✅ desktop frame size
-    desktopScale: 1.0,
+    desktopScale: 1.08,
 
     // ✅ mobile: crop flowers outward slightly
     mobileScale: 1.05,

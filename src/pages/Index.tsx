@@ -54,7 +54,10 @@ const CinematicSection = ({
         ease: CINEMATIC_EASE,
       }}
       viewport={{ once: true, amount, margin: "0px 0px -8% 0px" }}
-      style={{ transformOrigin: "center top", willChange: "transform, opacity, filter" }}
+      style={{
+        transformOrigin: "center top",
+        willChange: "transform, opacity, filter",
+      }}
     >
       {children}
     </motion.div>
@@ -80,7 +83,7 @@ const Index = () => {
         {!opened ? (
           <EnvelopeOpening key="envelope" onOpen={() => setOpened(true)} />
         ) : (
-          <motion.div
+          <motion.main
             key="main-site"
             initial={{
               opacity: 0,
@@ -96,7 +99,7 @@ const Index = () => {
               filter: reduceMotion ? "blur(0px)" : "blur(8px)",
             }}
             transition={reduceMotion ? { duration: 0.35 } : pageTransition}
-            className="myanmar-paper-bg relative w-full overflow-x-hidden"
+            className="myanmar-paper-bg relative isolate w-full min-h-screen"
           >
             <MusicPlayer />
 
@@ -109,25 +112,31 @@ const Index = () => {
             <CinematicSection id="main-invitation" amount={0.1}>
               <HeroSection />
             </CinematicSection>
+
             <CinematicSection delay={0.04}>
               <EventDetails />
             </CinematicSection>
+
             <CinematicSection delay={0.04}>
               <VenueSection />
             </CinematicSection>
+
             <CinematicSection delay={0.04}>
               <RSVPSection />
             </CinematicSection>
+
             <CinematicSection delay={0.04}>
               <StorySection />
             </CinematicSection>
+
             <CinematicSection delay={0.04}>
               <Gallery />
             </CinematicSection>
+
             <CinematicSection delay={0.04}>
               <ContactSection />
             </CinematicSection>
-          </motion.div>
+          </motion.main>
         )}
       </AnimatePresence>
     </>

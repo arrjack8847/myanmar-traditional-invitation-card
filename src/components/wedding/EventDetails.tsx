@@ -14,11 +14,11 @@ const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
    🎛️ FULL CONTROL PANEL
    ========================================================= */
 
-const CORNER_IMAGE = "/detail-corner.png";
+const CORNER_IMAGE = "/detail-corner.webp";
 
 /* 🎛️ DETAILS TITLE PNG CONTROL PANEL */
-/* Put your file inside: public/mingalar-Photoroom.png */
-const DETAILS_TITLE_IMAGE = "/mingalar-Photoroom.png";
+/* Put your file inside: public/mingalar-Photoroom.webp */
+const DETAILS_TITLE_IMAGE = "/mingalar-Photoroom.webp";
 
 const DETAILS_TITLE = {
   x: 0, // negative = left, positive = right
@@ -29,8 +29,8 @@ const DETAILS_TITLE = {
 };
 
 /* 🎛️ DETAILS DIVIDER PNG CONTROL PANEL */
-/* Put your file inside: public/details-divider.png */
-const DETAILS_DIVIDER_IMAGE = "/boarder.png";
+/* Put your file inside: public/details-divider.webp */
+const DETAILS_DIVIDER_IMAGE = "/boarder.webp";
 
 const DETAILS_DIVIDER = {
   show: true,
@@ -310,7 +310,7 @@ const EventDetails = () => {
   return (
     <section
       id="details"
-      className="myanmar-paper-bg relative overflow-hidden px-4 sm:px-6 sm:py-24"
+      className="relative overflow-hidden px-4 sm:px-6 sm:py-24"
       style={{
         paddingTop: DETAILS_CARD.sectionPaddingTop,
         paddingBottom: DETAILS_CARD.sectionPaddingBottom,

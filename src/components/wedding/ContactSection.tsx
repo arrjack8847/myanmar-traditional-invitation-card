@@ -10,7 +10,7 @@ const ContactSection = () => {
   const motionDisabled = Boolean(reduceMotion);
 
   return (
-    <section className="myanmar-paper-bg relative flex items-center overflow-hidden px-4 py-14 sm:min-h-screen sm:px-6 sm:py-24">
+    <section className="relative flex items-center overflow-hidden px-4 py-14 sm:min-h-screen sm:px-6 sm:py-24">
       {/* BACKGROUND */}
       <div className="section-glow absolute inset-0" />
 
@@ -204,7 +204,17 @@ const ContactSection = () => {
 
           <p className="mt-3 text-[8.5px] tracking-[0.1em] text-muted-foreground/70 sm:mt-6 sm:text-xs sm:tracking-[0.18em]">
             {contact.footerCreditPrefix}{" "}
-            <span className="text-gold/90">{contact.footerCredit}</span>
+            <motion.a
+              href="https://jack-nex-studio-xmit.vercel.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block text-gold/90 underline-offset-4 transition-colors duration-300 hover:text-gold hover:underline"
+              whileHover={motionDisabled ? undefined : { y: -1 }}
+              whileTap={motionDisabled ? undefined : { scale: 0.97 }}
+              aria-label="Visit JackNex Studio website"
+            >
+              {contact.footerCredit}
+            </motion.a>
           </p>
         </motion.div>
       </div>

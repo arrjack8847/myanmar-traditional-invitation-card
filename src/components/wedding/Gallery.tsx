@@ -148,7 +148,7 @@ const Gallery = () => {
     ) : null;
 
   return (
-    <section id="gallery" className="myanmar-paper-bg relative overflow-hidden px-4 py-16 sm:py-28">
+    <section id="gallery" className="relative overflow-hidden px-4 py-16 sm:py-28">
       <div className="mx-auto max-w-5xl text-center">
         <motion.p
           className="mb-4 text-[10px] uppercase tracking-[0.42em] text-gold/75 sm:text-[11px]"

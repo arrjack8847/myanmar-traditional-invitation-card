@@ -92,7 +92,7 @@ const RSVPSection = () => {
   return (
     <section
       id="rsvp"
-      className="myanmar-paper-bg relative flex items-center overflow-hidden px-4 py-14 sm:min-h-[100dvh] sm:px-6 sm:py-24"
+      className="relative flex items-center overflow-hidden px-4 py-14 sm:min-h-[100dvh] sm:px-6 sm:py-24"
     >
       {/* BACKGROUND */}
       <div className="section-glow absolute inset-0" />

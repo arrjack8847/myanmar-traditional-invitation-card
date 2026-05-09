@@ -1,6 +1,10 @@
 import { motion } from "framer-motion";
-import type { WeddingContent } from "@/data/wedding";
-import { EASE, INVITATION_CARD_SRC } from "./openingConfig";
+import type { Language, WeddingContent } from "@/data/wedding";
+import {
+  EASE,
+  EN_INVITATION_CARD_SRC,
+  INVITATION_CARD_SRC,
+} from "./openingConfig";
 import {
   getCardAnimate,
   getCardInitial,
@@ -18,6 +22,7 @@ interface InvitationCardStageProps {
   isExpandedLike: boolean;
   isInvitationHold: boolean;
   isMobile: boolean;
+  language: Language;
   onContinue: () => void;
   stage: Stage;
   ui: WeddingContent["ui"];
@@ -30,12 +35,16 @@ const InvitationCardStage = ({
   isExpandedLike,
   isInvitationHold,
   isMobile,
+  language,
   onContinue,
   stage,
   ui,
 }: InvitationCardStageProps) => {
+  const invitationCardSrc =
+    language === "en" ? EN_INVITATION_CARD_SRC : INVITATION_CARD_SRC;
+
   /**
-   * Keep the Myanmar text and CTA visually attached to the same PNG card.
+   * Keep the welcome text and CTA visually attached to the same card.
    * This value must stay positive so the stack always sits below the card.
    */
   const underCardGap = isMobile ? "clamp(10px, 1.6svh, 14px)" : "16px";
@@ -61,7 +70,7 @@ const InvitationCardStage = ({
       }}
     >
       <motion.img
-        src={INVITATION_CARD_SRC}
+        src={invitationCardSrc}
         alt="Wedding invitation card"
         className="h-full w-full select-none object-contain"
         draggable={false}

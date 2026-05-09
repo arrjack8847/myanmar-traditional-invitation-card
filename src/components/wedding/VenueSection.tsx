@@ -4,7 +4,7 @@ import { useLanguage } from "@/context/language";
 
 const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
-const CORNER_IMAGE = "/detail-corner.png";
+const CORNER_IMAGE = "/detail-corner.webp";
 
 const VENUE_LAYOUT = {
   sectionPaddingTop: "clamp(3.5rem, 8vw, 6.25rem)",
@@ -86,7 +86,7 @@ const VenueSection = () => {
   return (
     <section
       id="venue"
-      className="myanmar-paper-bg relative overflow-hidden px-4 sm:px-6"
+      className="relative overflow-hidden px-4 sm:px-6"
       style={{
         paddingTop: VENUE_LAYOUT.sectionPaddingTop,
         paddingBottom: VENUE_LAYOUT.sectionPaddingBottom,

@@ -7,12 +7,12 @@ const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
 const BRIDE_IMAGE = "/hero-couple.jpg";
 const GROOM_IMAGE = "/hero-couple.jpg";
-const FRAME_IMAGE = "/frame.png";
-const RING_IMAGE = "/ring.png";
+const FRAME_IMAGE = "/frame.webp";
+const RING_IMAGE = "/ring.webp";
 
 /* 🎛️ NAME PNG FILES */
-const GROOM_NAME_IMAGE = "/husband.png";
-const BRIDE_NAME_IMAGE = "/wife.png";
+const GROOM_NAME_IMAGE = "/husband.webp";
+const BRIDE_NAME_IMAGE = "/wife.webp";
 
 /* 🎛️ GROOM NAME PNG CONTROL */
 const GROOM_NAME_PNG = {
@@ -343,7 +343,7 @@ const HeroSection = () => {
   return (
     <section
       id="top"
-      className="myanmar-paper-bg relative min-h-[100svh] overflow-hidden px-4 pb-[calc(env(safe-area-inset-bottom)+1rem)] pt-12 text-[#6d5226] sm:pt-8 lg:px-10 lg:pb-12 lg:pt-14"
+      className="relative min-h-[100svh] overflow-hidden px-4 pb-[calc(env(safe-area-inset-bottom)+1rem)] pt-12 text-[#6d5226] sm:pt-8 lg:px-10 lg:pb-12 lg:pt-14"
     >
       {/* Soft background glow */}
       <div className="pointer-events-none absolute left-1/2 top-40 z-0 h-72 w-72 -translate-x-1/2 rounded-full bg-gold/10 blur-[90px]" />

@@ -357,7 +357,7 @@ const EnvelopeOpening = ({ onOpen }: Props) => {
 
           {isSealed && (
             <motion.img
-              src="/Envelope Closed.png"
+              src="/Envelope Closed.webp"
               alt="Closed envelope"
               className="envelope-closed relative z-[6] w-full drop-shadow-[0_26px_50px_rgba(93,70,28,0.16)]"
               initial={{ opacity: 0, scale: 0.96, y: 18 }}
@@ -376,7 +376,7 @@ const EnvelopeOpening = ({ onOpen }: Props) => {
           {!isSealed && (
             <>
               <motion.img
-                src="/Envelope Opened.png"
+                src="/Envelope Opened.webp"
                 alt="Opened envelope back"
                 className="envelope-opened-back absolute left-1/2 top-1/2 z-[1]"
                 initial={{
@@ -631,7 +631,7 @@ const EnvelopeOpening = ({ onOpen }: Props) => {
               </motion.div>
 
               <motion.img
-                src="/Envelope Opened Cutted.png"
+                src="/Envelope Opened Cutted.webp"
                 alt="Opened envelope front pocket"
                 className="envelope-opened-front absolute left-1/2 top-1/2 z-[10]"
                 initial={{

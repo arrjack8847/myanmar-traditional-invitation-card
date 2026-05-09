@@ -6,6 +6,7 @@ import {
 } from "@/data/wedding";
 
 export const LANGUAGE_STORAGE_KEY = "wedding-language";
+export const DEFAULT_LANGUAGE: Language = "my";
 
 export interface LanguageContextValue {
   language: Language;
@@ -18,15 +19,31 @@ export const LanguageContext = createContext<LanguageContextValue | undefined>(
   undefined,
 );
 
-export const getInitialLanguage = (): Language => {
-  if (typeof window === "undefined") return "en";
-
-  const saved = window.localStorage.getItem(LANGUAGE_STORAGE_KEY);
-  return saved === "my" ? "my" : "en";
+const isValidLanguage = (value: unknown): value is Language => {
+  return value === "en" || value === "my";
 };
 
-export const getWeddingContent = (language: Language) =>
-  weddingContent[language];
+export const getInitialLanguage = (): Language => {
+  if (typeof window === "undefined") {
+    return DEFAULT_LANGUAGE;
+  }
+
+  try {
+    const savedLanguage = window.localStorage.getItem(LANGUAGE_STORAGE_KEY);
+
+    if (isValidLanguage(savedLanguage)) {
+      return savedLanguage;
+    }
+
+    return DEFAULT_LANGUAGE;
+  } catch {
+    return DEFAULT_LANGUAGE;
+  }
+};
+
+export const getWeddingContent = (language: Language): WeddingContent => {
+  return weddingContent[language] ?? weddingContent[DEFAULT_LANGUAGE];
+};
 
 export const useLanguage = () => {
   const context = useContext(LanguageContext);

@@ -158,11 +158,11 @@ export const weddingContent = {
       welcomeTitle: "Step into our story",
       dayText: "Friday",
       dateText: "29 January 2027",
-      envelopeClosedImage: "/Envelope Closed.png",
-      envelopeOpenedBackImage: "/Envelope Opened.png",
-      envelopeOpenedFrontImage: "/Envelope Opened Cutted.png",
-      letterImage: "/Envelope Letter.png",
-      ribbonImage: "/ribbon.png",
+      envelopeClosedImage: "/Envelope Closed.webp",
+      envelopeOpenedBackImage: "/Envelope Opened.webp",
+      envelopeOpenedFrontImage: "/Envelope Opened Cutted.webp",
+      letterImage: "/Envelope Letter.webp",
+      ribbonImage: "/ribbon.webp",
     },
 
     hero: {
@@ -352,11 +352,11 @@ export const weddingContent = {
       welcomeTitle: "ချစ်ခြင်းမေတ္တာ ဇာတ်လမ်းထဲသို့ ဝင်ရောက်ပါ",
       dayText: "သောကြာနေ့",
       dateText: "၂၀၂၇ ခုနှစ် ဇန်နဝါရီလ ၂၉ ရက်",
-      envelopeClosedImage: "/Envelope Closed.png",
-      envelopeOpenedBackImage: "/Envelope Opened.png",
-      envelopeOpenedFrontImage: "/Envelope Opened Cutted.png",
-      letterImage: "/Envelope Letter.png",
-      ribbonImage: "/ribbon.png",
+      envelopeClosedImage: "/Envelope Closed.webp",
+      envelopeOpenedBackImage: "/Envelope Opened.webp",
+      envelopeOpenedFrontImage: "/Envelope Opened Cutted.webp",
+      letterImage: "/Envelope Letter.webp",
+      ribbonImage: "/ribbon.webp",
     },
 
     hero: {

@@ -46,12 +46,15 @@ const VideoIntroOverlay = ({
           }}
           transition={{ duration: isSiteReveal ? 1.65 : 3.1, ease: EASE }}
           style={{ objectPosition: "center center" }}
-          src="/luxury-bg.mp4"
           autoPlay
           muted
+          loop
           playsInline
           preload="auto"
-        />
+        >
+          <source src="/luxury-bg.webm" type="video/webm" />
+          <source src="/luxury-bg.mp4" type="video/mp4" />
+        </motion.video>
       </div>
 
       <div

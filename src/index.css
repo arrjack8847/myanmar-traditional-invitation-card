@@ -150,22 +150,38 @@
 @layer base {
   * {
     @apply border-border;
+    box-sizing: border-box;
   }
 
   html {
     scroll-behavior: smooth;
+    width: 100%;
+    min-height: 100%;
+    overflow-x: clip;
+    overflow-y: auto;
     background: hsl(var(--background));
   }
 
   body {
     @apply bg-background text-foreground font-sans;
-    min-height: 100vh;
-    overflow-x: hidden;
+    margin: 0;
+    width: 100%;
+    min-height: 100%;
+    overflow-x: clip;
+    overflow-y: visible;
     background:
       radial-gradient(circle at 50% 0%, rgba(214, 169, 60, 0.11), transparent 30%),
       radial-gradient(circle at 0% 18%, rgba(255, 255, 255, 0.85), transparent 32%),
       radial-gradient(circle at 100% 72%, rgba(214, 169, 60, 0.08), transparent 28%),
       linear-gradient(180deg, #fbf7ec 0%, #f7f1e4 48%, #fbf7ec 100%);
+  }
+
+  #root {
+    width: 100%;
+    min-height: 100%;
+    max-width: 100%;
+    overflow-x: clip;
+    overflow-y: visible;
   }
 
   body::selection,
@@ -186,6 +202,7 @@
     -webkit-tap-highlight-color: transparent;
   }
 }
+
 
 /* =========================================================
    REUSABLE DESIGN UTILITIES
@@ -618,8 +635,8 @@ html[data-language="my"] select {
   );
 
   background: #efe7d6;
-  -webkit-mask-image: var(--frame-mask, url("/frame-mask.png"));
-  mask-image: var(--frame-mask, url("/frame-mask.png"));
+  -webkit-mask-image: var(--frame-mask, url("/frame-mask.webp"));
+  mask-image: var(--frame-mask, url("/frame-mask.webp"));
   -webkit-mask-size: 100% 100%;
   mask-size: 100% 100%;
   -webkit-mask-position: center;
